@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100vw;
+    overflow-X: hidden;
+}
+.bod {
+    background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.man h2 {
+    color: white;
+    font-size: 1.2rem;
+}
+.man {
+    width: 80vw;
+    padding: 60px 20px;
+    text-align: center;
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    border: 0.5px solid white;
+}
+.man input {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px rgb(239, 234, 234) solid;
+    margin: 10px;
+    background-color: transparent;
+    color: white;
+    outline: none;
+}
+
+.man input::placeholder {
+    color: rgb(238, 232, 232);
+    text-align: center;
+}
+
+.man button {
+    color: white;
+    padding: 10px 30px;
+    border: 1px solid rgb(245, 241, 241);
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-top: 10px;
+}
+.man button:hover{
+    background-color: white;
+    color: black;
+}
+#errorMessage {
+    color: white;
+    margin-top: 10px;
+}
+
+/*Loading*/
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+

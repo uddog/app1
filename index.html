@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+     
+    /*for main content */
+        .ad2 {
+        width: 95vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-wrap: wrap;
+        padding: 7px;
+        justify-content: center;
+        border-radius: 10px; 
+    }
+   
+    .ad2 a {
+        background-color: rgb(255, 119, 0);
+        width: 30vw;
+        margin: 5px;
+        text-align: center;
+        padding: 20px;
+        text-decoration: none;
+        color: #F5F5DC; /* Text color */
+        border-radius: 5px; /* Rounded corners for buttons */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .ad2 a ion-icon {
+        font-size: 4rem;
+        margin-bottom: 10px;
+        color: #F5F5DC; /* Icon color */
+    }
+
+    .ad2 a:hover {
+        background-color: black; /* Darker background on hover */
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="ad2">
+            <a href="search.html"><div><ion-icon name="search-outline"></ion-icon><br>Search</div></a>  
+            <a href="blooddonation.html"><div><ion-icon name="bag-add-outline"></ion-icon><br>Add Blood Donar</div></a>  
+            <a href="donation.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Money Donar</div></a>  
+            <a href="eventsAttend.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Event Attendace</div></a>  
+    </div>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
