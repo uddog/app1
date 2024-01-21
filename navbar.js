@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function displayUserProfile(rowIndex, navbar) {
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm48hnUwaJhf04Q7c-QOWvVSLCWCghP2lIihDV-kCSTAoKROFRQn6kaeLoRXjQ7bLKW2Rz12oYcRaT/pub?output=csv&gid=0';
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
 
     try {
         const response = await fetch(csvUrl);
@@ -49,11 +49,16 @@ async function displayUserProfile(rowIndex, navbar) {
             // Check the value in column AB and show the corresponding Admin button(s)
             switch (additionalValue) {
                 case '1':
-                    addAdminButton('Admin 1', 'admin1.html'); // Set the link for Admin 1
+                    addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     break;
                 case '2':
-                    addAdminButton('Admin 1', 'admin1.html'); // Set the link for Admin 1
-                    addAdminButton('Admin 2', 'admin2.html'); // Set the link for Admin 2
+                    addAdminButton('Access Pro', 'admin2.html'); // Set the link for Admin 2
+                    addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
+                    break;
+                 case '3':
+                    addAdminButton('Admin', 'admin.html'); // Set the link for Admin 1
+                    addAdminButton('Access Pro', 'admin2.html'); // Set the link for Admin 2
+                    addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     break;
                 // Add more cases as needed
                 default:

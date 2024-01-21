@@ -1,8 +1,7 @@
-@font-face {
-   font-family: 'anik';
-   src: url(anik.ttf);
+body{
+   background-size: cover;
+   background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
 }
-
 /*start*/
 .liafnav{
     position: fixed;
@@ -10,6 +9,15 @@
     left: 50%;
     padding: 4px;
     transform: translateX(-50%);
+    backdrop-filter: blur(5px);
+}
+.liafnav::after{
+   content: '';
+   background-color: white;
+   width: 100%;
+   margin-top: 3px;
+   height: 1px;
+   position: absolute;
 }
 .liafnav ul { 
     width: 90vw;
@@ -21,7 +29,7 @@
     position: relative; 
   }
   .liafnav  a {
-    color: var(--color);
+   color: white;
     font-size: 0.9rem;
     text-decoration: none;
   }
@@ -49,13 +57,12 @@
  }
  .udnam{
     width: 70vw;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     text-align: center;
-    font-family: 'anik';
  }
  .udnam::first-line{
-    font-size: 2rem;
-    color: var(--color);
+   color: white;
+    font-size: 3.5rem;
  }
  
  .udop{
@@ -73,19 +80,24 @@
     width: 20vw;
  }
  .udop a{
+   color: white;
     text-decoration: none;
     font-size: 0.7rem;
-    color: var(--color);
  }
 .udop ul div{
+    backdrop-filter: blur(5px);
     text-align: center;
     padding: 8px;
     width: 65px;
     border-radius: 10px;
-    border: solid 1px var(--color);
+    border: solid 1.5px white;
+ }
+ .udop ul div:hover{    
+   border: solid 1.5px black;
+   background-color: black;
  }
  .udop ion-icon{
-    color: var(--color);
+   color: white;
     font-size: 2.2rem;
  }
 
@@ -112,10 +124,9 @@ img {
    width: 100%;
    height: auto;
 }
+
+
+
 footer{
-   width: 100%;
-   background-color: var(--color);
-   height: 100px;
-   position: relative;
-   bottom: 0px;
+
 }

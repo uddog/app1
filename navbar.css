@@ -8,7 +8,8 @@
     padding: 0;
 }
 :root {
-    --color:#ff6d0b;
+    --color:#000000a1;
+    --text:white;
 }
 a{
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -102,7 +103,6 @@ nav img {
 .bio-section {
     padding: 3px;
     background-color: var(--color); /* Darker shade of orange */
-    border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 5px;
     text-align: center;
@@ -110,6 +110,7 @@ nav img {
     position: fixed;
     right: 5px;
     top: 8vh;
+    color: white;
     z-index: 1;
 }
 .bio-section p {
@@ -129,9 +130,9 @@ nav img {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    background: #fff;
     border: 1px solid #ccc;
     z-index: 2;
+    backdrop-filter: blur(10px);
     text-align: center;
 }
 .popup button{

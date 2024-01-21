@@ -7,6 +7,25 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
     <style>
+        main{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background-color: red;
+            width: 100vw;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .div1{
+            background-color: green;
+            width: 45vw;
+            height: 50vw;
+            margin: 5px;
+        }
+
+        /*color*/
         .color-buttons{
             margin-top: 100px;
             display: flex;
@@ -54,6 +73,14 @@
         <button onclick="closeLogoutPopup()">No</button>
     </div>    
     <!--NavBar End-->
+
+
+    <main>
+        <div class="div1"></div>
+        <div class="div1"></div>
+        <div class="div1"></div>
+        <div class="div1"></div>
+    </main>
 
     <div class="color-buttons">
         <button style="background-color: #3498db;" class="color-button" onclick="changeColor('#3498db')"></button>
