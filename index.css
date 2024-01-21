@@ -1,0 +1,121 @@
+@font-face {
+   font-family: 'anik';
+   src: url(anik.ttf);
+}
+
+/*start*/
+.liafnav{
+    position: fixed;
+    top: 9vh;
+    left: 50%;
+    padding: 4px;
+    transform: translateX(-50%);
+}
+.liafnav ul { 
+    width: 90vw;
+    list-style: none; 
+    display: flex;
+    justify-content: space-between;
+  }
+  .liafnav li { 
+    position: relative; 
+  }
+  .liafnav  a {
+    color: var(--color);
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .liafnav  a:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+    background: var(--color);
+  }
+  .liafnav a:hover:after { 
+    width: 100%; 
+    left: 0; 
+  }
+ .instart{
+    justify-content: center;
+    margin-top: 15vh;
+    flex-wrap: wrap;
+    display: flex;
+ }
+ .udnam{
+    width: 70vw;
+    font-size: 0.7rem;
+    text-align: center;
+    font-family: 'anik';
+ }
+ .udnam::first-line{
+    font-size: 2rem;
+    color: var(--color);
+ }
+ 
+ .udop{
+    width: 90vw;
+    margin-top: 20px;
+ }
+ .udop ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+ }
+ .udop ul li{
+    margin: 15px;
+    width: 20vw;
+ }
+ .udop a{
+    text-decoration: none;
+    font-size: 0.7rem;
+    color: var(--color);
+ }
+.udop ul div{
+    text-align: center;
+    padding: 8px;
+    width: 65px;
+    border-radius: 10px;
+    border: solid 1px var(--color);
+ }
+ .udop ion-icon{
+    color: var(--color);
+    font-size: 2.2rem;
+ }
+
+ 
+
+
+ /*for img slider*/
+
+ .slider-container {
+   width: 80%;
+   margin: 15px auto;
+   height: 170px;
+   overflow: hidden;
+   border: 2px solid #ccc;
+   border-radius: 10px;
+}
+
+.slider {
+   display: flex;
+   transition: transform 0.5s ease-in-out;
+}
+
+img {
+   width: 100%;
+   height: auto;
+}
+footer{
+   width: 100%;
+   background-color: var(--color);
+   height: 100px;
+   position: relative;
+   bottom: 0px;
+}

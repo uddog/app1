@@ -69,7 +69,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const lastEnteredTime = localStorage.getItem('lastEnteredTime');
+            const lastEnteredTime = localStorage.getItem('myCustomKey2'); // Change here
             const pinSection = document.getElementById('pinSection');
             const dataSection = document.getElementById('dataSection');
 
@@ -132,7 +132,7 @@
                     dataSection.style.display = 'block';
 
                     // Save the timestamp when the correct PIN was entered
-                    localStorage.setItem('lastEnteredTime', Date.now().toString());
+                    localStorage.setItem('myCustomKey2', Date.now().toString()); // Change here
                 } else {
                     pinErrorMessageElement.textContent = 'Incorrect PIN. Please try again.';
                 }

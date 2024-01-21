@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style_dataentry.css">
+</head>
+
+<body>
+    <div class="bod" id="login-form">
+        <div class="man">
+            <h2>UDDOG ID</h2>
+            <p id="errorMessage"></p>
+            <form id="loginForm">
+                <input autocomplete="off" placeholder="Enter Username" type="text" id="username" name="username" required><br>
+                <input autocomplete="off" placeholder="Enter Password" type="password" id="password" name="password" required><br>
+                <button type="button" onclick="attemptLogin()">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="content" style="display: none;">
+        <div id="profile">
+            <!-- Profile information will be displayed here -->
+        </div>
+    </div>
+
+    <div id="loading-overlay" style="display: none;">
+        <div id="loading-spinner"></div>
+    </div>
+
+    <script>
+        async function attemptLogin() {
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim().toLowerCase();
+            const errorMessageElement = document.getElementById('errorMessage');
+
+            // Check if the username and password inputs are not empty
+            if (username === '' || password === '') {
+                errorMessageElement.textContent = 'Please enter both username and password.';
+                return; // Stop the function if any input is empty
+            }
+
+            errorMessageElement.textContent = ''; // Clear previous error message
+
+            // Show loading overlay
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm48hnUwaJhf04Q7c-QOWvVSLCWCghP2lIihDV-kCSTAoKROFRQn6kaeLoRXjQ7bLKW2Rz12oYcRaT/pub?output=csv&gid=0';
+
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').map(row => row.split(','));
+
+                // Loop through the rows to check for matching credentials, starting from index 1 (skipping the first row)
+                let isValid = false;
+                let rowIndex;
+
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    console.log('Checking:', row[1]); // Assuming username is in column B
+                    console.log('Password:', row[26]); // Assuming password is in column AA
+                    if (row[1] === username && row[26].trim().toLowerCase() === password) {
+                        isValid = true;
+                        rowIndex = i;
+                        break;
+                    }
+                }
+
+                if (isValid) {
+                    // Save row index to localStorage
+                    localStorage.setItem('rowIndex', rowIndex);
+
+                    // Redirect to index.html
+                    window.location.href = 'index.html';
+
+                    // Note: The code below won't be executed after the redirection,
+                    // as the page will be unloaded and the script will be terminated.
+                } else {
+                    errorMessageElement.textContent = 'Wrong username or password. Please try again.';
+                }
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                errorMessageElement.textContent = 'An error occurred. Please try again later.';
+            } finally {
+                // Hide loading overlay regardless of success or failure
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+
+            // Check if there is a saved row index in localStorage
+            const savedRowIndex = localStorage.getItem('rowIndex');
+            if (savedRowIndex) {
+                // If a row index is saved, you might want to handle it accordingly (e.g., redirect or perform some action)
+                console.log('Saved row index:', savedRowIndex);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serach in UDDOG</title>
+    <title>UDDOG Information</title>
     <style>
         * {
             margin: 0;
@@ -15,6 +15,7 @@
         body{
             background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
         }
+
         .srch {
             display: flex;
             backdrop-filter: blur(5px);
@@ -256,39 +257,29 @@
         }
 
         function filterData() {
-    const filterText = document.getElementById('infoFilter').value.toLowerCase();
-    const availabilityCheckbox = document.getElementById('availabilityCheckbox');
-    const isAvailable = availabilityCheckbox.checked;
+            const filterText = document.getElementById('infoFilter').value.toLowerCase();
+            const availabilityCheckbox = document.getElementById('availabilityCheckbox');
+            const isAvailable = availabilityCheckbox.checked;
 
-    let filteredInfo;
+            let filteredInfo;
 
-    if (filterType === 'bloodGroup') {
-        filteredInfo = allInfo.filter(entry => {
-            const matchesSearch = entry[filterType].toLowerCase() === filterText;
-            const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
-
-            if (isAvailable) {
-                return matchesSearch && isDonationAvailable;
+            if (filterType === 'bloodGroup') {
+                filteredInfo = allInfo.filter(entry => entry[filterType].toLowerCase() === filterText);
             } else {
-                return matchesSearch;
+                filteredInfo = allInfo.filter(entry => {
+                    const matchesSearch = entry[filterType].toLowerCase().includes(filterText);
+                    const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
+
+                    if (isAvailable) {
+                        return matchesSearch && isDonationAvailable;
+                    } else {
+                        return matchesSearch;
+                    }
+                });
             }
-        });
-    } else {
-        filteredInfo = allInfo.filter(entry => {
-            const matchesSearch = entry[filterType].toLowerCase().includes(filterText);
-            const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
 
-            if (isAvailable) {
-                return matchesSearch && isDonationAvailable;
-            } else {
-                return matchesSearch;
-            }
-        });
-    }
-
-    displayInfo(filteredInfo);
-}
-
+            displayInfo(filteredInfo);
+        }
 
         function copyToClipboard(text) {
             const dummyElement = document.createElement("textarea");

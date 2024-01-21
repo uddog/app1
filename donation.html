@@ -54,7 +54,7 @@
                     <label for="dataInput"></label>
                     <input autocomplete="off" placeholder="Enter Amount" type="text" id="dataInput" name="dataInput"
                         required>
-                    <button type="button" onclick="submitDataForm()">Login / Write to Spreadsheet</button>
+                    <button type="button" onclick="submitDataForm()">Update</button>
                 </form>
             </div>
         </div>
@@ -64,7 +64,7 @@
     <!-- Loading Modal -->
     <div id="loadingModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <p>Loading...</p>
+            <p>Updating...</p>
         </div>
     </div>
 
@@ -182,7 +182,7 @@
                             console.log('Spreadsheet update result:', updateResult);
 
                             // Handle the success scenario here, e.g., display a success message
-                            errorMessageElement.textContent = 'Data added successfully to the spreadsheet!';
+                            errorMessageElement.textContent = 'Update Successfully';
 
                             // Clear the form fields
                             document.getElementById('myForm').reset();

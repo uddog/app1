@@ -4,61 +4,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
-    <style>
-     
-    /*for main content */
-        .ad2 {
-        width: 95vw;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-wrap: wrap;
-        padding: 7px;
-        justify-content: center;
-        border-radius: 10px; 
-    }
-   
-    .ad2 a {
-        background-color: rgb(255, 119, 0);
-        width: 30vw;
-        margin: 5px;
-        text-align: center;
-        padding: 20px;
-        text-decoration: none;
-        color: #F5F5DC; /* Text color */
-        border-radius: 5px; /* Rounded corners for buttons */
-        transition: background-color 0.3s; /* Smooth transition for hover effect */
-    }
-
-    .ad2 a ion-icon {
-        font-size: 4rem;
-        margin-bottom: 10px;
-        color: #F5F5DC; /* Icon color */
-    }
-
-    .ad2 a:hover {
-        background-color: black; /* Darker background on hover */
-    }
-
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
 
-    <div class="ad2">
-            <a href="search.html"><div><ion-icon name="search-outline"></ion-icon><br>Search</div></a>  
-            <a href="blooddonation.html"><div><ion-icon name="bag-add-outline"></ion-icon><br>Add Blood Donar</div></a>  
-            <a href="donation.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Money Donar</div></a>  
-            <a href="eventsAttend.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Event Attendace</div></a>  
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <button onclick="logout()">Yes</button>
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+
+    <div class="liafnav">
+        <ul>
+            <li><a href="">স্বাস্থ্য</a></li>
+            <li><a href="">শিক্ষা</a></li>
+            <li><a href="">পরিবহন</a></li>
+            <li><a href="">দর্শনীয় স্থান</a></li>
+            <li><a href="">ইমার্জেন্সি সেবা</a></li>
+        </ul>
     </div>
     
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+<div class="instart">
+
+     <div class="udnam">
+        <h2>উদ্যোগ<br>একটি সামাজিক উন্নয়নমূলক সংগঠন </h2>
+     </div>
+      
+     <div class="udop">
+        <ul>
+            <li><a href=""><div><ion-icon name="medkit"></ion-icon><br>স্বাস্থ্য</div></a></li>
+            <li><a href=""><div><ion-icon name="book"></ion-icon><br>শিক্ষা</div></a></li>
+            <li><a href=""><div><ion-icon name="car"></ion-icon><br>পরিবহন</div></a></li>         
+            <li><a href=""><div><ion-icon name="leaf"></ion-icon><br>দর্শনীয় স্থান</div></a></li>
+            <li><a href=""><div><ion-icon name="medical"></ion-icon><br>ইমার্জেন্সি</div></a></li>
+            <li><a href=""><div><ion-icon name="apps"></ion-icon><br>সেবা</div></a></li>
+        </ul>
+     </div>
+
+
+    <!--Image Slider-->
+    <div class="slider-container" id="imageSliderContainer">
+        <div class="slider" id="imageSlider"></div>
+    </div>
+
+
+
+    <footer>
+        
+    </footer>
+
+
+ </div>
+
+
+<script src="navbar.js"></script>
+<script src="index.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+            //color picker
+                function changeColor(newColor) {
+                document.documentElement.style.setProperty('--color', newColor);
+                localStorage.setItem('mainColor', newColor);
+            }
+
+            // Check if there is a saved color in local storage and apply it
+            const savedColor = localStorage.getItem('mainColor');
+            if (savedColor) {
+                changeColor(savedColor);
+            }
+</script>
 </body>
 
 </html>

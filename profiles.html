@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="navbar.css">
+</head>
+<style>
+            #content{
+   width: 100%;  
+}
+#profile{
+   padding: 10px;
+   text-align: center;
+   border: solid 1px white;
+   margin: 0 auto;
+}
+.s1{
+    margin-top: 10vh;
+}
+.s1 img{
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid;
+}
+.s1 p:nth-child(2){
+    font-size: 1.3rem;
+}
+.s1 p:nth-child(3){
+    font-size: 0.8rem;
+}
+.s2{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.s2 p{
+    padding: 10px;
+    width: 20vw;
+    line-height: 1.5rem;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.s3{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    margin: 20px 30px;
+    text-align: left;
+    border-radius: 10px;
+    padding: 10px;
+}
+.s3 p{
+    margin: 5px;
+}
+.s3 p:nth-child(odd){
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.s3 p:nth-child(even){
+    font-size: 0.9rem;
+}
+.s4{
+   border: .5px solid;
+   padding: 10px;
+}
+.s4 p:nth-child(1){ 
+    margin-bottom: 10px;
+}
+.s4 p:nth-child(2){
+    margin: 5px;
+    padding: 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+</style>
+
+<body>
+
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <button onclick="logout()">Yes</button>
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+    
+
+    
+    <div id="content" style="display: none;">
+        <div id="profile">
+            <!-- Profile information will be displayed here -->
+        </div>
+    </div>
+
+
+    
+    
+<script src="navbar.js"></script>
+<script>
+    async function fetchUserProfile() {
+        const storedRowIndex = parseInt(localStorage.getItem('rowIndex'), 10);
+
+        if (!storedRowIndex) {
+            alert("No stored row index found. Please enter your credentials.");
+            return;
+        }
+
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm48hnUwaJhf04Q7c-QOWvVSLCWCghP2lIihDV-kCSTAoKROFRQn6kaeLoRXjQ7bLKW2Rz12oYcRaT/pub?output=csv&gid=0';
+
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const rows = data.split('\n').map(row => row.split(','));
+
+            const storedRow = rows[storedRowIndex];
+
+            if (storedRow) {
+                const imgSrc = storedRow[18].trim();
+                const name = storedRow[3].trim();
+                const role = storedRow[2].trim();
+                const fatherName = storedRow[5].trim();
+                const address = storedRow[10].trim();
+                const joiningDate = storedRow[19].trim();
+                const totalDonation = storedRow[20].trim();
+                const dateOfBirth = storedRow[8].trim();
+                const bloodGroup = storedRow[11].trim();
+                const message = storedRow[21].trim();
+                const attendedEvents = storedRow[22].trim();
+                const bloodDonationTimes = storedRow[17].trim();
+                const columnY = storedRow[24].trim(); // Add this line for column Y
+                const columnZ = storedRow[25].trim(); // Add this line for column Z
+
+                document.getElementById("content").style.display = "block";
+
+                document.getElementById("profile").innerHTML = `
+                    <div class="s1">
+                        <img src="${imgSrc}" alt="Profile Image">
+                        <p>${name}</p>
+                        <p>${role}</p>
+                    </div>
+                    <div class="s2">
+                        <p>Events<br>${attendedEvents}</p>
+                        <p>Donation<br>${totalDonation}</p>
+                        <p>Point<br>${bloodDonationTimes}</p>
+                    </div>
+                    <div class="s3">
+                        <p>Blood Group</p>
+                        <p>${bloodGroup}</p>
+                        <p>Date of Birth</p>
+                        <p>${dateOfBirth}</p>
+                        <p>Father's Name</p>
+                        <p>${fatherName}</p>
+                        <p>Address</p>
+                        <p>${address}</p>
+                        <p>Last Donate</p>
+                        <p>${columnY}</p>
+                        <p>Last Blood Donate</p>
+                        <p>${columnZ}</p>
+                        <p>Joining Date</p>
+                        <p>${joiningDate}</p>
+                    </div>
+                    <div class="s4">
+                        <p>Message for ${name} from UDDOG</p>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    const storedRowIndex = localStorage.getItem('rowIndex');
+    if (storedRowIndex) {
+        fetchUserProfile();
+    }
+
+    
+    //color picker
+                function changeColor(newColor) {
+                document.documentElement.style.setProperty('--color', newColor);
+                localStorage.setItem('mainColor', newColor);
+            }
+
+            // Check if there is a saved color in local storage and apply it
+            const savedColor = localStorage.getItem('mainColor');
+            if (savedColor) {
+                changeColor(savedColor);
+            }
+</script>
+</body>
+
+</html>

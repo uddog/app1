@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
+        }
+        main{
+            width: 100v1;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        main>div{
+            backdrop-filter: blue(10px);
+            border: 2px solid white;
+            padding: 15px;
+            height: 70vh;
+            width: 80vw;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+        main div>h2{
+            margin: 20px;
+            font-size: 2rem;
+        }
+        main div>p{
+            margin: 5px;
+            margin-top: 10px;
+            width: 120px;
+            color: white;
+            text-align: left;
+        }
+        main div>input{
+            text-align: center;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            color: white;
+            border-bottom: 1px solid white;
+            padding: 3px;
+        }
+        main div>button{
+            height: 30px;
+            width: 100px;
+            margin: 20px auto;
+        }
+        /* Add some basic styling for the modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        #loadingModal {
+            display: none;
+        }
+
+        #successModal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<main>
+    <div>
+        <h2>Your Profile</h2>
+        <div id="rowData"></div>
+        <button onclick="saveChanges()">Update</button>
+    </div>
+</main>
+ 
+<div id="loadingModal" class="modal">
+    <div class="modal-content">
+        Loading...
+    </div>
+</div>
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <p>Data saved successfully!</p>
+        <button onclick="closeSuccessModal()">OK</button>
+    </div>
+</div>
+
+    <script>
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+
+        // Get the saved row index from localStorage
+        const savedRowIndex = localStorage.getItem('rowIndex');
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n');
+                const headerRowData = rows[0].split(','); // Use row 1 data as labels
+                const rowData = savedRowIndex ? rows[savedRowIndex].split(',') : null;
+
+                const rowDataContainer = document.getElementById('rowData');
+
+                if (rowData) {
+                    const columnsToShow = [3, 4, 5, 6, 7, 8]; // D, E, F, G, H, I
+                    columnsToShow.forEach(index => {
+                        const label = document.createElement('p');
+                        label.textContent = `${headerRowData[index]} -`;
+                        rowDataContainer.appendChild(label);
+
+                        const inputBox = document.createElement('input');
+                        inputBox.type = 'text';
+                        inputBox.value = rowData[index].trim();
+                        rowDataContainer.appendChild(inputBox);
+                    });
+                } else {
+                    const message = document.createElement('p');
+                    message.textContent = 'No data found for the selected row index.';
+                    rowDataContainer.appendChild(message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching CSV data:', error);
+            });
+
+        function saveChanges() {
+            const inputBoxes = document.querySelectorAll('#rowData input');
+            const updatedData = Array.from(inputBoxes).map(input => input.value);
+
+            // Get the saved row index from localStorage
+            const savedRowIndex = localStorage.getItem('rowIndex');
+
+            // Show loading modal
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.style.display = 'block';
+
+            // Send the updated data and row index to the Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbyvHCbyKG3P8vEhZoThBDNiRFifsIIv8cBVP44a7nH1pXECuDq8WjF4oR8hjOEs2woj/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `data=${encodeURIComponent(updatedData.join(','))}&rowIndex=${savedRowIndex}`,
+            })
+                .then(response => response.text())
+                .then(responseText => {
+                    console.log('Response:', responseText);
+                    // Hide loading modal
+                    loadingModal.style.display = 'none';
+
+                    // Show success modal
+                    const successModal = document.getElementById('successModal');
+                    successModal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    // Hide loading modal on error
+                    loadingModal.style.display = 'none';
+                });
+        }
+
+        function closeSuccessModal() {
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
