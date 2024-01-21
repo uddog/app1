@@ -8,14 +8,12 @@
     <link rel="stylesheet" href="navbar.css">
 </head>
 <style>
-            #content{
-   width: 100%;  
+#content{
+   width: 100vw;  
 }
 #profile{
-   padding: 10px;
    text-align: center;
-   border: solid 1px white;
-   margin: 0 auto;
+   color: white;
 }
 .s1{
     margin-top: 10vh;
@@ -39,6 +37,7 @@
     margin-top: 20px;
 }
 .s2 p{
+    background-color: var(--color);
     padding: 10px;
     width: 20vw;
     line-height: 1.5rem;
@@ -48,10 +47,10 @@
 .s3{
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    margin: 20px 30px;
     text-align: left;
-    border-radius: 10px;
     padding: 10px;
+    background-color: var(--color);
 }
-.s3 p{
+.s3 p{  
     margin: 5px;
 }
 .s3 p:nth-child(odd){
@@ -63,8 +62,10 @@
     font-size: 0.9rem;
 }
 .s4{
-   border: .5px solid;
    padding: 10px;
+   border: .5px solid;
+   background-color: var(--color);
+
 }
 .s4 p:nth-child(1){ 
     margin-bottom: 10px;
@@ -148,7 +149,7 @@
                 const address = storedRow[10].trim();
                 const joiningDate = storedRow[19].trim();
                 const totalDonation = storedRow[20].trim();
-                const dateOfBirth = storedRow[8].trim();
+                const dateOfBirth = storedRow[7].trim();
                 const bloodGroup = storedRow[11].trim();
                 const message = storedRow[21].trim();
                 const attendedEvents = storedRow[22].trim();

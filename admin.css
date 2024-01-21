@@ -1,0 +1,38 @@
+   
+    /*for main content */
+        .ad2 {
+        width: 95vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-wrap: wrap;
+        padding: 7px;
+        justify-content: center;
+        border-radius: 10px; 
+    }
+   
+    .ad2 a {
+        width: 30vw;
+        margin: 5px;
+        border: 2px solid white;
+        backdrop-filter: blur(10px);
+        text-align: center;
+        padding: 20px;
+        text-decoration: none;
+        color: #F5F5DC; /* Text color */
+        border-radius: 5px; /* Rounded corners for buttons */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .ad2 a ion-icon {
+        font-size: 4rem;
+        margin-bottom: 10px;
+        color: #F5F5DC; /* Icon color */
+    }
+
+    .ad2 a:hover {
+        border: 2px solid var(--color);
+        background-color: var(--color); /* Darker background on hover */
+    }

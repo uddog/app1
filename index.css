@@ -1,7 +1,4 @@
-body{
-   background-size: cover;
-   background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
-}
+
 /*start*/
 .liafnav{
     position: fixed;
@@ -107,9 +104,9 @@ body{
  /*for img slider*/
 
  .slider-container {
-   width: 80%;
+   width: 95vw;
    margin: 15px auto;
-   height: 170px;
+   height: 180px;
    overflow: hidden;
    border: 2px solid #ccc;
    border-radius: 10px;

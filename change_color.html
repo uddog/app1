@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        /*color*/
+      .color-buttons{
+          margin-top: 100px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          width: 100vw;
+      }
+      .color-buttons button{
+          height: 200px;
+          width: 45vw;
+          margin: 5px;
+          border: none;
+      }
+      h2{
+        z-index: -1;
+        color: white;
+        top: 10vh;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+  </style>
+</head>
+
+<body>
+
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <button onclick="logout()">Yes</button>
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+    <h2>Pick Any Colour</h2>
+    <div class="color-buttons">
+        <button style="background-color: #f39c12;" class="color-button" onclick="changeColor('#f39c12')"></button>
+        <button style="background-color: #9b59b6;" class="color-button" onclick="changeColor('#9b59b6')"></button>
+        <button style="background-color: #1abc9c;" class="color-button" onclick="changeColor('#1abc9c')"></button>
+        <button style="background-color: #d35400;" class="color-button" onclick="changeColor('#d35400')"></button>
+        <button style="background-color: #3498db;" class="color-button" onclick="changeColor('#3498db')"></button>
+        <button style="background-color: #e74c3c;" class="color-button" onclick="changeColor('#e74c3c')"></button>
+        <button style="background-color: #27ae60;" class="color-button" onclick="changeColor('#27ae60')"></button>
+        <button style="background-color: #000000a1;" class="color-button" onclick="changeColor('#000000a1')"></button>
+        <button style="background-color: #7f8c8d;" class="color-button" onclick="changeColor('#7f8c8d')"></button>
+        <button style="background-color: #ecf0f18f;" class="color-button" onclick="changeColor('#ecf0f18f')"></button>
+        
+    </div>
+    
+
+    
+
+<script src="navbar.js"></script>
+<script>
+            //color picker
+            function changeColor(newColor) {
+            document.documentElement.style.setProperty('--color', newColor);
+            localStorage.setItem('mainColor', newColor);
+        }
+
+        // Check if there is a saved color in local storage and apply it
+        const savedColor = localStorage.getItem('mainColor');
+        if (savedColor) {
+            changeColor(savedColor);
+        }
+</script>
+</body>
+
+</html>

@@ -1,312 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UDDOG Information</title>
+    <title>Offline Website</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            box-sizing: border-box;
-        }
-        body{
-            background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
-        }
-
-        .srch {
-            display: flex;
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            width: 100vw;
-            height: 8vh;
-            top: 0px;
-            border-bottom: 1px solid white;
-            border-radius: 0 0 10px 10px;
-            z-index: 2;
-        }
-        .srch input{
-            margin: 3px;
-        }
-
-        #filterType {
-            padding: 5px;
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
-            border: none;
-            color: white;
-            background-color: transparent;
-            outline: none;
-            border: 1px solid white;
+            padding: 20px;
         }
-        #filterType option{
-            background-color: black;
-            color: white;
-        }
-        #infoFilter {
-            font-weight: bold;
-            padding: 5px;
-            text-align: center;
-            border: none;
-            background-color: transparent;
-            border: solid 1px white;
-            color: white;
-            outline: none;
-        }
-        #infoFilter::placeholder{
-            text-align: center;
-            color: white;
-        }
-        
-        input[type="checkbox"] {
-            appearance: none;
-            background-color: transparent;
-            width: 1.6rem;
-            height: 1.6rem;
-            border: solid 1px white;
-        }
-        
-        input[type="checkbox"]:checked {
-          background-color: white; 
-}
-        .availability-count {
-            position: fixed;
-            right: 0px;
-            color: white;
-            top: 20px;
-            font-size: 1.4rem;
-            border-radius: 10px 0px 0px 10px;
-            padding: 3px 10px;
-            background-color: black;
-        }
-
-        #info {
-            display: flex;
-            margin-top: 10vh;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .imgp{
-            text-align: center;
-            margin: 10px;
-            border-bottom: 1px solid white;
-        }
-        #info>div {
-            color: white;
-            line-height: 1.3rem;
-            margin: 7px;
-            width: 300px;
-            padding: 15px;
-            backdrop-filter: blur(5px);
-            border: 2px solid white;
-            border-radius: 12px;
-            font-size: 0.8rem;
-         }
-        #info div p {
-           font-weight: bolder;
-        }
-
-        #info div img {
-            border: 3px solid white;
-            border-radius: 50%;
-            padding: 4px;       
-            width: 100px;
-            height: 100px;
-        }
-        @media only screen and (max-width: 600px) {
-            #info>div {
-               width: 85vw;
-          }
-        }
-
-        .availability-count {
-            margin-top: 10vh;
-            position: fixed;
-            font-weight: bolder;
-            right: 0px;
-            top: 20px;
-            font-size: 1.3rem;
-            color: black;
-            border-radius: 10px 0px 0px 10px;
-            padding: 3px 10px;
-            background-color: white;
-        }
-
-        .showAllButton {
-            margin-top: 8px;
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-        }
-
-        .click-to-copy {
-            cursor: pointer;
-        }
-
     </style>
 </head>
-
 <body>
-    <div class="srch">
-        <label for="filterType"></label>
-        <select id="filterType">
-            <option value="name">Name</option>
-            <option value="address">Address</option>
-            <option value="bloodGroup">Blood Group</option>
-        </select>
-        <label for="infoFilter"></label>
-        <input placeholder="Search" type="text" id="infoFilter" oninput="filterData()">
-        <input type="checkbox" id="availabilityCheckbox" onchange="filterData()">
-        <div class="availability-count" id="availabilityCount"></div>
-    </div>
-
-    <div id="content" style="display: none;">
-        <div id="info">
-            <!-- User information will be displayed here -->
-        </div>
+    <div id="content">
+        <h1>Welcome to the Offline Website!</h1>
+        <!-- Your website content goes here -->
     </div>
 
     <script>
-        let allInfo = [];
-        let filterType = "name";
-
-        async function fetchUserData() {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm48hnUwaJhf04Q7c-QOWvVSLCWCghP2lIihDV-kCSTAoKROFRQn6kaeLoRXjQ7bLKW2Rz12oYcRaT/pub?output=csv&gid=0';
-
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
-
-                allInfo = rows.slice(1).map(row => ({
-                    name: row[4].trim(),
-                    customFieldU: row[20].trim(),
-                    address: row[10].trim(),
-                    phoneNumber: row[6].trim(),
-                    bloodGroup: row[11].trim(),
-                    customField: formatDate(row[24].trim()),
-                    imgSrc: row[18].trim(),
-                    donationDate: new Date(row[25].trim()),
-                    allData: [row[2].trim(), row[5].trim(), row[8].trim(), row[25].trim()]
-                })).filter(entry => entry.name !== '' && entry.address !== '');
-
-                document.getElementById("content").style.display = "block";
-                displayInfo();
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-        }
-
-        function displayInfo(data = allInfo) {
-            const infoContainer = document.getElementById("info");
-            infoContainer.innerHTML = "";
-
-            data.forEach(entry => {
-                const timeLeft = calculateTimeLeft(entry.donationDate);
-                const entryDiv = document.createElement("div");
-                const timeDisplay = timeLeft <= 0 ? "Available for Blood Donation" : `Next Blood Donate in ${timeLeft}`;
-
-                entryDiv.innerHTML = `
-                    <div class="imgp">
-                    <img src="${entry.imgSrc}" alt="Profile Image" id="ppimg"><br>
-                    <p>${entry.name}</p>
-                    </div>
-                    Live in ${entry.address}<br>
-                    <span class="click-to-copy" onclick="copyToClipboard('${entry.phoneNumber}')">${entry.phoneNumber}</span><br>
-                    Blood Group ${entry.bloodGroup}<br>
-                    Total Money Donate ${entry.customFieldU} Taka<br>
-                    Last Donate Money in ${entry.customField}<br>
-                    ${timeDisplay}
-                `;
-                infoContainer.appendChild(entryDiv);
-
-                // Triggering reflow to apply the fade-in effect
-                entryDiv.offsetHeight;
-                entryDiv.style.opacity = 1;
-            });
-
-            updateAvailabilityCount(data.length);
-        }
-
-        function calculateTimeLeft(donationDate) {
-            const nextDonationDate = new Date(donationDate);
-            nextDonationDate.setMonth(nextDonationDate.getMonth() + 4);
-            const currentDate = new Date();
-            const timeLeft = nextDonationDate - currentDate;
-
-            if (timeLeft <= 0) {
-                return 0;
-            }
-
-            const monthsLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 30));
-            const daysLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-
-            return `${monthsLeft} months and ${daysLeft} days`;
-        }
-
-        function filterData() {
-            const filterText = document.getElementById('infoFilter').value.toLowerCase();
-            const availabilityCheckbox = document.getElementById('availabilityCheckbox');
-            const isAvailable = availabilityCheckbox.checked;
-
-            let filteredInfo;
-
-            if (filterType === 'bloodGroup') {
-                filteredInfo = allInfo.filter(entry => entry[filterType].toLowerCase() === filterText);
-            } else {
-                filteredInfo = allInfo.filter(entry => {
-                    const matchesSearch = entry[filterType].toLowerCase().includes(filterText);
-                    const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
-
-                    if (isAvailable) {
-                        return matchesSearch && isDonationAvailable;
-                    } else {
-                        return matchesSearch;
-                    }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+                const CACHE_NAME = 'offline-cache';
+                const offlineUrl = 'data:text/html;base64,' + btoa(\`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Offline Page</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                text-align: center;
+                                padding: 20px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div id="content">
+                            <h1>You are currently offline</h1>
+                            <p>Please check your internet connection and try again.</p>
+                        </div>
+                    </body>
+                    </html>
+                \`);
+                
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                // Add all resources needed for your website to the cache
+                                return cache.addAll([
+                                    '/',
+                                    '/index.html', // Adjust the paths accordingly
+                                    '/styles.css',
+                                    '/app.js',
+                                    // Add other resources like images, fonts, etc.
+                                ]);
+                            })
+                    );
                 });
-            }
 
-            displayInfo(filteredInfo);
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                            .catch(() => caches.match(offlineUrl))
+                    );
+                });
+            `))
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(error => {
+                    console.error('Service Worker registration failed:', error);
+                });
         }
-
-        function copyToClipboard(text) {
-            const dummyElement = document.createElement("textarea");
-            document.body.appendChild(dummyElement);
-            dummyElement.value = text;
-            dummyElement.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummyElement);
-        }
-
-        function updateAvailabilityCount(count) {
-            const availabilityCountElement = document.getElementById("availabilityCount");
-
-            if (count > 0) {
-                availabilityCountElement.textContent = `${count}`;
-            } else {
-                availabilityCountElement.textContent = "0";
-            }
-        }
-
-        document.getElementById('filterType').addEventListener('change', function () {
-            filterType = this.value;
-            filterData();
-        });
-
-        fetchUserData();
     </script>
 </body>
-
 </html>

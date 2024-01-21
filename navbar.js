@@ -56,9 +56,9 @@ async function displayUserProfile(rowIndex, navbar) {
                     addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     break;
                  case '3':
-                    addAdminButton('Admin', 'admin.html'); // Set the link for Admin 1
                     addAdminButton('Access Pro', 'admin2.html'); // Set the link for Admin 2
                     addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
+                    addAdminButton('Admin', 'admin.html'); // Set the link for Admin 1
                     break;
                 // Add more cases as needed
                 default:

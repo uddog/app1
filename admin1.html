@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="admin.css">
     <style>
         main{
             position: absolute;
@@ -25,19 +26,7 @@
             margin: 5px;
         }
 
-        /*color*/
-        .color-buttons{
-            margin-top: 100px;
-            display: flex;
-            justify-content: center;
-        }
-        .color-buttons button{
-            height: 30px;
-            width: 30px;
-            margin: 10px;
-            border-radius: 50%;
-            border: none;
-        }
+
     </style>
 </head>
 
@@ -74,25 +63,22 @@
     </div>    
     <!--NavBar End-->
 
+    <div class="ad2">
+        <a href="change_color.html"><div><ion-icon name="color-palette-outline"></ion-icon><br>Change Color</div></a>  
+        <a href="#"><div><ion-icon name="help-outline"></ion-icon><br>Coming Soon</div></a>  
+        <a href="#"><div><ion-icon name="help-outline"></ion-icon><br>Coming Soon</div></a>  
+        <a href="#"><div><ion-icon name="help-outline"></ion-icon><br>Coming Soon</div></a>  
 
-    <main>
-        <div class="div1"></div>
-        <div class="div1"></div>
-        <div class="div1"></div>
-        <div class="div1"></div>
-    </main>
+    </div>
 
-    <div class="color-buttons">
-        <button style="background-color: #3498db;" class="color-button" onclick="changeColor('#3498db')"></button>
-        <button style="background-color: #e74c3c;" class="color-button" onclick="changeColor('#e74c3c')"></button>
-        <button style="background-color: #27ae60;" class="color-button" onclick="changeColor('#27ae60')"></button>
-        <button style="background-color: #ED7D31;" class="color-button" onclick="changeColor('#ED7D31')"></button>  
-      </div>
-  
+
+
+
     
 
 <script src="navbar.js"></script>
-
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
             //color picker
             function changeColor(newColor) {
