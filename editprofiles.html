@@ -6,55 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        body{
+
+        body {
             background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: sans-serif;
         }
-        main{
-            width: 100v1;
-            height: 100vh;
-            display: grid;
-            place-items: center;
+
+        main {
+            padding: 40px 0;
         }
-        main>div{
-            backdrop-filter: blue(10px);
+
+        main>div {
+            margin: 0 auto;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
             border: 2px solid white;
             padding: 15px;
-            height: 70vh;
-            width: 80vw;
             display: flex;
             flex-direction: column;
             text-align: center;
             justify-content: center;
+            width: 300px;
         }
-        main div>h2{
+
+        main div>h2 {
             margin: 20px;
             font-size: 2rem;
         }
-        main div>p{
+
+        main div>p {
             margin: 5px;
             margin-top: 10px;
             width: 120px;
-            color: white;
+            /* color: white; */
+            color: #000;
             text-align: left;
         }
-        main div>input{
+
+        main div>input {
+            padding: 15px 23px;
+            border-radius: 8px;
+            width: 75%;
             text-align: center;
             outline: none;
             border: none;
-            background-color: transparent;
-            color: white;
-            border-bottom: 1px solid white;
-            padding: 3px;
+            background-color: rgba(255, 255, 255, 0.489);
+            /* color: white; */
+            color: black;
+            border: 1px solid white;
+            margin-top: 10px;
         }
-        main div>button{
-            height: 30px;
-            width: 100px;
+
+        main div>button {
+            padding: 10px 40px;
+            border-radius: 8px;
+            border: 0;
             margin: 20px auto;
+            background: #ffe1be;
         }
+
         /* Add some basic styling for the modals */
         .modal {
             display: none;
@@ -88,26 +104,26 @@
 
 <body>
 
+    <main>
+        <div>
+            <h2>Your Profile</h2>
+            <div id="rowData"></div>
+            <button onclick="saveChanges()">Update</button>
+        </div>
+    </main>
 
-<main>
-    <div>
-        <h2>Your Profile</h2>
-        <div id="rowData"></div>
-        <button onclick="saveChanges()">Update</button>
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            Loading...
+        </div>
     </div>
-</main>
- 
-<div id="loadingModal" class="modal">
-    <div class="modal-content">
-        Loading...
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <p>Data saved successfully!</p>
+            <button onclick="closeSuccessModal()">OK</button>
+        </div>
     </div>
-</div>
-<div id="successModal" class="modal">
-    <div class="modal-content">
-        <p>Data saved successfully!</p>
-        <button onclick="closeSuccessModal()">OK</button>
-    </div>
-</div>
 
     <script>
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
@@ -159,12 +175,12 @@
 
             // Send the updated data and row index to the Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbyvHCbyKG3P8vEhZoThBDNiRFifsIIv8cBVP44a7nH1pXECuDq8WjF4oR8hjOEs2woj/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `data=${encodeURIComponent(updatedData.join(','))}&rowIndex=${savedRowIndex}`,
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `data=${encodeURIComponent(updatedData.join(','))}&rowIndex=${savedRowIndex}`,
+                })
                 .then(response => response.text())
                 .then(responseText => {
                     console.log('Response:', responseText);

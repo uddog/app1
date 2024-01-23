@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<style>
+        @font-face {
+            font-family: anik;
+            src: url(anik.ttf);
+        }
+	/* CSS styles */
+.bloo{
+    text-align: center;
+}
+.bloo h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+#imageUpload {
+    display: block;
+}
+
+#uploadedImage {
+    max-width: 100%;
+    height: auto;
+}
+.bloo>input {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 20px;
+    font-weight: bolder;
+    background-color: var(--color);
+    font-family: anik;
+}
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+#myDiv {
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.bloo img{
+    width: 100%;
+}
+
+.bloo button{
+    border: none;
+    width: 50vw;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.bloo>p{
+    margin: 10px;
+}
+#draggable {
+            width: 200px;
+            background-color: lightblue;
+            cursor: pointer;
+            position: absolute; 
+        }
+        .inss p{
+            font-family: anik;
+            margin: 2px;
+        }
+        .inss div{
+            position: absolute;
+            text-align: center;
+        }
+        .inss .namm{
+            top: 167px;
+            margin-left: 3px;
+            font-size: 0.9rem;
+            width: 110px;
+            color: white;
+        }
+        .inss .datt{
+            top: 230px;
+            margin-left: 3px;
+            width: 110px;
+            color: rgb(255, 255, 255);
+
+        }
+        .inss .blodd{
+            top: 323px;
+            margin-left: 23px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            width: 70px;
+            color: white;
+        }
+        .inss .namm input{
+            color: white;
+            border-radius: 10px;
+            width: 100px;
+            background-color: rgba(208, 204, 204, 0);
+        }
+        .inss .datt input{
+            color: white;
+            border-radius: 10px;
+            width: 100px;
+            background-color: rgba(208, 204, 204, 0);
+        }
+        .inss .blodd input{
+            color: white;
+            border-radius: 10px;
+            width: 30px;
+            padding: 4px;
+            background-color: rgba(208, 204, 204, 0);
+        }
+
+</style>
+</head>
+<body>
+  <div class="bloo">
+
+    <h2>Blood Donar Templete</h2>
+    <div id="myDiv">
+     <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYSWMQ-q3UqsLC75r4wdorqYl_q5V62sYH7kU9y4zBLDN6b2mqO3UnPWvIZETqclJR97MezEr88hWN69kg1dOqm6IIA4=s1600">
+
+     <div id="haha" class="inss">
+        <div class="namm"><p style="font-size: 0.7rem;">রক্তদাতার নাম</p><p class="aa aa">Enter Name</p></div>
+        <div class="datt"><p style="font-size: 0.7rem;">রক্তদানের তারিখ</p><p class="aa bb">Enter Date</p></div>
+        <div class="blodd"><p class="aa cc">BG</p></div>
+     </div>
+
+    </div>
+    <p>Drag Your Photo in Position</p>
+    <input type="file" id="imageUpload" accept="image/*">
+    <button id="convertButton">Download</button>
+
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script><script>
+///content ediatble
+const editableTexts = document.querySelectorAll(".aa");
+
+editableTexts.forEach(function(editableText) {
+    editableText.addEventListener("click", handleEdit);
+    editableText.addEventListener("touchstart", handleEdit);
+});
+
+function handleEdit(event) {
+    event.stopPropagation();
+
+    const text = this.textContent;
+    const parentElement = this; // Store a reference to the parent element
+    const input = document.createElement("input");
+    input.value = text;
+    parentElement.textContent = "";
+    parentElement.appendChild(input);
+    input.focus();
+
+    input.addEventListener("blur", function() {
+        saveText();
+    });
+
+    input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            saveText();
+        }
+    });
+
+    function saveText() {
+        const newText = input.value;
+        parentElement.removeChild(input);
+        parentElement.textContent = newText;
+    }
+}
+
+
+
+    //photo upload
+     // JavaScript code
+	const imageUpload = document.getElementById("imageUpload");
+	const myDiv = document.getElementById("myDiv");
+	const convertButton = document.getElementById("convertButton");
+
+	// Handle image selection
+	imageUpload.addEventListener("change", function () {
+	    const file = this.files[0];
+	    if (file) {
+	        const reader = new FileReader();
+
+	        reader.onload = function (e) {
+	            // Set the selected image as the background image of myDiv
+	            myDiv.style.backgroundImage = `url(${e.target.result})`;
+	        };
+
+	        reader.readAsDataURL(file);
+	    } else {
+	        // Clear the background image if no file is selected
+	        myDiv.style.backgroundImage = "none";
+	    }
+	});
+
+	// Capture myDiv as an image and allow download
+
+    const divToCapture = document.getElementById("myDiv");
+const captureButton = document.getElementById("convertButton");
+
+captureButton.addEventListener("click", () => {
+    html2canvas(divToCapture).then(function (canvas) {
+        // Convert the canvas to a data URL representing a PNG image
+        const imgData = canvas.toDataURL("image/png");
+
+        // Create a temporary anchor element to trigger the download
+        const a = document.createElement("a");
+        a.href = imgData;
+        a.download = "captured_image.png";
+        a.style.display = "none";
+        document.body.appendChild(a);
+
+        // Trigger a click event on the anchor element to download the image
+        a.click();
+
+        // Remove the temporary anchor element
+        document.body.removeChild(a);
+    });
+});
+
+
+    //div position
+
+
+    const customizableDiv = document.getElementById('myDiv');
+let isDragging = false;
+let isZooming = false;
+let startX, startY;
+let initialBackgroundPositionX = 0;
+let initialBackgroundPositionY = 0;
+let initialBackgroundSize = 100;
+
+customizableDiv.addEventListener('mousedown', startDrag);
+customizableDiv.addEventListener('mousemove', drag);
+customizableDiv.addEventListener('mouseup', endDrag);
+customizableDiv.addEventListener('mouseleave', endDrag);
+customizableDiv.addEventListener('touchstart', startDrag);
+customizableDiv.addEventListener('touchmove', drag);
+customizableDiv.addEventListener('touchend', endDrag);
+customizableDiv.addEventListener('touchcancel', endDrag);
+customizableDiv.addEventListener('wheel', zoom);
+
+function startDrag(e) {
+  e.preventDefault();
+  if (e.touches && e.touches[0]) {
+    e = e.touches[0];
+  }
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  initialBackgroundPositionX = parseInt(getComputedStyle(customizableDiv).backgroundPositionX);
+  initialBackgroundPositionY = parseInt(getComputedStyle(customizableDiv).backgroundPositionY);
+}
+
+function drag(e) {
+  if (!isDragging) return;
+  if (e.touches && e.touches[0]) {
+    e = e.touches[0];
+  }
+  const currentX = e.clientX;
+  const currentY = e.clientY;
+  const diffX = currentX - startX;
+  const diffY = currentY - startY;
+
+  customizableDiv.style.backgroundPositionX = initialBackgroundPositionX + diffX + 'px';
+  customizableDiv.style.backgroundPositionY = initialBackgroundPositionY + diffY + 'px';
+}
+
+function endDrag() {
+  isDragging = false;
+}
+
+function zoom(e) {
+  if (e.deltaY < 0) {
+    // Zoom in
+    initialBackgroundSize += 10;
+  } else {
+    // Zoom out
+    initialBackgroundSize -= 10;
+  }
+
+  customizableDiv.style.backgroundSize = initialBackgroundSize + '%';
+  e.preventDefault();
+}
+
+// Handle pinch-to-zoom for mobile
+let initialDistance = 0;
+let initialZoom = 100;
+
+customizableDiv.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    initialDistance = Math.hypot(e.touches[1].pageX - e.touches[0].pageX, e.touches[1].pageY - e.touches[0].pageY);
+    initialZoom = initialBackgroundSize;
+    isZooming = true;
+  }
+});
+
+customizableDiv.addEventListener('touchmove', (e) => {
+  if (isZooming && e.touches.length === 2) {
+    const currentDistance = Math.hypot(e.touches[1].pageX - e.touches[0].pageX, e.touches[1].pageY - e.touches[0].pageY);
+    const zoomFactor = (currentDistance / initialDistance) * 100;
+    customizableDiv.style.backgroundSize = initialZoom * (zoomFactor / 100) + '%';
+  }
+});
+
+customizableDiv.addEventListener('touchend', () => {
+  isZooming = false;
+});
+
+	</script>
+</body>
+</html>

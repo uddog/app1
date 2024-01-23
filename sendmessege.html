@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit to Spreadsheet</title>
+</head>
+<body>
+
+    <h2>Submit Data to Spreadsheet</h2>
+
+    <form id="myForm">
+        <label for="dataInput">Enter Data:</label>
+        <input type="text" id="dataInput" name="dataInput" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(event.target);
+            var dataValue = formData.get("dataInput");
+
+            fetch('https://script.google.com/macros/s/AKfycbyqDk_nW72zHB2JE6kArFHweimBwF529dbq1XCX65B9QkMlynYBBE937MsGHkz-bL6omA/exec', {
+                method: 'POST',
+                body: JSON.stringify({ data: dataValue }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // handle success or error
+            });
+        });
+    </script>
+
+</body>
+</html>
