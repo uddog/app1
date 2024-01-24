@@ -8,14 +8,6 @@
     transform: translateX(-50%);
     backdrop-filter: blur(5px);
 }
-.liafnav::after{
-   content: '';
-   background-color: white;
-   width: 100%;
-   margin-top: 3px;
-   height: 1px;
-   position: absolute;
-}
 .liafnav ul { 
     width: 90vw;
     list-style: none; 
@@ -26,7 +18,7 @@
     position: relative; 
   }
   .liafnav  a {
-   color: white;
+   color: black;
     font-size: 0.9rem;
     text-decoration: none;
   }
@@ -35,12 +27,12 @@
     bottom: 0;
     content: "";
     display: block;
+    background-color: black;
     height: 2px;
     left: 50%;
     position: absolute;
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
-    background: var(--color);
   }
   .liafnav a:hover:after { 
     width: 100%; 
@@ -58,7 +50,6 @@
     text-align: center;
  }
  .udnam::first-line{
-   color: white;
     font-size: 3.5rem;
  }
  
@@ -77,24 +68,24 @@
     width: 20vw;
  }
  .udop a{
-   color: white;
     text-decoration: none;
     font-size: 0.7rem;
  }
 .udop ul div{
-    backdrop-filter: blur(5px);
+   transition: 0.5s;
+   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     text-align: center;
+    color: black;
     padding: 8px;
     width: 65px;
     border-radius: 10px;
-    border: solid 1.5px white;
  }
  .udop ul div:hover{    
    border: solid 1.5px black;
    background-color: black;
+   color: white;
  }
  .udop ion-icon{
-   color: white;
     font-size: 2.2rem;
  }
 
@@ -122,8 +113,3 @@ img {
    height: auto;
 }
 
-
-
-footer{
-
-}

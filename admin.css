@@ -1,5 +1,20 @@
+   body{
+    background-image: url(https://lh3.googleusercontent.com/drive-viewer/AEYmBYRCG3X9fpJl9Gbx9uAMgIwTiYhHs-1C7e3hHZfZ_23UD0_zGMcd-tAk8ik0ZZUm-vWe99VQVbwiWRxUeI5XKiX0uoqltA=s1600);
+   }
+   header{
+    background-color: rgba(0, 0, 0, 0.514);
+    backdrop-filter: blur(5px);
+   }
+   .sidebar{
+    background-color: rgba(0, 0, 0, 0.514);
+    color: white;
+   }
+   .bio-section{
+    border: 0.5px solid white;
+   }
    
-    /*for main content */
+   
+   /*for main content */
         .ad2 {
         width: 95vw;
         position: absolute;
