@@ -1,41 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit to Spreadsheet</title>
+    <title>Add Data to Column V</title>
+    <link rel="stylesheet" href="style_dataentry.css">
+    <style>
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 999;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+
+        /* Loading Styles */
+        #loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 999;
+        }
+    </style>
 </head>
-<body>
 
-    <h2>Submit Data to Spreadsheet</h2>
+<body onclick="closePopup()">
 
-    <form id="myForm">
-        <label for="dataInput">Enter Data:</label>
-        <input type="text" id="dataInput" name="dataInput" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="bod">
+        <div class="man">
+            <h2>Send Messege To Everyone</h2>
+            <input type="text" id="inputData" placeholder="Messege">
+            <button onclick="sendDataToScript()">Send</button>
+        </div>
+    </div>
+
+
+    <!-- Popup Div -->
+    <div id="successPopup" class="popup">
+        <p>Messege Sent Successfully</p>
+    </div>
+
+    <!-- Overlay for Popup -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Loading Div -->
+    <div id="loading" class="popup">
+        <p>Loading...</p>
+    </div>
 
     <script>
-        document.getElementById("myForm").addEventListener("submit", function (event) {
-            event.preventDefault();
+        function sendDataToScript() {
+            const inputData = document.getElementById('inputData').value;
 
-            var formData = new FormData(event.target);
-            var dataValue = formData.get("dataInput");
+            // Display loading
+            document.getElementById('loading').style.display = 'block';
 
-            fetch('https://script.google.com/macros/s/AKfycbyqDk_nW72zHB2JE6kArFHweimBwF529dbq1XCX65B9QkMlynYBBE937MsGHkz-bL6omA/exec', {
+            // Send the input data to the Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbzQexQ3gB6OfhZPWju7ACKxof7J3BbONQLOVh91qd6HYHCQNCdlOXkjejVaiBYb2Z3F/exec', {
                 method: 'POST',
-                body: JSON.stringify({ data: dataValue }),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `inputData=${encodeURIComponent(inputData)}`,
             })
             .then(response => response.text())
-            .then(data => {
-                console.log(data); // handle success or error
+            .then(responseText => {
+                console.log('Response:', responseText);
+                openPopup();
+            })
+            .catch(error => {
+                console.error('Error adding data:', error);
+                alert('Error adding data. Check the console for details.');
+            })
+            .finally(() => {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
             });
-        });
-    </script>
+        }
 
+        function openPopup() {
+            document.getElementById('successPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('successPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
 </body>
+
 </html>

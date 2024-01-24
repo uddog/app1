@@ -101,11 +101,11 @@ nav img {
 }
 .bio-section {
     padding: 3px;
-    background-color: var(--color); /* Darker shade of orange */
     border-radius: 8px;
     margin-top: 5px;
     text-align: center;
     width: 40vw;
+    background-color: var(--color);
     position: fixed;
     right: 5px;
     top: 8vh;
@@ -131,8 +131,8 @@ nav img {
     padding: 20px;
     border: 1px solid #ccc;
     z-index: 2;
-    backdrop-filter: blur(10px);
     text-align: center;
+    background-color: var(--color);
     color: var(--text);
 }
 .popup button{
@@ -144,7 +144,7 @@ nav img {
     width: 35px;
     margin: 4px;
     font-size: 1rem;
-    border: 0.5px solid white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: transparent;
 }
 .popup button:hover{
