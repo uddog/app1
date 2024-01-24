@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send SMS</title>
+    <link rel="stylesheet" href="style_dataentry.css">
+    <style>
+        #loadingModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #loadingModalContent {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #successMessage {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bod">
+
+  <main class="man">
+    <h2>Send SMS to UDDOG INBOX</h2>
+    <div id="successMessage">
+        Send successful!
+    </div>
+    <form id="dataForm">
+        <input autocomplete="off" placeholder="Messege Title" type="text" id="dataInput1" name="dataInput1" required>
+        <input autocomplete="off" placeholder="Messege Body" type="text" id="dataInput2" name="dataInput2" required>
+        <button type="button" onclick="addData()">Add Data</button>
+    </form>
+
+</main>
+    <div id="loadingModal">
+        <div id="loadingModalContent">
+            Loading...
+        </div>
+    </div>
+
+
+    <script>
+        function addData() {
+            const dataInput1 = document.getElementById('dataInput1').value.trim();
+            const dataInput2 = document.getElementById('dataInput2').value.trim();
+
+            // Check if input fields are not empty
+            if (dataInput1 === '' || dataInput2 === '') {
+                alert('Please fill in both message title and body.');
+                return;
+            }
+
+            // Show loading modal
+            document.getElementById('loadingModal').style.display = 'flex';
+
+            // Send the data to the Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbwOcNn5FJn-CkuAU90bqgctA6TAf8nNk_05Tp_LkwUIb3zI4_8HI1uaw_tIZ4Yz0ONS/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `data1=${encodeURIComponent(dataInput1)}&data2=${encodeURIComponent(dataInput2)}`,
+                })
+                .then(response => response.text())
+                .then(responseText => {
+                    console.log('Response:', responseText);
+                    // Handle success if needed
+                    // Show success message
+                    document.getElementById('successMessage').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error adding data:', error);
+                    // Handle error if needed
+                })
+                .finally(() => {
+                    // Hide loading modal
+                    document.getElementById('loadingModal').style.display = 'none';
+                });
+        }
+    </script>
+
+</body>
+
+</html>
