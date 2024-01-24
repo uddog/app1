@@ -130,7 +130,7 @@
                         label.textContent = `${headerRowData[index]} -`;
                         rowDataContainer.appendChild(label);
 
-                        if (index >= 9 && index <= 15) {
+                        if (index >= 9 && index <= 16) {
                             const selectBox = document.createElement('select');
                             selectBox.id = `dropdownSelect${index}`;
                             selectBox.style.width = '100%';
@@ -168,7 +168,7 @@
                                     $(`#dropdownSelect${index}`).val(previousValue).trigger('change');
                                 }
                             });
-                        } else if (index === 7) {
+                        } else if (index === 8) {
                             const dateInputBox = document.createElement('input');
                             dateInputBox.type = 'date';
                             dateInputBox.value = rowData[index].trim();

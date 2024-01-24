@@ -39,7 +39,7 @@ async function displayUserProfile(rowIndex, navbar) {
 
             const bioSection = document.getElementById('bioSection');
             const userName = userRow[4];
-            const bloodGroup = userRow[8].trim();
+            const bloodGroup = userRow[9].trim();
             const address = userRow[11].trim();
             const balance = userRow[20].trim();
             const additionalValue = userRow[27].trim(); // Assuming column AB is at index 27
