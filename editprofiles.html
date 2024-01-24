@@ -5,71 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="editprofile.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
 
-        body {
-            background-image: url(https://i.pinimg.com/564x/2c/5d/ef/2c5def7d7cb3d4d9d534ec3dd22041b1.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: sans-serif;
-        }
-
-        main {
-            padding: 40px 0;
-        }
-
-        main>div {
-            margin: 0 auto;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 2px solid white;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            justify-content: center;
-            width: 300px;
-        }
-
-        main div>h2 {
-            margin: 20px;
-            font-size: 2rem;
-        }
-
-        main div>p {
-            margin: 5px;
-            margin-top: 10px;
-            width: 120px;
-            /* color: white; */
-            color: #000;
-            text-align: left;
-        }
-
-        main div>input {
-            padding: 15px 23px;
-            border-radius: 8px;
-            width: 75%;
-            text-align: center;
-            outline: none;
-            border: none;
-            background-color: rgba(255, 255, 255, 0.489);
-            /* color: white; */
-            color: black;
-            border: 1px solid white;
-            margin-top: 10px;
-        }
-
-        main div>button {
-            padding: 10px 40px;
-            border-radius: 8px;
-            border: 0;
-            margin: 20px auto;
-            background: #ffe1be;
-        }
+       
 
         /* Add some basic styling for the modals */
         .modal {
@@ -104,6 +47,41 @@
 
 <body>
 
+
+
+    
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <button onclick="logout()">Yes</button>
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+
+
     <main>
         <div>
             <h2>Your Profile</h2>
@@ -112,6 +90,8 @@
         </div>
     </main>
 
+
+    
     <div id="loadingModal" class="modal">
         <div class="modal-content">
             Loading...
@@ -125,6 +105,9 @@
         </div>
     </div>
 
+
+
+    <script src="navbar.js"></script>
     <script>
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
 
@@ -141,16 +124,61 @@
                 const rowDataContainer = document.getElementById('rowData');
 
                 if (rowData) {
-                    const columnsToShow = [3, 4, 5, 6, 7, 8]; // D, E, F, G, H, I
+                    const columnsToShow = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
                     columnsToShow.forEach(index => {
                         const label = document.createElement('p');
                         label.textContent = `${headerRowData[index]} -`;
                         rowDataContainer.appendChild(label);
 
-                        const inputBox = document.createElement('input');
-                        inputBox.type = 'text';
-                        inputBox.value = rowData[index].trim();
-                        rowDataContainer.appendChild(inputBox);
+                        if (index >= 9 && index <= 14) {
+                            const selectBox = document.createElement('select');
+                            selectBox.id = `dropdownSelect${index}`;
+                            selectBox.style.width = '100%';
+
+                            rowDataContainer.appendChild(selectBox);
+
+                            // Fetch options from the respective column of the CSV, skipping the first row
+                            const optionsColumnIndex = index;
+                            const options = rows.slice(1).map(row => row.split(',')[optionsColumnIndex].trim());
+                            const uniqueOptions = [...new Set(options.filter(option => option !== ''))];
+
+                            // Initialize Select2 for the dropdown with fetched options
+                            $(document).ready(function () {
+                                $(`#dropdownSelect${index}`).select2({
+                                    width: '100%',
+                                    placeholder: `Search or select an option for ${headerRowData[index]}`,
+                                    allowClear: true,
+                                    tags: true,
+                                    createTag: function (params) {
+                                        return {
+                                            id: params.term,
+                                            text: params.term,
+                                            newTag: true
+                                        };
+                                    },
+                                    data: uniqueOptions.map(option => ({
+                                        id: option,
+                                        text: option
+                                    }))
+                                });
+
+                                // Set default value based on the previous value
+                                const previousValue = rowData[index].trim();
+                                if (previousValue !== '' && uniqueOptions.includes(previousValue)) {
+                                    $(`#dropdownSelect${index}`).val(previousValue).trigger('change');
+                                }
+                            });
+                        } else if (index === 7) {
+                            const dateInputBox = document.createElement('input');
+                            dateInputBox.type = 'date';
+                            dateInputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(dateInputBox);
+                        } else {
+                            const inputBox = document.createElement('input');
+                            inputBox.type = 'text';
+                            inputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(inputBox);
+                        }
                     });
                 } else {
                     const message = document.createElement('p');
@@ -163,7 +191,7 @@
             });
 
         function saveChanges() {
-            const inputBoxes = document.querySelectorAll('#rowData input');
+            const inputBoxes = document.querySelectorAll('#rowData input, #rowData select');
             const updatedData = Array.from(inputBoxes).map(input => input.value);
 
             // Get the saved row index from localStorage
@@ -174,7 +202,7 @@
             loadingModal.style.display = 'block';
 
             // Send the updated data and row index to the Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbyvHCbyKG3P8vEhZoThBDNiRFifsIIv8cBVP44a7nH1pXECuDq8WjF4oR8hjOEs2woj/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbzdbZYyaX9TQm5IUDm3Y3aiqY8n0ZQPmrgzBfbI0HDIyaeN19qXdBY3TKowfksAjxkT/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

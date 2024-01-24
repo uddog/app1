@@ -1,82 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <style>
+    /* Add some basic styling for the dropdown */
+    .select2-container {
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
-    <div id="content">
-        <h1>Welcome to the Offline Website!</h1>
-        <!-- Your website content goes here -->
-    </div>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
-                const CACHE_NAME = 'offline-cache';
-                const offlineUrl = 'data:text/html;base64,' + btoa(\`
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Offline Page</title>
-                        <style>
-                            body {
-                                font-family: Arial, sans-serif;
-                                text-align: center;
-                                padding: 20px;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div id="content">
-                            <h1>You are currently offline</h1>
-                            <p>Please check your internet connection and try again.</p>
-                        </div>
-                    </body>
-                    </html>
-                \`);
-                
-                self.addEventListener('install', event => {
-                    event.waitUntil(
-                        caches.open(CACHE_NAME)
-                            .then(cache => {
-                                // Add all resources needed for your website to the cache
-                                return cache.addAll([
-                                    '/',
-                                    '/index.html', // Adjust the paths accordingly
-                                    '/styles.css',
-                                    '/app.js',
-                                    // Add other resources like images, fonts, etc.
-                                ]);
-                            })
-                    );
-                });
+<select id="myDropdown" class="js-example-basic-single" multiple="multiple" style="width: 300px;">
+  <option value="Option 1">Option 1</option>
+  <option value="Option 2">Option 2</option>
+  <option value="Option 3">Option 3</option>
+  <option value="Option 4">Option 4</option>
+  <option value="Option 5">Option 5</option>
+</select>
 
-                self.addEventListener('fetch', event => {
-                    event.respondWith(
-                        caches.match(event.request)
-                            .then(response => response || fetch(event.request))
-                            .catch(() => caches.match(offlineUrl))
-                    );
-                });
-            `))
-                .then(registration => {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(error => {
-                    console.error('Service Worker registration failed:', error);
-                });
+<script>
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2({
+      tags: true,
+      tokenSeparators: [',', ' '], // allows for multiple tags to be added
+      createTag: function (params) {
+        var term = $.trim(params.term);
+
+        if (term === '') {
+          return null;
         }
-    </script>
+
+        return {
+          id: term,
+          text: term,
+          newTag: true // add additional parameters
+        }
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

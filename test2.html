@@ -4,61 +4,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="navbar.css">
+    <title>Edit Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <style>
-     
-    /*for main content */
-        .ad2 {
-        width: 95vw;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-wrap: wrap;
-        padding: 7px;
-        justify-content: center;
-        border-radius: 10px; 
-    }
-   
-    .ad2 a {
-        background-color: rgb(255, 119, 0);
-        width: 30vw;
-        margin: 5px;
-        text-align: center;
-        padding: 20px;
-        text-decoration: none;
-        color: #F5F5DC; /* Text color */
-        border-radius: 5px; /* Rounded corners for buttons */
-        transition: background-color 0.3s; /* Smooth transition for hover effect */
-    }
+        /* Add some basic styling for the modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
-    .ad2 a ion-icon {
-        font-size: 4rem;
-        margin-bottom: 10px;
-        color: #F5F5DC; /* Icon color */
-    }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
 
-    .ad2 a:hover {
-        background-color: black; /* Darker background on hover */
-    }
+        #loadingModal {
+            display: none;
+        }
 
+        #successModal {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="ad2">
-            <a href="search.html"><div><ion-icon name="search-outline"></ion-icon><br>Search</div></a>  
-            <a href="blooddonation.html"><div><ion-icon name="bag-add-outline"></ion-icon><br>Add Blood Donar</div></a>  
-            <a href="donation.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Money Donar</div></a>  
-            <a href="eventsAttend.html"><div><ion-icon name="add-circle-outline"></ion-icon><br>Add Event Attendace</div></a>  
-    </div>
-    
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <main>
+        <div>
+            <h2>Your Profile</h2>
+            <div id="rowData"></div>
+            <button onclick="saveChanges()">Update</button>
+        </div>
+    </main>
 
+
+    
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            Loading...
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <p>Data saved successfully!</p>
+            <button onclick="closeSuccessModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+
+        // Get the saved row index from localStorage
+        const savedRowIndex = localStorage.getItem('rowIndex');
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n');
+                const headerRowData = rows[0].split(','); // Use row 1 data as labels
+                const rowData = savedRowIndex ? rows[savedRowIndex].split(',') : null;
+
+                const rowDataContainer = document.getElementById('rowData');
+
+                if (rowData) {
+                    const columnsToShow = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+                    columnsToShow.forEach(index => {
+                        const label = document.createElement('p');
+                        label.textContent = `${headerRowData[index]} -`;
+                        rowDataContainer.appendChild(label);
+
+                        if (index >= 9 && index <= 14) {
+                            const selectBox = document.createElement('select');
+                            selectBox.id = `dropdownSelect${index}`;
+                            selectBox.style.width = '100%';
+
+                            rowDataContainer.appendChild(selectBox);
+
+                            // Fetch options from the respective column of the CSV, skipping the first row
+                            const optionsColumnIndex = index;
+                            const options = rows.slice(1).map(row => row.split(',')[optionsColumnIndex].trim());
+                            const uniqueOptions = [...new Set(options.filter(option => option !== ''))];
+
+                            // Initialize Select2 for the dropdown with fetched options
+                            $(document).ready(function () {
+                                $(`#dropdownSelect${index}`).select2({
+                                    width: '100%',
+                                    placeholder: `Search or select an option for ${headerRowData[index]}`,
+                                    allowClear: true,
+                                    tags: true,
+                                    createTag: function (params) {
+                                        return {
+                                            id: params.term,
+                                            text: params.term,
+                                            newTag: true
+                                        };
+                                    },
+                                    data: uniqueOptions.map(option => ({
+                                        id: option,
+                                        text: option
+                                    }))
+                                });
+
+                                // Set default value based on the previous value
+                                const previousValue = rowData[index].trim();
+                                if (previousValue !== '' && uniqueOptions.includes(previousValue)) {
+                                    $(`#dropdownSelect${index}`).val(previousValue).trigger('change');
+                                }
+                            });
+                        } else if (index === 7) {
+                            const dateInputBox = document.createElement('input');
+                            dateInputBox.type = 'date';
+                            dateInputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(dateInputBox);
+                        } else {
+                            const inputBox = document.createElement('input');
+                            inputBox.type = 'text';
+                            inputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(inputBox);
+                        }
+                    });
+                } else {
+                    const message = document.createElement('p');
+                    message.textContent = 'No data found for the selected row index.';
+                    rowDataContainer.appendChild(message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching CSV data:', error);
+            });
+
+        function saveChanges() {
+            const inputBoxes = document.querySelectorAll('#rowData input, #rowData select');
+            const updatedData = Array.from(inputBoxes).map(input => input.value);
+
+            // Get the saved row index from localStorage
+            const savedRowIndex = localStorage.getItem('rowIndex');
+
+            // Show loading modal
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.style.display = 'block';
+
+            // Send the updated data and row index to the Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbzdbZYyaX9TQm5IUDm3Y3aiqY8n0ZQPmrgzBfbI0HDIyaeN19qXdBY3TKowfksAjxkT/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `data=${encodeURIComponent(updatedData.join(','))}&rowIndex=${savedRowIndex}`,
+                })
+                .then(response => response.text())
+                .then(responseText => {
+                    console.log('Response:', responseText);
+                    // Hide loading modal
+                    loadingModal.style.display = 'none';
+
+                    // Show success modal
+                    const successModal = document.getElementById('successModal');
+                    successModal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    // Hide loading modal on error
+                    loadingModal.style.display = 'none';
+                });
+        }
+
+        function closeSuccessModal() {
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

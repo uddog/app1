@@ -51,8 +51,8 @@
     line-height: 1.5rem;
 }
 .s2 p:nth-child(2){
-    border-left: 1px solid rgba(0, 0, 0, 0.527);
-    border-right: 1px solid rgba(0, 0, 0, 0.527);
+    border-left: 0.4px solid rgba(0, 0, 0, 0.527);
+    border-right: 0.4px solid rgba(0, 0, 0, 0.527);
 }
 .s3{
     margin: 30px 1px;
@@ -77,14 +77,16 @@
 .s3 p:last-child{
     border-bottom: none;
 }
+.ediki{
+    margin-bottom: 40px;
+}
 .edit{
     text-decoration: none;
-    padding: 10px 60px;
-    border-radius: 10px;
-    color: white;
+    padding: 10px 30px;
     border: none;
-    background-color: #2967e1;
-    border: 1px solid;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #2967e1;
 }
 .edit:hover{
     background: black;
@@ -93,18 +95,18 @@
 .s4{
    padding: 10px;
    margin-top: 20px;
+   margin-bottom: 20px;
 
 }
 .s4 p:nth-child(1){ 
     text-align: left;
-    margin-bottom: 10px;
     border-bottom: 1px solid;
     padding-bottom: 5px;
     font-weight: bold;
 }
 .s4 p:nth-child(2){
-    margin: 5px;
-    padding: 20px 20px;
+    padding: 20px;
+    border-bottom: 1px solid;
 }
 
 
@@ -179,6 +181,8 @@
                 const role = storedRow[2].trim();
                 const fatherName = storedRow[5].trim();
                 const address = storedRow[10].trim();
+                const gender = storedRow[12].trim();
+                const profession = storedRow[13].trim();
                 const joiningDate = storedRow[19].trim();
                 const totalDonation = storedRow[20].trim();
                 const dateOfBirth = storedRow[7].trim();
@@ -205,12 +209,16 @@
                     <div class="s3">
                         <p>Blood Group</p>
                         <p>${bloodGroup}</p>
+                        <p>Gender</p>
+                        <p>${gender}</p>
                         <p>Date of Birth</p>
                         <p>${dateOfBirth}</p>
                         <p>Father's Name</p>
                         <p>${fatherName}</p>
                         <p>Address</p>
                         <p>${address}</p>
+                        <p>Profession</p>
+                        <p>${profession}</p>
                         <p>Last Donate</p>
                         <p>${columnY}</p>
                         <p>Last Blood Donate</p>
@@ -218,11 +226,15 @@
                         <p>Joining Date</p>
                         <p>${joiningDate}</p>
                     </div>
-                    <a class="edit" href="editprofiles.html">Edit or Add</a>
                     <div class="s4">
                         <p>Message for ${name} from UDDOG</p>
                         <p>${message}</p>
                     </div>
+
+                <div class="ediki">
+                    <a class="edit" href="editprofiles.html">Edit Profile</a>                  
+                    <a class="edit" href="">Change Password</a>
+                </div>
                 `;
             }
         } catch (error) {
