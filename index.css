@@ -18,7 +18,7 @@
     position: relative; 
   }
   .liafnav  a {
-   color: black;
+    color: black;
     font-size: 0.9rem;
     text-decoration: none;
   }
@@ -45,6 +45,7 @@
     display: flex;
  }
  .udnam{
+    color: rgb(41, 39, 39);
     width: 70vw;
     font-size: 0.6rem;
     text-align: center;
@@ -75,13 +76,13 @@
    transition: 0.5s;
    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     text-align: center;
-    color: black;
+    color: rgba(0, 0, 0, 0.637);
     padding: 8px;
     width: 65px;
     border-radius: 10px;
  }
  .udop ul div:hover{    
-   background-color: black;
+   background-color: rgba(41, 37, 37, 0.799);
    color: white;
  }
  .udop ion-icon{

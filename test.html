@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <link rel="stylesheet" href="style_dataentry.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #loading {
+            display: none;
+        }
+
+        #message {
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bod">
+
+    <div class="man">
+        <h2>Change Password</h2>
+        <div id="message"></div>
+        <input autocomplete="off" placeholder="Enter New Password" type="password" id="userInput" name="userInput">
+        <br>
+        <input autocomplete="off" placeholder="Confirm New Password" type="password" id="confirmInput" name="confirmInput">
+        <br>
+        <button onclick="sendData()">Change</button>
+        <div id="loading" class="modal">
+            <div class="modal-content">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendData() {
+            // Show loading modal
+            document.getElementById('loading').style.display = 'flex';
+
+            // Retrieve input data from the input boxes
+            var userInput = document.getElementById('userInput').value;
+            var confirmInput = document.getElementById('confirmInput').value;
+
+            // Check if passwords match
+            if (userInput !== confirmInput) {
+                document.getElementById('message').innerHTML = 'Passwords do not match. Please re-enter.';
+                // Hide loading modal
+                document.getElementById('loading').style.display = 'none';
+                return;
+            }
+
+            // Check if row index is stored in local storage
+            var rowIndex = localStorage.getItem('rowIndex');
+            if (rowIndex) {
+                // Send data to the Google Apps Script
+                var scriptUrl = 'https://script.google.com/macros/s/AKfycbxuiAl6ETnMhJ8c8R2mGsdasKWRm0RO-4PQkwy4qvqUEu9WUjcsMWw4VMs3Qd9hbFs/exec';
+                var formData = new FormData();
+                formData.append('rowIndex', rowIndex);
+                formData.append('inputData', userInput);
+
+                fetch(scriptUrl, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                        // Display success or error message in the HTML
+                        document.getElementById('message').innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('message').innerHTML = 'Error occurred while changing the password.';
+                    })
+                    .finally(() => {
+                        // Hide loading modal
+                        document.getElementById('loading').style.display = 'none';
+                    });
+            } else {
+                console.error('Row Index not found in local storage.');
+                document.getElementById('message').innerHTML = 'Row Index not found in local storage.';
+                // Hide loading modal
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

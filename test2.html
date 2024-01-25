@@ -1,230 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="navbar.css">
-    <style>
-      #profilesContainer {
-            padding: 20px;
-            border-radius: 10px;
-            overflow: hidden; /* Added to prevent container from collapsing */
-        }
-
-        .section {
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            position: relative;
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid;
-        }
-
-        .section a{
-            text-decoration: none;
-        }
-        .section-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-            width: 100%;
-            color: #333;
-        }
-
-        .profile {
-            flex-wrap: wrap;
-            width: 20vw;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 10px;
-            cursor: pointer;
-            justify-content: center;
-            display: flex;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-            text-align: center;
-        }
-        .profile:hover {
-            background-color: #474747;
-        }
-
-        .profile img {
-            width: 70px;
-            border-radius: 50%;
-            margin-right: 0 auto;
-        }
-        .profile div {
-            color: black;
-        }
-
-        #searchBox {
-            z-index: 1;
-            margin-top: 10vh;
-            padding: 10px;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 90vw;
-            box-sizing: border-box;
-        }
-
-    </style>
+    <title>Input Box with Local Storage</title>
 </head>
-
 <body>
 
-    <!--NavBar Start-->
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
-    </div>
-    <!-- Main content -->
-    <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
-        </div>
-        <nav id="navbar">
-        </nav>
-    </header>
+    <label for="userInput">Enter Something:</label>
+    <input type="text" id="userInput" name="userInput">
+    <p id="rowIndexDisplay"></p>
+    <button onclick="sendData()">Send Data</button>
 
-    <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
-
-    <!-- Logout Popup -->
-    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
-    <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>    
-    <!--NavBar End-->
-
-
-
-    <input type="text" id="searchBox" placeholder="Search Column C" oninput="searchProfiles()">
-
-    <div id="profilesContainer">
-        <!-- Profile content will be dynamically generated here -->
-    </div>
-
-
-    <script src="navbar.js"></script>
     <script>
-        // Replace 'your_csv_link_here' with the actual link to your CSV file
-        const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
+        // Check if row index is stored in local storage
+        if (localStorage.getItem('rowIndex') !== null) {
+            // Retrieve and display row index
+            var rowIndex = localStorage.getItem('rowIndex');
+            document.getElementById('rowIndexDisplay').innerText = 'Row Index from Local Storage: ' + rowIndex;
+        }
 
-        fetch(csvLink)
-            .then(response => response.text())
-            .then(csvData => {
-                const profilesContainer = document.getElementById('profilesContainer');
-                const rows = csvData.split('\n');
+        function sendData() {
+            // Retrieve input data from the input box
+            var inputData = document.getElementById('userInput').value;
 
-                let sections = {};
+            // Check if row index is stored in local storage
+            var rowIndex = localStorage.getItem('rowIndex');
+            if (rowIndex) {
+                // Send data to the Google Apps Script
+                var scriptUrl = 'https://script.google.com/macros/s/AKfycbzfP31yookA_JXv-k3lQpNsoJ_FA8MlVIo0okKQt1hKjXH1uGWEDCtDN-R-yh483oxj/exec' + rowIndex + '&inputData=' + encodeURIComponent(inputData);
 
-                // Group profiles by section
-                for (let i = 1; i < rows.length; i++) {
-                    const profileData = rows[i].split(',');
-
-                    const sectionName = profileData[0];
-                    const profileDiv = document.createElement('div');
-                    profileDiv.classList.add('profile');
-
-                    // Create an image element and set its source (column B)
-                    const imgElement = document.createElement('img');
-                    imgElement.src = profileData[1]; // Assuming column B contains the image source
-                    profileDiv.appendChild(imgElement);
-
-                    // Create a div for column C content
-                    const columnCContent = document.createElement('div');
-                    columnCContent.textContent = profileData[2]; // Assuming column C contains content
-                    profileDiv.appendChild(columnCContent);
-
-                    // Create an anchor tag and set its link (column D)
-                    const anchorElement = document.createElement('a');
-                    anchorElement.href = profileData[3]; // Assuming column D contains the link
-                    anchorElement.appendChild(profileDiv);
-
-                    // Add anchor tag to the corresponding section
-                    if (!sections[sectionName]) {
-                        sections[sectionName] = {
-                            sectionElement: document.createElement('div'),
-                            hasMatchingProfile: false
-                        };
-                        sections[sectionName].sectionElement.classList.add('section');
-                        profilesContainer.appendChild(sections[sectionName].sectionElement);
-
-                        const sectionTitle = document.createElement('div');
-                        sectionTitle.classList.add('section-title');
-                        sectionTitle.textContent = sectionName;
-                        sections[sectionName].sectionElement.appendChild(sectionTitle);
-                    }
-
-                    sections[sectionName].sectionElement.appendChild(anchorElement);
-
-                    // Check if the profile matches the search term
-                    const searchTerm = document.getElementById('searchBox').value.toLowerCase();
-                    if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
-                        sections[sectionName].hasMatchingProfile = true;
-                    }
-                }
-
-                // Initially hide sections without matching profiles
-                Object.values(sections).forEach(section => {
-                    if (!section.hasMatchingProfile) {
-                        section.sectionElement.style.display = 'none';
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching CSV:', error));
-           
-           
-     function searchProfiles() {
-        const searchBox = document.getElementById('searchBox');
-        const sections = document.querySelectorAll('.section');
-
-        sections.forEach(section => {
-            const sectionTitle = section.querySelector('.section-title');
-            let showSectionTitle = false;
-
-            const profiles = section.querySelectorAll('.profile');
-            profiles.forEach(profile => {
-                const columnCContent = profile.querySelector('div:nth-child(2)'); // Assuming column C content is the second child
-                const imgElement = profile.querySelector('img');
-                const searchTerm = searchBox.value.toLowerCase();
-
-                if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
-                    profile.style.display = 'flex';
-                    showSectionTitle = true;
-                } else {
-                    profile.style.display = 'none';
-                }
-
-                // Center the image
-                imgElement.style.margin = 'auto';
-            });
-
-            // Change the display property of the profiles container
-            section.style.display = showSectionTitle ? 'flex' : 'none';
-            // Center the content of the profiles
-            section.style.justifyContent = showSectionTitle ? 'center' : 'none';
-        });
-    }
+                fetch(scriptUrl)
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            } else {
+                console.error('Row Index not found in local storage.');
+            }
+        }
     </script>
 
 </body>
-
 </html>
