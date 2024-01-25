@@ -1,4 +1,7 @@
-
+@font-face {
+   font-family: 'anik';
+   src: url(anik.ttf);
+}
 /*start*/
 .liafnav{
     position: fixed;
@@ -6,7 +9,7 @@
     left: 50%;
     padding: 4px;
     transform: translateX(-50%);
-    backdrop-filter: blur(5px);
+    z-index: 1;
 }
 .liafnav ul { 
     width: 90vw;
@@ -95,14 +98,15 @@
  /*for img slider*/
 
  .slider-container {
-   width: 95vw;
+   border-top: 1px solid ;
+   border-bottom: 1px solid;
+   display: grid;
+   place-items: center;
+   width: 100vw;
    margin: 15px auto;
-   height: 180px;
+   height: 220px;
    overflow: hidden;
-   border: 2px solid #ccc;
-   border-radius: 10px;
 }
-
 .slider {
    display: flex;
    transition: transform 0.5s ease-in-out;
@@ -113,3 +117,48 @@ img {
    height: auto;
 }
 
+/*4 BOX */
+.profile-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border-bottom: 1px solid;
+    margin: 10px;
+    padding: 5px 0px;
+}
+
+.profile {
+    border: 1px solid #ddd;
+    margin: 5px;
+    width: 40vw;
+    padding: 5px;
+    text-align: center;
+}
+
+.profile img {
+   width: 80%;
+}
+
+.profile h3 {
+  margin: 0;
+}
+.profile p {
+    font-family: 'anik';
+    padding: 0px 5px;
+    font-size: 0.7rem;
+    text-align: center;
+}
+/*for story*/
+a{
+   text-decoration: none;
+   color: white;
+}
+.forstory{
+   width: 95vw;
+   background-image: url(https://i.pinimg.com/474x/7d/ea/65/7dea65a5a2ca8ab7ddd0c4e864855b97.jpg);
+   margin: 10px auto;
+   height: 120px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

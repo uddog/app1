@@ -100,3 +100,56 @@ function resumeSlider() {
 
 fetchImageSources();
 
+//for 4 box
+async function fetchProfileData() {
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
+
+    try {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        const rows = data.split('\n').map(row => row.split(','));
+
+        const profileSection = document.getElementById("profileSection");
+
+        // Start from index 1 to skip the header row
+        rows.slice(1).forEach(row => {
+            // Check if the profile data is empty
+            const isProfileEmpty = row.slice(1, 4).every(cell => cell.trim() === '');
+
+            if (!isProfileEmpty) {
+                const profileDiv = document.createElement("div");
+                profileDiv.classList.add("profile");
+
+                // Column B contains the image URL
+                if (row[1].trim() !== '') {
+                    const profileImage = document.createElement("img");
+                    profileImage.src = row[1].trim();
+                    profileDiv.appendChild(profileImage);
+                }
+
+                // Column C contains the profile name
+                if (row[2].trim() !== '') {
+                    const profileName = document.createElement("h3");
+                    profileName.textContent = row[2].trim();
+                    profileDiv.appendChild(profileName);
+                }
+
+                // Column D contains the profile details
+                if (row[3].trim() !== '') {
+                    const profileDetails = document.createElement("p");
+                    profileDetails.textContent = row[3].trim();
+                    profileDiv.appendChild(profileDetails);
+                }
+
+                profileSection.appendChild(profileDiv);
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching profile data:', error);
+    }
+}
+
+// Call the function to fetch and display profile data
+fetchProfileData();
+
+
