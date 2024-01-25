@@ -28,8 +28,11 @@
         }
 
         .modal-content {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
             background-color: #fefefe;
-            margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
@@ -45,7 +48,7 @@
     </style>
 </head>
 
-<body>
+<body  onclick="closeSuccessModal()">
 
 
 
@@ -72,14 +75,13 @@
     <!-- Bio section -->
     <div class="bio-section" id="bioSection" style="display: none;">
     </div>
-
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
         <p>Are you sure you want to logout?</p>
-        <button onclick="logout()">Yes</button>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
         <button onclick="closeLogoutPopup()">No</button>
-    </div>    
+    </div>   
     <!--NavBar End-->
 
 
@@ -102,7 +104,6 @@
     <div id="successModal" class="modal">
         <div class="modal-content">
             <p>Data saved successfully!</p>
-            <button onclick="closeSuccessModal()">OK</button>
         </div>
     </div>
 
@@ -146,7 +147,6 @@
                             // Initialize Select2 for the dropdown with fetched options
                             $(document).ready(function () {
                                 $(`#dropdownSelect${index}`).select2({
-                                    width: '100%',
                                     placeholder: `Search or select an option for ${headerRowData[index]}`,
                                     allowClear: true,
                                     tags: true,

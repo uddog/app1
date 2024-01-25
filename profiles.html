@@ -41,6 +41,7 @@
     justify-content: center;
     margin: 20px auto;
     border-radius: 6px;
+    background-color: #ecf0f1;
     width: 75vw;
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -92,22 +93,6 @@
     background: black;
     color: white;
 }
-.s4{
-   padding: 10px;
-   margin-top: 20px;
-   margin-bottom: 20px;
-
-}
-.s4 p:nth-child(1){ 
-    text-align: left;
-    border-bottom: 1px solid;
-    padding-bottom: 5px;
-    font-weight: bold;
-}
-.s4 p:nth-child(2){
-    padding: 20px;
-    border-bottom: 1px solid;
-}
 
 
 </style>
@@ -141,9 +126,9 @@
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
         <p>Are you sure you want to logout?</p>
-        <button onclick="logout()">Yes</button>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
         <button onclick="closeLogoutPopup()">No</button>
-    </div>    
+    </div>   
     <!--NavBar End-->
     
 
@@ -226,10 +211,6 @@
                         <p>${columnZ}</p>
                         <p>Joining Date</p>
                         <p>${joiningDate}</p>
-                    </div>
-                    <div class="s4">
-                        <p>Message for ${name} from UDDOG</p>
-                        <p>${message}</p>
                     </div>
 
                 <div class="ediki">

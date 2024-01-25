@@ -48,14 +48,20 @@ async function displayUserProfile(rowIndex, navbar) {
 
             // Check the value in column AB and show the corresponding Admin button(s)
             switch (additionalValue) {
+                case '0':
+                    addAdminButton('More Option', 'admin0.html'); // Set the link for Admin 1
+                    break;
                 case '1':
+                    addAdminButton('More Option', 'admin0.html'); // Set the link for Admin 1
                     addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     break;
                 case '2':
+                    addAdminButton('More Option', 'admin0.html'); // Set the link for Admin 1
                     addAdminButton('Access Pro', 'admin2.html'); // Set the link for Admin 2
                     addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     break;
                  case '3':
+                    addAdminButton('More Option', 'admin0.html'); // Set the link for Admin 1
                     addAdminButton('Access Pro', 'admin2.html'); // Set the link for Admin 2
                     addAdminButton('Access', 'admin1.html'); // Set the link for Admin 1
                     addAdminButton('Admin', 'admin3.html'); // Set the link for Admin 1
