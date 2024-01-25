@@ -17,34 +17,8 @@
 
         body {
             margin: 0;
-        }
-
-        .profile-section {
-            display: flex;
-            flex-direction: row;
-            overflow-x: scroll;
-            scroll-snap-type: x mandatory;
-        }
-
-        .profile {
-            width: 100vw;
-            height: 100vh;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            flex-direction: column;
-            display: flex;
-            justify-content: end;
-        }
-
-        .profile p {
+            overflow: hidden;
             font-family: 'anik';
-            width: 90vw;
-            margin: 20px auto;
-            padding: 5px;
         }
 
         #backButton {
@@ -56,6 +30,33 @@
             color: white;
             cursor: pointer;
         }
+
+        .story-container {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            height: 100vh;
+        }
+
+        .profile {
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .profile p {
+            width: 90vw;
+            margin: 20px auto;
+            padding: 5px;
+        }
     </style>
 </head>
 
@@ -64,7 +65,7 @@
     <!-- Back arrow button -->
     <a href="index.html" id="backButton">&#8592;</a>
 
-    <div class="profile-section" id="profileSection"></div>
+    <div class="story-container" id="storyContainer"></div>
 
     <script>
         async function fetchProfileData() {
@@ -75,30 +76,31 @@
                 const data = await response.text();
                 const rows = data.split('\n').map(row => row.split(','));
 
-                const profileSection = document.getElementById("profileSection");
+                const storyContainer = document.getElementById("storyContainer");
 
                 // Start from index 1 to skip the header row
-                rows.slice(1).forEach(row => {
+                rows.slice(1).reverse().forEach(row => {
                     const profileDiv = document.createElement("div");
                     profileDiv.classList.add("profile");
 
                     // Column E contains the image URL for profile background
-                    const imageURL = row[4] ? row[4].trim() : ''; // Check if the value is truthy
+                    const imageURL = row[5] ? row[5].trim() : ''; // Check if the value is truthy
                     if (imageURL !== '') {
                         profileDiv.style.backgroundImage = `url(${imageURL})`;
                     }
 
                     // Column F contains additional profile details
                     const profileDetails = document.createElement("p");
-                    profileDetails.textContent = row[5] ? row[5].trim() : ''; // Check if the value is truthy
+                    profileDetails.textContent = row[6] ? row[6].trim() : ''; // Check if the value is truthy
                     profileDiv.appendChild(profileDetails);
 
-                    profileSection.appendChild(profileDiv);
+                    storyContainer.appendChild(profileDiv);
                 });
             } catch (error) {
                 console.error('Error fetching profile data:', error);
             }
         }
+
         // Call the function to fetch and display profile data
         fetchProfileData();
     </script>

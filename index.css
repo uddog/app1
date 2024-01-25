@@ -5,14 +5,16 @@
 /*start*/
 .liafnav{
     position: fixed;
-    top: 8.3vh;
+    top: 8vh;
     left: 50%;
     padding: 4px;
     transform: translateX(-50%);
     z-index: 1;
 }
 .liafnav ul { 
+   background-color: white;
     width: 90vw;
+    padding: 5px 10px;
     list-style: none; 
     display: flex;
     justify-content: space-between;
@@ -21,7 +23,8 @@
     position: relative; 
   }
   .liafnav  a {
-    color: black;
+   font-weight: bold;
+    color: rgb(105, 99, 99);
     font-size: 0.9rem;
     text-decoration: none;
   }
@@ -134,7 +137,10 @@ img {
     padding: 5px;
     text-align: center;
 }
-
+.profile a{
+   text-decoration: none;
+   color: black;
+}
 .profile img {
    width: 80%;
 }
@@ -148,8 +154,12 @@ img {
     font-size: 0.7rem;
     text-align: center;
 }
+.profile:hover{
+   background-color: #d2cbcb;
+}
+
 /*for story*/
-a{
+.aab{
    text-decoration: none;
    color: white;
 }

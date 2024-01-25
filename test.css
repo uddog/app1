@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'anik';
+    src: url(anik.ttf);
+}
+
+a {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    margin: 0;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+}
+
+.profile {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: end;
+}
+
+.profile p {
+    font-family: 'anik';
+    width: 90vw;
+    margin: 20px auto;
+    padding: 5px;
+}
+
+#backButton {
+    position: absolute;
+    top: 20px;
+    text-decoration: none;
+    left: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
