@@ -43,6 +43,8 @@ async function displayUserProfile(rowIndex, navbar) {
             const address = userRow[11].trim();
             const balance = userRow[20].trim();
             const additionalValue = userRow[27].trim(); // Assuming column AB is at index 27
+            const roleValue = userRow[15].trim(); // Assuming column P is at index 15
+
 
             bioSection.innerHTML = `<p>${userName}</p><p>Blood Group: ${bloodGroup}</p><p>Address: ${address}</p><p>Total Donate ${balance}</p>`;
 
@@ -70,6 +72,22 @@ async function displayUserProfile(rowIndex, navbar) {
                 default:
                     break;
             }
+
+            switch (roleValue) {
+                case 'Student':
+                    addAdminButton('Student', 'student.html'); // Set the link for Student
+                    break;
+                 case 'Business':
+                    addAdminButton('Business', 'business.html'); // Set the link for Student
+                    break;       
+                case 'Job':
+                    addAdminButton('Job', 'job.html'); // Set the link for Student
+                    break; 
+                // Add more cases as needed
+                default:
+                    break;
+            }
+
         } else {
             navbar.innerHTML = '<ul><li><a href="login.html">Login</a></li></ul>';
             console.error('Invalid row index:', rowIndex);

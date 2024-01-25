@@ -4,98 +4,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <style>
-        @font-face {
-            font-family: 'anik';
-            src: url(anik.ttf);
+
+       
+        /* Reset some default styles */
+        body, h1, h2, p, ul, li, button, input, select {
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
         }
 
-        .profile-section {
-            display: flex;
-            flex-direction: row;
-            overflow-x: scroll;
-            scroll-snap-type: x mandatory;
-        }
-
-        .profile {
-            width: 100vw;
-            height: 100vh;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            background-size: cover;
-            background-position: center;
-            color: white;
+        /* Header styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
             text-align: center;
-            flex-direction: column;
+        }
+
+        nav {
             display: flex;
-            justify-content: end;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .profile p {
-            font-family: 'anik';
-            width: 90vw;
-            margin: 20px auto;
-            padding: 5px;
-        }
-
-        #backButton {
-            position: absolute;
-            top: 20px;
-            text-decoration: none;
-            left: 20px;
-            font-size: 24px;
-            color: white;
+        .menu-icon {
             cursor: pointer;
         }
+
+        /* Sidebar styles */
+        #sidebar {
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: -200px;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        #sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        main {
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* Bio section styles */
+        .bio-section {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Popup styles */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Loading and success modals styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
+
+        /* Form input styles */
+        input, select {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
     </style>
 </head>
 
-<body>
+<body  onclick="closeSuccessModal()">
 
-    <!-- Back arrow button -->
-    <a href="index.html" id="backButton">&#8592;</a>
 
-    <div class="profile-section" id="profileSection"></div>
 
+    
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="inbox.html">Inbox</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>   
+    <!--NavBar End-->
+
+
+    <main>
+        <div>
+            <h2>Your Profile</h2>
+            <div id="rowData"></div>
+            <button onclick="saveChanges()">Update</button>
+        </div>
+    </main>
+
+
+    
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            Loading...
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <p>Data saved successfully!</p>
+        </div>
+    </div>
+
+
+
+    <script src="navbar.js"></script>
     <script>
-        async function fetchProfileData() {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
 
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
+        // Get the saved row index from localStorage
+        const savedRowIndex = localStorage.getItem('rowIndex');
 
-                const profileSection = document.getElementById("profileSection");
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n');
+                const headerRowData = rows[0].split(','); // Use row 1 data as labels
+                const rowData = savedRowIndex ? rows[savedRowIndex].split(',') : null;
 
-                // Start from index 1 to skip the header row
-                rows.slice(1).forEach(row => {
-                    const profileDiv = document.createElement("div");
-                    profileDiv.classList.add("profile");
+                const rowDataContainer = document.getElementById('rowData');
 
-                    // Column E contains the image URL for profile background
-                    profileDiv.style.backgroundImage = `url(${row[4].trim()})`;
+                if (rowData) {
+                    const columnsToShow = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+                    columnsToShow.forEach(index => {
+                        const label = document.createElement('p');
+                        label.textContent = `${headerRowData[index]} -`;
+                        rowDataContainer.appendChild(label);
 
-                    // Column F contains additional profile details
-                    const profileDetails = document.createElement("p");
-                    profileDetails.textContent = row[5].trim() || ''; // Use details from column F, or an empty string if not available
-                    profileDiv.appendChild(profileDetails);
+                        if (index >= 9 && index <= 16) {
+                            const selectBox = document.createElement('select');
+                            selectBox.id = `dropdownSelect${index}`;
+                            selectBox.style.width = '100%';
 
-                    profileSection.appendChild(profileDiv);
+                            rowDataContainer.appendChild(selectBox);
+
+                            // Fetch options from the respective column of the CSV, skipping the first row
+                            const optionsColumnIndex = index;
+                            const options = rows.slice(1).map(row => row.split(',')[optionsColumnIndex].trim());
+                            const uniqueOptions = [...new Set(options.filter(option => option !== ''))];
+
+                            // Initialize Select2 for the dropdown with fetched options
+                            $(document).ready(function () {
+                                $(`#dropdownSelect${index}`).select2({
+                                    placeholder: `Search or select an option for ${headerRowData[index]}`,
+                                    allowClear: true,
+                                    tags: true,
+                                    createTag: function (params) {
+                                        return {
+                                            id: params.term,
+                                            text: params.term,
+                                            newTag: true
+                                        };
+                                    },
+                                    data: uniqueOptions.map(option => ({
+                                        id: option,
+                                        text: option
+                                    }))
+                                });
+
+                                // Set default value based on the previous value
+                                const previousValue = rowData[index].trim();
+                                if (previousValue !== '' && uniqueOptions.includes(previousValue)) {
+                                    $(`#dropdownSelect${index}`).val(previousValue).trigger('change');
+                                }
+                            });
+                        } else if (index === 8) {
+                            const dateInputBox = document.createElement('input');
+                            dateInputBox.type = 'date';
+                            dateInputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(dateInputBox);
+                        } else {
+                            const inputBox = document.createElement('input');
+                            inputBox.type = 'text';
+                            inputBox.value = rowData[index].trim();
+                            rowDataContainer.appendChild(inputBox);
+                        }
+                    });
+                } else {
+                    const message = document.createElement('p');
+                    message.textContent = 'No data found for the selected row index.';
+                    rowDataContainer.appendChild(message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching CSV data:', error);
+            });
+
+        function saveChanges() {
+            const inputBoxes = document.querySelectorAll('#rowData input, #rowData select');
+            const updatedData = Array.from(inputBoxes).map(input => input.value);
+
+            // Get the saved row index from localStorage
+            const savedRowIndex = localStorage.getItem('rowIndex');
+
+            // Show loading modal
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.style.display = 'block';
+
+            // Send the updated data and row index to the Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbzdbZYyaX9TQm5IUDm3Y3aiqY8n0ZQPmrgzBfbI0HDIyaeN19qXdBY3TKowfksAjxkT/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `data=${encodeURIComponent(updatedData.join(','))}&rowIndex=${savedRowIndex}`,
+                })
+                .then(response => response.text())
+                .then(responseText => {
+                    console.log('Response:', responseText);
+                    // Hide loading modal
+                    loadingModal.style.display = 'none';
+
+                    // Show success modal
+                    const successModal = document.getElementById('successModal');
+                    successModal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    // Hide loading modal on error
+                    loadingModal.style.display = 'none';
                 });
-            } catch (error) {
-                console.error('Error fetching profile data:', error);
-            }
         }
-        // Call the function to fetch and display profile data
-        fetchProfileData();
-    </script>
 
+        function closeSuccessModal() {
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
