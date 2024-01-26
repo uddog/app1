@@ -132,7 +132,7 @@
 
 /*4 BOX */
 .profile-section {
-   min-height: 400px;
+   min-height: 200px;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
@@ -142,9 +142,9 @@
 
 .profile {
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   margin: 5px;
+   margin: 3px;
    width: 40vw;
-   padding: 5px;
+   padding: 10px;
    border-radius: 4px;
    text-align: center;
 }

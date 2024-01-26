@@ -1,63 +1,54 @@
-/* Styles for the container of all profiles */
-#csvData {
+#profilesContainer {
+    padding: 20px;
+    margin-top: 10vh;
+    border-radius: 10px;
+    overflow: hidden; /* Added to prevent container from collapsing */
+}
+
+.section {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    padding: 10px;
+    justify-content: center;
+    position: relative;
+    border: 0.5px solid rgb(172, 172, 172);
 }
 
-/* Styles for each individual profile (post) */
-.threecontent {
-    box-sizing: border-box;
-    width: 300px;
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    text-align: center;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+.section a{
+    text-decoration: none;
 }
-
-/* Hover effect for each profile */
-.threecontent:hover {
-    transform: translateY(-5px);
-}
-
-/* Styles for the profile image */
-.threecontent img {
-    width: 100%;
-    height: auto;
-    margin-bottom: 15px;
-    border-radius: 10px;
-}
-
-/* Styles for the profile name */
-.threecontent h3 {
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
     margin-bottom: 10px;
-    font-size: 1.5em;
+    text-align: center;
+    width: 100%;
     color: #333;
 }
 
-/* Styles for the additional content (paragraphs and button) */
-.threecontent p,
-.threecontent button {
-    margin-bottom: 8px;
-    color: #555;
-}
-
-/* Styles for the button */
-.threecontent button {
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
+.profile {
+    flex-wrap: wrap;
+    width: 30vw;
+    border: 1px solid #ddd;
+    margin: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    display: flex;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+.profile:hover {
+    background-color: #f9f8f8;
 }
 
-/* Hover effect for the button */
-.threecontent button:hover {
-    background-color: #c0392b;
+.profile img {
+    width: 30%;
+    border-radius: 50%;
+}
+.profile div {
+    text-align: right;
+    width: 70%;
+    color: black;
 }
