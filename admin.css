@@ -32,7 +32,7 @@
     }
 
     .ad2 a:hover {
-        background-color: black;
+        background-color: rgb(44, 37, 37);
         color: white;
     }
     .ad2 a:hover ion-icon {

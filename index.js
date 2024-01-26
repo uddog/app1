@@ -227,7 +227,7 @@ function displayData(csv) {
                 if (columnContent) {
                     const element = document.createElement(j === 10 ? 'button' : 'p');
                     if (j === 10) {
-                        element.textContent = 'Enter';
+                        element.textContent = 'Visit';
                         element.addEventListener('click', function () {
                             window.location.href = columnContent;
                         });

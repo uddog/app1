@@ -179,7 +179,7 @@ fetch(csvLink)
             sections[sectionName].sectionElement.appendChild(anchorElement);
 
             // Check if the profile matches the search term
-            if (sectionName.toLowerCase() === 'bazar' ) {
+            if (sectionName.toLowerCase() === 'service') {
                 sections[sectionName].hasMatchingProfile = true;
             }
         }
@@ -208,7 +208,7 @@ fetch(csvLink)
             const columns = row.split(',');
             const columnPValue = columns[15]; // Index 15 corresponds to column P
 
-            if (columnPValue.toLowerCase() === 'business') {
+            if (columnPValue.toLowerCase() === 'job') {
               totalStudentRows++;
             }
           });

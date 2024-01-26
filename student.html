@@ -57,10 +57,24 @@
     border-radius: 50%;
 }
 .profile div {
-    text-align: right;
+    text-align: center;
     width: 70%;
     color: black;
 }
+
+/*for counting*/
+    .count{
+    width: 85vw;
+    border: solid 1px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 10px;
+    }
+    .count p{
+        font-size: 1.2rem;
+    }
+
     </style>
 </head>
 
@@ -104,7 +118,10 @@
         <!-- Profile content will be dynamically generated here -->
     </div>
 
-
+    <div class="count">   
+         <p>Total Student Member :&#160</p>
+         <p id="totalStudentRows"></p>
+        </div>
 
     
 
@@ -175,6 +192,54 @@ fetch(csvLink)
         });
     })
     .catch(error => console.error('Error fetching CSV:', error));
+
+
+    //couny student 
+        // Function to fetch CSV data and count rows with "student" in column P
+        function fetchAndCountStudentRows(url) {
+      fetch(url)
+        .then(response => response.text())
+        .then(csvData => {
+          const rows = csvData.split('\n');
+          let totalStudentRows = 0;
+
+          // Count rows with "student" in column P
+          rows.forEach(row => {
+            const columns = row.split(',');
+            const columnPValue = columns[15]; // Index 15 corresponds to column P
+
+            if (columnPValue.toLowerCase() === 'student') {
+              totalStudentRows++;
+            }
+          });
+
+          // Display the total number of rows with "student" in column P with counting effect
+          const totalStudentRowsP = document.getElementById('totalStudentRows');
+          countUp(totalStudentRowsP, totalStudentRows, 2000); // 2000ms = 2 seconds
+        })
+        .catch(error => console.error('Error fetching CSV data:', error));
+    }
+
+    // Replace 'YOUR_GOOGLE_SHEETS_CSV_LINK' with the actual link to your Google Sheets CSV file
+    const googleSheetsCsvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+    fetchAndCountStudentRows(googleSheetsCsvLink);
+
+    // Function to perform counting animation
+    function countUp(element, endValue, duration) {
+      let start = 0;
+      const increment = endValue / (duration / 16); // 16ms per frame for a smooth animation
+
+      const animatedCount = setInterval(function () {
+        start += increment;
+        element.textContent = `${Math.round(start)}`;
+
+        if (start >= endValue) {
+          clearInterval(animatedCount);
+          element.textContent = `${endValue}`;
+        }
+      }, 16);
+    }
+
 </script>
 </body>
 

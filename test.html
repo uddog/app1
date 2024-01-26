@@ -3,143 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Website</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      background-color: #f8f8f8;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 30px 0;
-      text-align: center;
-    }
-
-    .footer-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-
-    .footer-section {
-      flex: 1;
-      margin: 20px;
-      text-align: left;
-      padding: 30px;
-      border-radius: 8px;
-      background-color: #444;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .footer-section:hover {
-      background-color: #555;
-      transform: translateY(-5px);
-    }
-
-    .footer-section h4 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      color: #ffd700;
-    }
-
-    .footer-section p {
-      font-size: 16px;
-      margin: 0 0 15px;
-      color: #ddd;
-    }
-
-    .footer-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 10px;
-    }
-
-    .footer-section a {
-      color: #ffd700;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: #fff;
-    }
-
-    .footer-bottom {
-      margin-top: 30px;
-      color: #ddd;
-    }
-
-    .social-icons a {
-      color: #ffd700;
-      font-size: 24px;
-      margin-right: 15px;
-      transition: color 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: #fff;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .footer-section {
-        flex: 100%;
-      }
-    }
-  </style>
+  <title>Google Sheets CSV Display</title>
 </head>
 <body>
 
-  <!-- Your website content goes here -->
+  <script>
+    // Function to fetch CSV data and count rows with "student" in column P
+    function fetchAndCountStudentRows(url) {
+      fetch(url)
+        .then(response => response.text())
+        .then(csvData => {
+          const rows = csvData.split('\n');
+          let totalStudentRows = 0;
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section about">
-        <h4>About Us</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Proin vel tellus vel urna semper euismod.</p>
-      </div>
-      
-      <div class="footer-section contact">
-        <h4>Contact Us</h4>
-        <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
-        <p>Phone: +1 (123) 456-7890</p>
-        <p>Address: 123 Street, City, Country</p>
-      </div>
-      
-      <div class="footer-section links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section social">
-        <h4>Follow Us</h4>
-        <div class="social-icons">
-          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; 2024 Your Company. All rights reserved. | Designed by Your Name</p>
-    </div>
-  </footer>
+          // Count rows with "student" in column P
+          rows.forEach(row => {
+            const columns = row.split(',');
+            const columnPValue = columns[15]; // Index 15 corresponds to column P
+
+            if (columnPValue.toLowerCase() === 'student') {
+              totalStudentRows++;
+            }
+          });
+
+          // Display the total number of rows with "student" in column P with counting effect
+          const totalStudentRowsP = document.getElementById('totalStudentRows');
+          countUp(totalStudentRowsP, totalStudentRows, 2000); // 2000ms = 2 seconds
+        })
+        .catch(error => console.error('Error fetching CSV data:', error));
+    }
+
+    // Replace 'YOUR_GOOGLE_SHEETS_CSV_LINK' with the actual link to your Google Sheets CSV file
+    const googleSheetsCsvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+    fetchAndCountStudentRows(googleSheetsCsvLink);
+
+    // Function to perform counting animation
+    function countUp(element, endValue, duration) {
+      let start = 0;
+      const increment = endValue / (duration / 16); // 16ms per frame for a smooth animation
+
+      const animatedCount = setInterval(function () {
+        start += increment;
+        element.textContent = `${Math.round(start)}`;
+
+        if (start >= endValue) {
+          clearInterval(animatedCount);
+          element.textContent = `${endValue}`;
+        }
+      }, 16);
+    }
+  </script>
+
+  <p id="totalStudentRows"></p>
 
 </body>
 </html>
