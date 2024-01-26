@@ -104,7 +104,7 @@
    transform: scale(1.1);
 }
 .udop ion-icon {
-   transition: 1s;
+   transition: 0.3s;
    font-size: 2.2rem;
 
 }
@@ -185,7 +185,7 @@
    background-position: center;
    background-size: cover;
    display: flex;
-   box-shadow: 0 4px 8px rgba(9, 30, 66, 0.1);
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
    justify-content: center;
    align-items: center;
    cursor: pointer;
@@ -310,7 +310,7 @@ a.sepost {
 
  
  footer {
-   background-color: rgb(92, 88, 88);
+   background-color: #333; /* Dark gray color */
    color: #fff;
    padding: 30px 0;
    text-align: center;
@@ -324,7 +324,7 @@ a.sepost {
 
  .footer-section {
    flex: 1;
-   margin: 20px;
+   margin: 10px;
    text-align: left;
    padding: 30px;
    border-radius: 8px;
@@ -340,7 +340,7 @@ a.sepost {
  .footer-section h4 {
    font-size: 24px;
    margin-bottom: 15px;
-   color: #ffd700;
+   color: rgb(255, 132, 0);
  }
 
  .footer-section p {
@@ -360,7 +360,7 @@ a.sepost {
  }
 
  .footer-section a {
-   color: #ffd700;
+   color: rgb(255, 132, 0);
    text-decoration: none;
    transition: color 0.3s ease;
  }
@@ -375,7 +375,7 @@ a.sepost {
  }
 
  .social-icons a {
-   color: #ffd700;
+   color: white;
    font-size: 24px;
    margin-right: 15px;
    transition: color 0.3s ease;
