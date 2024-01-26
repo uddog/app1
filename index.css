@@ -97,7 +97,7 @@
 }
 
 .udop ul div:hover {
-   background-color: #292525;
+   background-color: #333; /* Dark gray background */
    color: white;
 }
 .udop ul div:hover ion-icon{
@@ -189,19 +189,11 @@
    justify-content: center;
    align-items: center;
    cursor: pointer;
+   background: linear-gradient(90deg, #4285f4, #34a853); /* Example gradient colors */
    border: none;
    outline: none;
-   color: #2c3e50; /* Dark grayish-blue text color */
+   color: white; /* Dark grayish-blue text color */
 }
-
-.forstory:hover {
-   transition: 0.5s;
-   background-color: #34495e; /* Darker blue color on hover */
-   color: #ffffff; /* White text color on hover */
-}
-
-
-
 /*for psot*/
 
 /* Styles for the container of all profiles */

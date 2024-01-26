@@ -1,19 +1,4 @@
-   body{
-    background-image: url(https://lh3.googleusercontent.com/drive-viewer/AEYmBYRCG3X9fpJl9Gbx9uAMgIwTiYhHs-1C7e3hHZfZ_23UD0_zGMcd-tAk8ik0ZZUm-vWe99VQVbwiWRxUeI5XKiX0uoqltA=s1600);
-   }
-   header{
-    background-color: rgba(0, 0, 0, 0.514);
-    backdrop-filter: blur(5px);
-   }
-   .sidebar{
-    background-color: rgba(0, 0, 0, 0.514);
-    color: white;
-   }
-   .bio-section{
-    border: 0.5px solid white;
-   }
-   
-   
+ 
    /*for main content */
         .ad2 {
         width: 95vw;
@@ -31,12 +16,11 @@
     .ad2 a {
         width: 30vw;
         margin: 5px;
-        border: 2px solid white;
-        backdrop-filter: blur(10px);
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         text-align: center;
         padding: 20px;
         text-decoration: none;
-        color: #F5F5DC; /* Text color */
+        color: rgb(55, 46, 46); /* Text color */
         border-radius: 5px; /* Rounded corners for buttons */
         transition: background-color 0.3s; /* Smooth transition for hover effect */
     }
@@ -44,10 +28,13 @@
     .ad2 a ion-icon {
         font-size: 4rem;
         margin-bottom: 10px;
-        color: #F5F5DC; /* Icon color */
+        color: rgb(55, 46, 46); /* Text color */
     }
 
     .ad2 a:hover {
-        border: 2px solid black;
-        background-color: black; /* Darker background on hover */
+        background-color: black;
+        color: white;
+    }
+    .ad2 a:hover ion-icon {
+        color: white;
     }
