@@ -1,102 +1,117 @@
 /*start*/
-.liafnav{
-    position: fixed;
-    top: 8vh;
-    left: 50%;
-    padding: 4px;
-    transform: translateX(-50%);
-    z-index: 1;
+.liafnav {
+   position: fixed;
+   top: 6.8vh;
+   left: 50%;
+   padding: 4px;
+   transform: translateX(-50%);
+   z-index: 1;
 }
-.liafnav ul { 
+
+.liafnav ul {
    background-color: white;
-    width: 90vw;
-    padding: 5px 10px;
-    list-style: none; 
-    display: flex;
-    justify-content: space-between;
-  }
-  .liafnav li { 
-    position: relative; 
-  }
-  .liafnav  a {
+   width: 90vw;
+   padding: 5px 10px;
+   border-radius: 0px 0px 5px 5px;
+   list-style: none;
+   display: flex;
+   justify-content: space-between;
+}
+
+.liafnav li {
+   position: relative;
+}
+
+.liafnav a {
    font-weight: bold;
-    color: rgb(105, 99, 99);
-    font-size: 0.9rem;
-    text-decoration: none;
-  }
-  .liafnav  a:after {    
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: "";
-    display: block;
-    background-color: black;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
-  .liafnav a:hover:after { 
-    width: 100%; 
-    left: 0; 
-  }
- .instart{
-    justify-content: center;
-    margin-top: 15vh;
-    flex-wrap: wrap;
-    display: flex;
- }
- .udnam{
-    color: rgb(41, 39, 39);
-    width: 70vw;
-    font-size: 0.6rem;
-    text-align: center;
- }
- .udnam::first-line{
-    font-size: 3.5rem;
- }
- 
- .udop{
-    width: 90vw;
-    margin-top: 20px;
- }
- .udop ul{
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
- }
- .udop ul li{
-    margin: 15px;
-    width: 20vw;
- }
- .udop a{
-    text-decoration: none;
-    font-size: 0.7rem;
- }
-.udop ul div{
+   color: #000;
+   font-size: 0.9rem;
+   text-decoration: none;
+}
+
+.liafnav a:after {
+   background: none repeat scroll 0 0 transparent;
+   bottom: 0;
+   content: "";
+   display: block;
+   background-color: #000;
+   height: 2px;
+   left: 50%;
+   position: absolute;
+   transition: width 0.3s ease 0s, left 0.3s ease 0s;
+   width: 0;
+}
+
+.liafnav a:hover:after {
+   width: 100%;
+   left: 0;
+}
+
+.instart {
+   justify-content: center;
+   margin-top: 15vh;
+   flex-wrap: wrap;
+   display: flex;
+}
+
+.udnam {
+   color: #292727;
+   width: 70vw;
+   font-size: 0.6rem;
+   text-align: center;
+}
+
+.udnam::first-line {
+   font-size: 3.5rem;
+}
+
+.udop {
+   width: 90vw;
+   margin-top: 20px;
+}
+
+.udop ul {
+   list-style: none;
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+.udop ul li {
+   margin: 15px;
+   width: 20vw;
+}
+
+.udop a {
+   text-decoration: none;
+   font-size: 0.7rem;
+}
+
+.udop ul div {
    transition: 0.5s;
-   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.637);
-    padding: 8px;
-    width: 65px;
-    border-radius: 10px;
- }
- .udop ul div:hover{    
-   background-color: rgba(41, 37, 37, 0.799);
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   text-align: center;
+   color: rgba(0, 0, 0, 0.637);
+   padding: 8px;
+   width: 65px;
+   border-radius: 10px;
+}
+
+.udop ul div:hover {
+   background-color: #292525;
    color: white;
- }
- .udop ion-icon{
-    font-size: 2.2rem;
- }
+}
+.udop ul div:hover ion-icon{
+   transform: scale(1.1);
+   transform: 0.8s;
+}
+.udop ion-icon {
+   font-size: 2.2rem;
+}
 
- 
+/*for img slider*/
 
-
- /*for img slider*/
-
- .slider-container {
+.slider-container {
    display: grid;
    place-items: center;
    width: 100vw;
@@ -104,61 +119,66 @@
    height: 220px;
    overflow: hidden;
 }
+
 .slider {
    display: flex;
    transition: transform 0.5s ease-in-out;
 }
 
-img {
+.slider img {
    width: 100%;
    height: auto;
 }
 
 /*4 BOX */
 .profile-section {
-    min-height: 400px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 10px;
-    padding: 5px 0px;
+   min-height: 400px;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   margin: 10px;
+   padding: 5px 0px;
 }
 
 .profile {
-   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-    margin: 5px;
-    width: 40vw;
-    padding: 5px;
-    border-radius: 4px;
-    text-align: center;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   margin: 5px;
+   width: 40vw;
+   padding: 5px;
+   border-radius: 4px;
+   text-align: center;
 }
-.profile a{
+
+.profile a {
    text-decoration: none;
    color: black;
 }
+
 .profile img {
    width: 80%;
 }
 
 .profile h3 {
-  margin: 0;
+   margin: 0;
 }
+
 .profile p {
-    padding: 0px 5px;
-    font-size: 0.7rem;
-    text-align: center;
+   padding: 0px 5px;
+   font-size: 0.7rem;
+   text-align: center;
 }
-.profile:hover{
-   transform: 0.2s;
+
+.profile:hover {
    background-color: #cbcbcb;
 }
 
 /*for story*/
-.aab{
+.aab {
    text-decoration: none;
    color: black;
 }
-.forstory{
+
+.forstory {
    background-color: #e3e4eb;
    width: 95vw;
    margin: 10px auto;
@@ -166,12 +186,69 @@ img {
    background-position: center;
    background-size: cover;
    display: flex;
-   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+   box-shadow: 0 4px 8px rgba(9, 30, 66, 0.1);
    justify-content: center;
    align-items: center;
+   cursor: pointer; /* Add cursor pointer for better UX */
+   border: none; /* Remove default button border */
+   outline: none; /* Remove default button outline */
 }
-.forstory:hover{
+
+.forstory:hover {
    transition: 0.5s;
-   background-color: black;
+   background-color: #000;
    color: white;
+}
+
+
+/*for psot*/
+#csvData{
+   background-color: red;
+   margin-top: 20px;
+}
+.POST {
+   padding: 10px;
+   margin-top: 10px;
+   border-radius: 5px;
+}
+.POST img {
+   max-width: 100%;
+   height: auto;
+}
+
+
+.POST h3 {
+   font-size: 1.5em;
+   margin-bottom: 10px;
+   color: #333;
+}
+
+.POST p {
+   margin-bottom: 8px;
+}
+
+.POST a.button, .POST.button { /* Changed class name to POST */
+   display: inline-block;
+   padding: 8px 16px;
+   text-decoration: none;
+   background-color: #007BFF;
+   color: #fff;
+   border-radius: 4px;
+   transition: background-color 0.3s ease;
+}
+
+.POST a.button:hover, .POST.button:hover { /* Changed class name to POST */
+   background-color: #0056b3;
+}
+.POST .button, .POST.button { /* Changed class name to POST */
+   display: inline-block;
+   padding: 8px 16px;
+   text-decoration: none;
+   background-color: #007BFF;
+   color: #fff;
+   border-radius: 4px;
+   transition: background-color 0.3s ease;
+}
+.POST .button:hover, .POST.button:hover { /* Changed class name to POST */
+   background-color: #0056b3;
 }
