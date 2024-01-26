@@ -7,49 +7,71 @@
     <title>Post</title>
     <link rel="stylesheet" href="navbar.css">
     <style>
-        #csvData {
-            min-height: 150vh;
-            margin-top: 10vh;
-        }
+  /* Styles for the container of all profiles */
+#csvData {
+    margin-top: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 
-        .profile {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+/* Styles for each individual profile (post) */
+.profile {
+    box-sizing: border-box;
+    width: 90vw;
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
 
-        .profile img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 50%;
-        }
+/* Hover effect for each profile */
+.profile:hover {
+    transform: translateY(-5px);
+}
 
-        .profile h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #333;
-        }
+/* Styles for the profile image */
+.profile img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
 
-        .profile p {
-            margin-bottom: 8px;
-        }
+/* Styles for the profile name */
+.profile h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
 
-        .profile button {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;
-        }
+/* Styles for the additional content (paragraphs and button) */
+.profile p,
+.profile button {
+    text-align: justify;
+    margin-bottom: 8px;
+    color: #555;
+}
 
-        .profile button:hover {
-            background-color: #0056b3;
-        }
+/* Styles for the button */
+.profile button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
 
+/* Hover effect for the button */
+.profile button:hover {
+    background-color: #c0392b;
+}
         .navigation-buttons {
             margin-bottom: 20px;
             text-align: center;

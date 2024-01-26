@@ -189,57 +189,59 @@ fetchProfileData();
 //for post
 const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv';
 
-    async function fetchAndDisplayData() {
-        try {
-            const response = await fetch(csvDataURL);
-            const csvData = await response.text();
-            displayData(csvData);
-        } catch (error) {
-            console.error('Error fetching CSV data:', error);
-        }
+async function fetchAndDisplayData() {
+    try {
+        const response = await fetch(csvDataURL);
+        const csvData = await response.text();
+        displayData(csvData);
+    } catch (error) {
+        console.error('Error fetching CSV data:', error);
     }
+}
 
-    function displayData(csv) {
-        const rows = csv.split('\n');
-        const profilesContainer = document.getElementById('csvData');
+function displayData(csv) {
+    const rows = csv.split('\n');
+    const profilesContainer = document.getElementById('csvData');
 
-        const startIndex = Math.max(0, rows.length - 3);
+    const startIndex = Math.max(0, rows.length - 3);
 
-        for (let i = startIndex; i < rows.length; i++) {
-            const columns = rows[i].split(',');
+    for (let i = startIndex; i < rows.length; i++) {
+        const columns = rows[i].split(',');
 
-            const profileImageSrc = columns[7].trim();
-            if (profileImageSrc) {
-                const profileDiv = document.createElement('div');
-                profileDiv.classList.add('POST'); // Changed class name to POST
+        const profileImageSrc = columns[7].trim();
+        if (profileImageSrc) {
+            const profileDiv = document.createElement('div');
+            profileDiv.classList.add('threecontent'); // Class name 'profile'
 
-                const profileImage = document.createElement('img');
-                profileImage.src = profileImageSrc;
-                profileImage.alt = 'Profile Image';
-                profileDiv.appendChild(profileImage);
+            const profileImage = document.createElement('img');
+            profileImage.src = profileImageSrc;
+            profileImage.alt = 'Profile Image';
+            profileDiv.appendChild(profileImage);
 
-                const nameElement = document.createElement('h3');
-                nameElement.textContent = columns[8].trim();
-                profileDiv.appendChild(nameElement);
+            const nameElement = document.createElement('h3');
+            nameElement.textContent = columns[8].trim();
+            profileDiv.appendChild(nameElement);
 
-                for (let j = 9; j < columns.length; j++) {
-                    const columnContent = columns[j].trim();
-                    if (columnContent) {
-                        const element = document.createElement(j === 10 ? 'a' : 'p');
-                        if (j === 10) {
-                            element.href = columnContent;
-                            element.textContent = 'Visit Profile';
-                            element.classList.add('button', 'POST'); // Added POST class
-                        } else {
-                            element.textContent = columnContent;
-                        }
-                        profileDiv.appendChild(element);
+            for (let j = 9; j < columns.length; j++) {
+                const columnContent = columns[j].trim();
+                if (columnContent) {
+                    const element = document.createElement(j === 10 ? 'button' : 'p');
+                    if (j === 10) {
+                        element.textContent = 'Enter';
+                        element.addEventListener('click', function () {
+                            window.location.href = columnContent;
+                        });
+                    } else {
+                        element.textContent = columnContent;
                     }
+                    profileDiv.appendChild(element);
                 }
-
-                profilesContainer.appendChild(profileDiv);
             }
+
+            profilesContainer.appendChild(profileDiv);
         }
     }
+}
 
-    fetchAndDisplayData();
+fetchAndDisplayData();
+

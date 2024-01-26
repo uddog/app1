@@ -88,7 +88,6 @@
 }
 
 .udop ul div {
-   transition: 0.5s;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
    text-align: center;
    color: rgba(0, 0, 0, 0.637);
@@ -103,10 +102,11 @@
 }
 .udop ul div:hover ion-icon{
    transform: scale(1.1);
-   transform: 0.8s;
 }
 .udop ion-icon {
+   transition: 1s;
    font-size: 2.2rem;
+
 }
 
 /*for img slider*/
@@ -202,53 +202,99 @@
 
 
 /*for psot*/
-#csvData{
-   background-color: red;
-   margin-top: 20px;
+
+/* Styles for the container of all profiles */
+#csvData {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
 }
-.POST {
-   padding: 10px;
-   margin-top: 10px;
-   border-radius: 5px;
+
+/* Styles for each individual profile (post) */
+.threecontent {
+   box-sizing: border-box;
+   width: 90vw;
+   margin: 5px;
+   padding: 15px;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   text-align: center;
+   background-color: #f8f8f8;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   transition: transform 0.3s ease-in-out;
 }
-.POST img {
-   max-width: 100%;
+
+/* Hover effect for each profile */
+.threecontent:hover {
+   transform: translateY(-5px);
+}
+
+/* Styles for the profile image */
+.threecontent img {
+   width: 100%;
    height: auto;
+   margin-bottom: 15px;
+   border-radius: 10px;
 }
 
-
-.POST h3 {
-   font-size: 1.5em;
+/* Styles for the profile name */
+.threecontent h3 {
    margin-bottom: 10px;
+   font-size: 1.5em;
    color: #333;
 }
 
-.POST p {
+/* Styles for the additional content (paragraphs and button) */
+.threecontent p,
+.threecontent button {
+   text-align: justify;
    margin-bottom: 8px;
+   color: #555;
 }
 
-.POST a.button, .POST.button { /* Changed class name to POST */
-   display: inline-block;
-   padding: 8px 16px;
-   text-decoration: none;
-   background-color: #007BFF;
+/* Styles for the button */
+.threecontent button {
+   background-color: #e74c3c;
    color: #fff;
+   padding: 8px 15px;
+   border: none;
    border-radius: 4px;
-   transition: background-color 0.3s ease;
+   cursor: pointer;
+   transition: background-color 0.3s ease-in-out;
 }
 
-.POST a.button:hover, .POST.button:hover { /* Changed class name to POST */
-   background-color: #0056b3;
+/* Hover effect for the button */
+.threecontent button:hover {
+   background-color: #c0392b;
 }
-.POST .button, .POST.button { /* Changed class name to POST */
-   display: inline-block;
-   padding: 8px 16px;
-   text-decoration: none;
-   background-color: #007BFF;
-   color: #fff;
-   border-radius: 4px;
-   transition: background-color 0.3s ease;
-}
-.POST .button:hover, .POST.button:hover { /* Changed class name to POST */
-   background-color: #0056b3;
-}
+
+
+
+
+
+
+
+
+
+
+/* Style the link */
+a.sepost {
+   text-decoration: none; /* Remove underline */
+   display: inline-block; /* Make it a block-level element */
+ }
+ 
+ /* Style the button */
+ a.sepost button {
+   background-color: #4caf50; /* Set background color */
+   color: white; /* Set text color */
+   padding: 10px 15px; /* Add padding to the button */
+   border: none; /* Remove border */
+   border-radius: 5px; /* Add border-radius for rounded corners */
+   cursor: pointer; /* Add pointer cursor on hover */
+ }
+ 
+ /* Hover effect for the button */
+ a.sepost button:hover {
+   background-color: #45a049; /* Change background color on hover */
+ }
+ 

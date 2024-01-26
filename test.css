@@ -1,50 +1,63 @@
-@font-face {
-    font-family: 'anik';
-    src: url(anik.ttf);
-}
-
-a {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-body {
-    margin: 0;
-}
-
-.profile-section {
+/* Styles for the container of all profiles */
+#csvData {
     display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
-.profile {
-    width: 100vw;
-    height: 100vh;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    background-size: cover;
-    background-position: center;
-    color: white;
+/* Styles for each individual profile (post) */
+.threecontent {
+    box-sizing: border-box;
+    width: 300px;
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     text-align: center;
-    flex-direction: column;
-    display: flex;
-    justify-content: end;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
-.profile p {
-    font-family: 'anik';
-    width: 90vw;
-    margin: 20px auto;
-    padding: 5px;
+/* Hover effect for each profile */
+.threecontent:hover {
+    transform: translateY(-5px);
 }
 
-#backButton {
-    position: absolute;
-    top: 20px;
-    text-decoration: none;
-    left: 20px;
-    font-size: 24px;
-    color: white;
+/* Styles for the profile image */
+.threecontent img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+/* Styles for the profile name */
+.threecontent h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Styles for the additional content (paragraphs and button) */
+.threecontent p,
+.threecontent button {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Styles for the button */
+.threecontent button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Hover effect for the button */
+.threecontent button:hover {
+    background-color: #c0392b;
 }
