@@ -1,3 +1,4 @@
+
 /*start*/
 .liafnav {
    position: fixed;
@@ -9,7 +10,6 @@
 }
 
 .liafnav ul {
-   background-color: white;
    width: 90vw;
    padding: 5px 10px;
    border-radius: 0px 0px 5px 5px;
@@ -169,17 +169,16 @@
 }
 
 .profile:hover {
-   background-color: #cbcbcb;
+   background-color: #eaeaea46;
 }
 
 /*for story*/
 .aab {
    text-decoration: none;
-   color: black;
+   color: #3498db; /* Cool blue color */
 }
 
 .forstory {
-   background-color: #e3e4eb;
    width: 95vw;
    margin: 10px auto;
    height: 120px;
@@ -189,23 +188,27 @@
    box-shadow: 0 4px 8px rgba(9, 30, 66, 0.1);
    justify-content: center;
    align-items: center;
-   cursor: pointer; /* Add cursor pointer for better UX */
-   border: none; /* Remove default button border */
-   outline: none; /* Remove default button outline */
+   cursor: pointer;
+   border: none;
+   outline: none;
+   color: #2c3e50; /* Dark grayish-blue text color */
 }
 
 .forstory:hover {
    transition: 0.5s;
-   background-color: #000;
-   color: white;
+   background-color: #34495e; /* Darker blue color on hover */
+   color: #ffffff; /* White text color on hover */
 }
+
 
 
 /*for psot*/
 
 /* Styles for the container of all profiles */
 #csvData {
+   margin-top: 20px;
    display: flex;
+   min-height: 100vh;
    flex-wrap: wrap;
    justify-content: space-around;
 }
@@ -219,7 +222,6 @@
    border: 1px solid #ccc;
    border-radius: 10px;
    text-align: center;
-   background-color: #f8f8f8;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    transition: transform 0.3s ease-in-out;
 }
@@ -279,6 +281,7 @@
 
 /* Style the link */
 a.sepost {
+   margin: 20px;
    text-decoration: none; /* Remove underline */
    display: inline-block; /* Make it a block-level element */
  }
@@ -298,3 +301,92 @@ a.sepost {
    background-color: #45a049; /* Change background color on hover */
  }
  
+
+
+
+
+
+ /*footer*/
+
+ 
+ footer {
+   background-color: rgb(92, 88, 88);
+   color: #fff;
+   padding: 30px 0;
+   text-align: center;
+ }
+
+ .footer-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+ }
+
+ .footer-section {
+   flex: 1;
+   margin: 20px;
+   text-align: left;
+   padding: 30px;
+   border-radius: 8px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+   transition: background-color 0.3s ease, transform 0.3s ease;
+ }
+
+ .footer-section:hover {
+   background-color: #555;
+   transform: translateY(-5px);
+ }
+
+ .footer-section h4 {
+   font-size: 24px;
+   margin-bottom: 15px;
+   color: #ffd700;
+ }
+
+ .footer-section p {
+   font-size: 0.9rem;
+   margin: 0 0 15px;
+   color: #ddd;
+ }
+
+ .footer-section ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+ }
+
+ .footer-section ul li {
+   margin-bottom: 10px;
+ }
+
+ .footer-section a {
+   color: #ffd700;
+   text-decoration: none;
+   transition: color 0.3s ease;
+ }
+
+ .footer-section a:hover {
+   color: #fff;
+ }
+
+ .footer-bottom {
+   margin-top: 30px;
+   color: #ddd;
+ }
+
+ .social-icons a {
+   color: #ffd700;
+   font-size: 24px;
+   margin-right: 15px;
+   transition: color 0.3s ease;
+ }
+
+ .social-icons a:hover {
+   color: #fff;
+ }
+
+ @media only screen and (max-width: 600px) {
+   .footer-section {
+     flex: 100%;
+   }
+ }

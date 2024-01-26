@@ -3,105 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image to Base85 and Base85 to Image Converter</title>
+  <title>Your Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f8f8f8;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .footer-section {
+      flex: 1;
+      margin: 20px;
+      text-align: left;
+      padding: 30px;
+      border-radius: 8px;
+      background-color: #444;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .footer-section:hover {
+      background-color: #555;
+      transform: translateY(-5px);
+    }
+
+    .footer-section h4 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+
+    .footer-section p {
+      font-size: 16px;
+      margin: 0 0 15px;
+      color: #ddd;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section a {
+      color: #ffd700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      color: #ddd;
+    }
+
+    .social-icons a {
+      color: #ffd700;
+      font-size: 24px;
+      margin-right: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .footer-section {
+        flex: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <input type="file" id="imageInput" accept="image/*">
-  <button onclick="convertToBase85()">Convert to Base85</button>
-  <button onclick="copyToClipboard()">Copy Base85 to Clipboard</button>
-  <textarea id="base85Text" rows="10" cols="30" readonly></textarea>
 
-  <br>
+  <!-- Your website content goes here -->
 
-  <textarea id="base85Input" rows="10" cols="30" placeholder="Enter Base85 text"></textarea>
-  <button onclick="convertToImage()">Convert to Image</button>
-  <img id="outputImage" alt="Output Image">
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h4>About Us</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Proin vel tellus vel urna semper euismod.</p>
+      </div>
+      
+      <div class="footer-section contact">
+        <h4>Contact Us</h4>
+        <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
+        <p>Phone: +1 (123) 456-7890</p>
+        <p>Address: 123 Street, City, Country</p>
+      </div>
+      
+      <div class="footer-section links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section social">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2024 Your Company. All rights reserved. | Designed by Your Name</p>
+    </div>
+  </footer>
 
-  <script>
-    function convertToBase85() {
-      const input = document.getElementById('imageInput');
-      const base85Text = document.getElementById('base85Text');
-
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const base85String = encodeBase85(new Uint8Array(e.target.result));
-          base85Text.value = base85String;
-        };
-        reader.readAsArrayBuffer(file);
-      } else {
-        alert('Please select an image first.');
-      }
-    }
-
-    function copyToClipboard() {
-      const base85Text = document.getElementById('base85Text');
-      base85Text.select();
-      document.execCommand('copy');
-      alert('Base85 text copied to clipboard!');
-    }
-
-    function convertToImage() {
-      const base85Input = document.getElementById('base85Input').value;
-      const outputImage = document.getElementById('outputImage');
-
-      if (base85Input) {
-        const binaryArray = decodeBase85(base85Input);
-        const blob = new Blob([binaryArray], { type: 'image/jpeg' });
-        const imageUrl = URL.createObjectURL(blob);
-        outputImage.src = imageUrl;
-      } else {
-        alert('Please enter Base85 text first.');
-      }
-    }
-
-    function encodeBase85(bytes) {
-      const charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
-      let result = '';
-      let value = 0;
-      let bits = 0;
-
-      for (let i = 0; i < bytes.length; i++) {
-        value = (value << 8) | bytes[i];
-        bits += 8;
-
-        while (bits >= 5) {
-          result += charSet[(value >>> (bits - 5)) & 0x1F];
-          bits -= 5;
-        }
-      }
-
-      if (bits > 0) {
-        result += charSet[(value << (5 - bits)) & 0x1F];
-      }
-
-      return result;
-    }
-
-    function decodeBase85(input) {
-      const charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
-      let result = [];
-      let value = 0;
-      let bits = 0;
-
-      for (let i = 0; i < input.length; i++) {
-        const charIndex = charSet.indexOf(input[i]);
-        if (charIndex === -1) {
-          continue;
-        }
-
-        value = (value << 5) | charIndex;
-        bits += 5;
-
-        while (bits >= 8) {
-          result.push((value >>> (bits - 8)) & 0xFF);
-          bits -= 8;
-        }
-      }
-
-      return new Uint8Array(result);
-    }
-  </script>
 </body>
 </html>
