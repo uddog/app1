@@ -70,7 +70,7 @@ function initImageSlider() {
         if (!isTouching) {
             slide(1);
         }
-    }, 2000);
+    }, 4000);  //time
 }
 
 function slide(direction) {
@@ -95,11 +95,13 @@ function resumeSlider() {
         if (!isTouching) {
             slide(1);
         }
-    }, 2000);
+    }, 4000);
 }
 
 fetchImageSources();
 
+
+//4 box
 async function fetchProfileData() {
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
 
@@ -120,9 +122,10 @@ async function fetchProfileData() {
                 profileDiv.classList.add("profile");
 
                 // Column E contains the href (link) for the profile
-                if (row[4].trim() !== '') {
+                const hrefValue = row[4].trim();
+                if (hrefValue !== '') {
                     const profileLink = document.createElement("a");
-                    profileLink.href = row[4].trim();
+                    profileLink.href = hrefValue;
 
                     // Column B contains the image URL
                     if (row[1].trim() !== '') {
@@ -143,9 +146,33 @@ async function fetchProfileData() {
                         const profileDetails = document.createElement("p");
                         profileDetails.textContent = row[3].trim();
                         profileLink.appendChild(profileDetails);
+
+                        profileDiv.appendChild(profileLink);
+                        profileSection.appendChild(profileDiv);
+                    }
+                } else {
+                    // If href is empty, create profile without anchor tag
+                    // Column B contains the image URL
+                    if (row[1].trim() !== '') {
+                        const profileImage = document.createElement("img");
+                        profileImage.src = row[1].trim();
+                        profileDiv.appendChild(profileImage);
                     }
 
-                    profileDiv.appendChild(profileLink);
+                    // Column C contains the profile name
+                    if (row[2].trim() !== '') {
+                        const profileName = document.createElement("h3");
+                        profileName.textContent = row[2].trim();
+                        profileDiv.appendChild(profileName);
+                    }
+
+                    // Column D contains the profile details
+                    if (row[3].trim() !== '') {
+                        const profileDetails = document.createElement("p");
+                        profileDetails.textContent = row[3].trim();
+                        profileDiv.appendChild(profileDetails);
+                    }
+
                     profileSection.appendChild(profileDiv);
                 }
             }
@@ -157,4 +184,3 @@ async function fetchProfileData() {
 
 // Call the function to fetch and display profile data
 fetchProfileData();
-
