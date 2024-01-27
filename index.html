@@ -50,7 +50,7 @@
             <li><a href="education.html">শিক্ষা</a></li>
             <li><a href="transport.html">পরিবহন</a></li>
             <li><a href="bazar.html">বাজার</a></li>
-            <li><a href="emergency.html">ইমার্জেন্সি সেবা</a></li>
+            <li><a href="#fot">উদ্যোগ</a></li>
         </ul>
     </div>
     
@@ -67,7 +67,7 @@
             <li><a href="education.html"><div><ion-icon name="book-outline"></ion-icon><br>শিক্ষা</div></a></li>
             <li><a href="transport.html"><div><ion-icon name="car-outline"></ion-icon><br>পরিবহন</div></a></li>         
             <li><a href="bazar.html"><div><ion-icon name="storefront-outline"></ion-icon><br>বাজার</div></a></li>
-            <li><a href="emergency.html"><div><ion-icon name="medical-outline"></ion-icon><br>ইমার্জেন্সি</div></a></li>
+            <li><a href="emergency.html"><div id="emmer"><ion-icon name="medical-outline"></ion-icon><br>ইমার্জেন্সি</div></a></li>
             <li><a href="admin0.html"><div><ion-icon name="apps-outline"></ion-icon><br>সেবা</div></a></li>
         </ul>
      </div>
@@ -86,10 +86,7 @@
 
     <div id="csvData"></div>
 
-    <a class="sepost" href="post.html"><button>See More</button></a>
-
-
-
+    <a  id="fot" class="sepost" href="post.html"><button>See More</button></a>
 
 
  </div>
@@ -141,6 +138,17 @@
             if (savedColor) {
                 changeColor(savedColor);
             }
+
+//scroll smooth
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
 </script>
 </body>
 

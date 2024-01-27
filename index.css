@@ -26,12 +26,14 @@
    position: relative;
 }
 
+
 .liafnav a {
    font-weight: bold;
    color: #000;
    font-size: 0.9rem;
    text-decoration: none;
 }
+
 
 .liafnav a:after {
    background: none repeat scroll 0 0 transparent;
@@ -69,7 +71,7 @@
 .udnam::first-line {
    color: rgb(255, 68, 0);
    font-family: 'font3';
-   font-size: 5rem;
+   font-size: 6rem;
 }
 
 .udop {
@@ -94,7 +96,6 @@
    text-decoration: none;
    font-size: 0.9rem;
 }
-
 .udop ul div {
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
    text-align: center;
@@ -103,8 +104,12 @@
    width: 65px;
    border-radius: 10px;
 }
+#emmer{
+   background-color: rgb(241, 68, 68);
+   color: white;
+}
 
-.udop ul div:hover {
+#emmer:hover,.udop ul div:hover {
    background-color: #333; /* Dark gray background */
    color: white;
 }
@@ -112,9 +117,8 @@
    transform: scale(1.1);
 }
 .udop ion-icon {
-   transition: 0.3s;
+   transform: 0.3s;
    font-size: 2.2rem;
-
 }
 
 /*for img slider*/
@@ -348,6 +352,7 @@ a.sepost {
 
  .footer-section p {
    font-size: 0.9rem;
+   font-family: 'font1';
    margin: 0 0 15px;
    color: #ddd;
  }
