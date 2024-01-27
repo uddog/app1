@@ -9,7 +9,6 @@
     <style>
 #profilesContainer {
     padding: 20px;
-    margin-top: 10vh;
     border-radius: 10px;
     overflow: hidden; /* Added to prevent container from collapsing */
 }
@@ -64,11 +63,12 @@
 
 /*for counting*/
     .count{
+    margin: 10vh auto;
+    margin-bottom: 0px ;
     width: 85vw;
     border: solid 1px;
     display: flex;
     justify-content: center;
-    margin: 0 auto;
     padding: 10px;
     }
     .count p{
@@ -112,18 +112,17 @@
     </div>    
     <!--NavBar End-->
 
-    
+    <div class="count">   
+        <p>Total Student Member :&#160</p>
+        <p id="totalStudentRows"></p>
+       </div>
+   
 
     <div id="profilesContainer">
         <!-- Profile content will be dynamically generated here -->
     </div>
 
-    <div class="count">   
-         <p>Total Student Member :&#160</p>
-         <p id="totalStudentRows"></p>
-        </div>
 
-    
 
 <script src="navbar.js"></script>
 <script>
