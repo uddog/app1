@@ -35,6 +35,7 @@ async function displayUserProfile(rowIndex, navbar) {
             const userRow = rows[rowIndex];
             const photoUrl = userRow[18];
 
+
             navbar.innerHTML = `<ul><li><img src="${photoUrl}" alt="User Photo" onclick="toggleBio()"></li></ul>`;
 
             const bioSection = document.getElementById('bioSection');
@@ -44,7 +45,8 @@ async function displayUserProfile(rowIndex, navbar) {
             const balance = userRow[20].trim();
             const additionalValue = userRow[27].trim(); // Assuming column AB is at index 27
             const roleValue = userRow[15].trim(); // Assuming column P is at index 15
-
+           
+            localStorage.setItem('userName', userName);
 
             bioSection.innerHTML = `<p>${userName}</p><p>Blood Group: ${bloodGroup}</p><p>Address: ${address}</p><p>Total Donate ${balance}</p>`;
 
@@ -142,6 +144,7 @@ function closeLogoutPopup() {
 
 function logout() {
     localStorage.removeItem('rowIndex');
+    localStorage.removeItem('userName');
     localStorage.removeItem('mainColor');
     location.reload();
 }

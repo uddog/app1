@@ -1,75 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smooth Scroll Example</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-    }
-
-    nav {
-      background-color: #333;
-      padding: 10px;
-      position: fixed;
-      width: 100%;
-      top: 0;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    nav li {
-      display: inline-block;
-      margin-right: 20px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .section {
-      height: 100vh;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .section:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="#section1">Section 1</a></li>
-      <li><a href="#section2">Section 2</a></li>
-      <li><a href="#section3">Section 3</a></li>
-    </ul>
-  </nav>
+    <!-- Placeholder <p> tag with an id -->
+    <p id="welcome-message"></p>
 
-  <div id="section1" class="section">Section 1 Content</div>
-  <div id="section2" class="section">Section 2 Content</div>
-  <div id="section3" class="section">Section 3 Content</div>
+    <script>
+        const storedUserName = localStorage.getItem('userName');
 
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+        if (storedUserName) {
+            // Get the existing <p> element by its id
+            const welcomeParagraph = document.getElementById("welcome-message");
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-  </script>
+            // Set the content of the <p> element
+            welcomeParagraph.innerText = `Welcome, ${storedUserName}!`;
+        }
+    </script>
 </body>
 </html>
