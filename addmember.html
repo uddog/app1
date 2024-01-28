@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send SMS</title>
+    <title>Add New Member</title>
     <link rel="stylesheet" href="style_dataentry.css">
     <style>
         #loadingModal {
@@ -37,6 +37,7 @@
 
   <main class="man">
     <h2>Create UDDOG ID</h2>
+    <p style="color: white; font-size: 0.7rem;" id="lastRowValue"></p>
     <div id="successMessage">
         Successfully Created
     </div>
@@ -69,7 +70,7 @@
             document.getElementById('loadingModal').style.display = 'flex';
 
             // Send the data to the Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbzeA29dgAPrFUE69s21ZSXygCY8110kCDDRr6dHgoInmSLTleHeTyHltDaHtZjjN6V2/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbztVVu-jExg54opp8R8ICigmU0QSA87hqhahAUGMW1Axj3tlZ2FNvHCkrsVXkraJOOA/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -92,6 +93,29 @@
                     document.getElementById('loadingModal').style.display = 'none';
                 });
         }
+
+
+
+//serial number
+         // Replace 'your_csv_link_here' with the provided Google Sheets CSV link
+    const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+
+// Fetch CSV data and extract the last row value from column A
+fetch(csvLink)
+    .then(response => response.text())
+    .then(data => {
+        const rows = data.split('\n');
+        
+        // Get the last row from the CSV data
+        const lastRow = rows[rows.length - 2]; // Adjusted to skip the header row
+
+        // Get the value from the first column (column A)
+        const lastRowValue = lastRow.split(',')[0];
+
+        // Display the value
+        document.getElementById('lastRowValue').textContent = 'Last user Serial Number : ' + lastRowValue;
+    })
+    .catch(error => console.error('Error fetching CSV data:', error));
     </script>
 
 </body>
