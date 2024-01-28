@@ -56,7 +56,6 @@
     border-right: 0.4px solid rgba(0, 0, 0, 0.527);
 }
 .s3{
-    margin: 30px 1px;
     text-align: left;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;   
@@ -78,21 +77,36 @@
 .s3 p:last-child{
     border-bottom: none;
 }
-.ediki{
-    margin-bottom: 40px;
-}
-.edit{
+.ediki a {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
     text-decoration: none;
-    padding: 10px 30px;
-    border: none;
-    color: black;
-    font-weight: bold;
-    border: 1px solid #2967e1;
+    color: #fff;
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-family: 'Arial', sans-serif;
 }
-.edit:hover{
-    background: black;
-    color: white;
+
+.ediki a:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+    color: #fff;
 }
+
+.ediki a:active {
+    background-color: #3e8e41;
+    border-color: #3e8e41;
+}
+
+.ediki a:focus {
+    outline: none;
+    box-shadow: 0 0 5px #4CAF50;
+}
+
+
 
 
 </style>
