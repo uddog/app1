@@ -4,78 +4,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Member</title>
-    <link rel="stylesheet" href="style_dataentry.css">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="navbar.css">
     <style>
-        #loadingModal {
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Loading Modal */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
             text-align: center;
         }
 
-        #loadingModalContent {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
         }
 
-        #successMessage {
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Additional styling for the popup button */
+        .popup button {
+            margin-top: 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .popup button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 
-<body class="bod">
+<body>
 
-  <main class="man">
-    <h2>Create UDDOG ID</h2>
-    <p style="color: white; font-size: 0.7rem;" id="lastRowValue"></p>
-    <div id="successMessage">
-        Successfully Created
+    
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="inbox.html">Inbox</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
-    <form id="dataForm">
-        <input autocomplete="off" placeholder="Create Username" type="text" id="dataInput1" name="dataInput1" required>
-        <input autocomplete="off" placeholder="Create Password" type="text" id="dataInput2" name="dataInput2" required>
-        <button type="button" onclick="addData()">Create</button>
-    </form>
-
-</main>
-    <div id="loadingModal">
-        <div id="loadingModalContent">
-            Loading...
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
         </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+
+
+    <div class="container">
+
+        <h1>Create Account</h1>
+
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="modal">
+            <div class="modal-content">
+                <div class="loader"></div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="success-message">
+            <p>Account created successfully!</p>
+        </div>
+
+        <!-- Popup -->
+        <div id="popup" class="popup">
+            <p id="popupText"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+
+        <form id="dataForm">
+            <input autocomplete="off" placeholder="Enter your username" type="text" id="dataInput1" name="dataInput1" required>
+            <input autocomplete="off" placeholder="Choose a strong password" type="password" id="dataInput2" name="dataInput2" required>
+            <button type="button" onclick="checkAndAddData()">Create Account</button>
+        </form>
     </div>
 
 
-    <script>
-        function addData() {
+    <script src="navbar.js"></script>
+<script>
+        function checkAndAddData() {
             const dataInput1 = document.getElementById('dataInput1').value.trim();
             const dataInput2 = document.getElementById('dataInput2').value.trim();
 
             // Check if input fields are not empty
             if (dataInput1 === '' || dataInput2 === '') {
-                alert('Please fill in both message title and body.');
+                showPopup('Please fill in both username and password.');
                 return;
             }
 
             // Show loading modal
             document.getElementById('loadingModal').style.display = 'flex';
 
+            // Fetch CSV data from the spreadsheet
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv')
+                .then(response => response.text())
+                .then(csvData => {
+                    // Parse CSV data
+                    const lines = csvData.split('\n');
+                    const usernames = lines.map(line => line.split(',')[1].trim()); // Assuming usernames are in column B
+
+                    // Check if the entered username already exists
+                    if (usernames.includes(dataInput1)) {
+                        showPopup('This username is not available. Please choose another.');
+                    } else {
+                        // If username is not found, proceed to send data
+                        sendData(dataInput1, dataInput2);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching CSV data:', error);
+                    // Handle error if needed
+                })
+                .finally(() => {
+                    // Hide loading modal
+                    document.getElementById('loadingModal').style.display = 'none';
+                });
+        }
+
+        function sendData(username, password) {
             // Send the data to the Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbztVVu-jExg54opp8R8ICigmU0QSA87hqhahAUGMW1Axj3tlZ2FNvHCkrsVXkraJOOA/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: `data1=${encodeURIComponent(dataInput1)}&data2=${encodeURIComponent(dataInput2)}`,
+                    body: `data1=${encodeURIComponent(username)}&data2=${encodeURIComponent(password)}`,
                 })
                 .then(response => response.text())
                 .then(responseText => {
@@ -83,6 +259,9 @@
                     // Handle success if needed
                     // Show success message
                     document.getElementById('successMessage').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000); // Hide success message after 3 seconds
                 })
                 .catch(error => {
                     console.error('Error adding data:', error);
@@ -94,28 +273,14 @@
                 });
         }
 
+        function showPopup(message) {
+            document.getElementById('popupText').innerText = message;
+            document.getElementById('popup').style.display = 'block';
+        }
 
-
-//serial number
-         // Replace 'your_csv_link_here' with the provided Google Sheets CSV link
-    const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
-
-// Fetch CSV data and extract the last row value from column A
-fetch(csvLink)
-    .then(response => response.text())
-    .then(data => {
-        const rows = data.split('\n');
-        
-        // Get the last row from the CSV data
-        const lastRow = rows[rows.length - 2]; // Adjusted to skip the header row
-
-        // Get the value from the first column (column A)
-        const lastRowValue = lastRow.split(',')[0];
-
-        // Display the value
-        document.getElementById('lastRowValue').textContent = 'Last user Serial Number : ' + lastRowValue;
-    })
-    .catch(error => console.error('Error fetching CSV data:', error));
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
     </script>
 
 </body>
