@@ -1,4 +1,4 @@
-//img slider
+/// img slider
 async function fetchImageSources() {
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
 
@@ -10,11 +10,22 @@ async function fetchImageSources() {
         const imageSlider = document.getElementById("imageSlider");
 
         // Start from index 1 to skip the first row
-        const imgSrcArray = rows.slice(1).map(row => row[0].trim()).filter(src => src !== "");
+        const imgDataArray = rows.slice(1).map(row => ({
+            src: row[0].trim(),
+            href: row[1] ? row[1].trim() : null
+        })).filter(imgData => imgData.src !== "");
 
-        imgSrcArray.forEach(imgSrc => {
+        imgDataArray.forEach(imgData => {
             const imgElement = document.createElement("img");
-            imgElement.src = imgSrc;
+            
+            // Check if there is a valid href link
+            if (imgData.href) {
+                imgElement.setAttribute("data-href", imgData.href);
+                imgElement.addEventListener("click", handleImgClick);
+                imgElement.style.cursor = "pointer";
+            }
+
+            imgElement.src = imgData.src;
             imageSlider.appendChild(imgElement);
         });
 
@@ -23,6 +34,16 @@ async function fetchImageSources() {
         console.error('Error fetching image sources:', error);
     }
 }
+
+function handleImgClick() {
+    const href = this.getAttribute("data-href");
+    if (href) {
+        window.location.href = href;
+    }
+}
+
+// ... (rest of the code remains unchanged)
+
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -101,7 +122,11 @@ function resumeSlider() {
 fetchImageSources();
 
 
-//4 box
+
+
+
+
+// 4 box
 async function fetchProfileData() {
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
 
@@ -115,36 +140,36 @@ async function fetchProfileData() {
         // Start from index 1 to skip the header row
         rows.slice(1).forEach(row => {
             // Check if the profile data is empty
-            const isProfileEmpty = row.slice(1, 4).every(cell => cell.trim() === '');
+            const isProfileEmpty = row.slice(1, 5).every(cell => cell.trim() === '');
 
             if (!isProfileEmpty) {
                 const profileDiv = document.createElement("div");
                 profileDiv.classList.add("profile");
 
-                // Column E contains the href (link) for the profile
-                const hrefValue = row[4].trim();
+                // Column F contains the href (link) for the profile
+                const hrefValue = row[5].trim();
                 if (hrefValue !== '') {
                     const profileLink = document.createElement("a");
                     profileLink.href = hrefValue;
 
-                    // Column B contains the image URL
-                    if (row[1].trim() !== '') {
+                    // Column C contains the image URL
+                    if (row[2].trim() !== '') {
                         const profileImage = document.createElement("img");
-                        profileImage.src = row[1].trim();
+                        profileImage.src = row[2].trim();
                         profileLink.appendChild(profileImage);
                     }
 
-                    // Column C contains the profile name
-                    if (row[2].trim() !== '') {
+                    // Column D contains the profile name
+                    if (row[3].trim() !== '') {
                         const profileName = document.createElement("h3");
-                        profileName.textContent = row[2].trim();
+                        profileName.textContent = row[3].trim();
                         profileLink.appendChild(profileName);
                     }
 
-                    // Column D contains the profile details
-                    if (row[3].trim() !== '') {
+                    // Column E contains the profile details
+                    if (row[4].trim() !== '') {
                         const profileDetails = document.createElement("p");
-                        profileDetails.textContent = row[3].trim();
+                        profileDetails.textContent = row[4].trim();
                         profileLink.appendChild(profileDetails);
 
                         profileDiv.appendChild(profileLink);
@@ -152,24 +177,24 @@ async function fetchProfileData() {
                     }
                 } else {
                     // If href is empty, create profile without anchor tag
-                    // Column B contains the image URL
-                    if (row[1].trim() !== '') {
+                    // Column C contains the image URL
+                    if (row[2].trim() !== '') {
                         const profileImage = document.createElement("img");
-                        profileImage.src = row[1].trim();
+                        profileImage.src = row[2].trim();
                         profileDiv.appendChild(profileImage);
                     }
 
-                    // Column C contains the profile name
-                    if (row[2].trim() !== '') {
+                    // Column D contains the profile name
+                    if (row[3].trim() !== '') {
                         const profileName = document.createElement("h3");
-                        profileName.textContent = row[2].trim();
+                        profileName.textContent = row[3].trim();
                         profileDiv.appendChild(profileName);
                     }
 
-                    // Column D contains the profile details
-                    if (row[3].trim() !== '') {
+                    // Column E contains the profile details
+                    if (row[4].trim() !== '') {
                         const profileDetails = document.createElement("p");
-                        profileDetails.textContent = row[3].trim();
+                        profileDetails.textContent = row[4].trim();
                         profileDiv.appendChild(profileDetails);
                     }
 

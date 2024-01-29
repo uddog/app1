@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AddBloodDonar</title>
+    <title>AddBloodDonor</title>
     <link rel="stylesheet" href="style_dataentry.css">
+    <link rel="stylesheet" href="universal.css">
 </head>
+
 <style>
     /* Add these styles to your existing stylesheet or create a new one */
     .modal {
@@ -19,6 +21,7 @@
         background-color: rgba(0, 0, 0, 0.5);
         justify-content: center;
         align-items: center;
+        z-index: 999;
     }
 
     .modal-content {
@@ -26,6 +29,21 @@
         padding: 20px;
         border-radius: 5px;
         text-align: center;
+    }
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 </style>
 
@@ -35,7 +53,7 @@
             <h2>Enter PIN Code</h2>
             <p id="pinErrorMessage"></p>
             <form id="pinForm">
-                <input type="password" id="pin" name="pin" placeholder="Enter PIN" required>
+                <input type="password" id="pin" name="pin" placeholder="Enter PIN" required><br>
                 <button type="button" onclick="submitPinForm()">Submit</button>
             </form>
         </div>
@@ -48,11 +66,9 @@
                 <h2>UDDOG Blood Donation</h2>
                 <p id="errorMessage"></p>
                 <form id="myForm">
-                    <input autocomplete="off" placeholder="Enter username" type="text" id="username" name="username"
-                        required><br>
+                    <input autocomplete="off" placeholder="Enter username" type="text" id="username" name="username" required><br>
                     <label for="dataInput"></label>
-                    <input autocomplete="off" placeholder="Enter patient Details" type="text" id="dataInput" name="dataInput"
-                        required>
+                    <input autocomplete="off" placeholder="Enter patient Details" type="text" id="dataInput" name="dataInput" required>
                     <button type="button" onclick="submitDataForm()">Update</button>
                 </form>
             </div>
@@ -61,145 +77,126 @@
     </div>
 
     <!-- Loading Modal -->
-    <div id="loadingModal" class="modal" style="display: none;">
+    <div id="loadingModal" class="modal">
         <div class="modal-content">
-            <p>Loading...</p>
+            <div class="loader"></div>
         </div>
     </div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-    const lastEnteredTime = localStorage.getItem('myCustomKey'); // Change here
+        document.addEventListener('DOMContentLoaded', function () {
+            const lastEnteredTime = localStorage.getItem('myCustomKey');
 
-    const pinSection = document.getElementById('pinSection');
-    const dataSection = document.getElementById('dataSection');
+            const pinSection = document.getElementById('pinSection');
+            const dataSection = document.getElementById('dataSection');
 
-    if (lastEnteredTime && Date.now() - parseInt(lastEnteredTime) < 600000) {
-        // If the user has entered the correct PIN in the last 10 minutes, hide PIN section and show data section
-        pinSection.style.display = 'none';
-        dataSection.style.display = 'block';
-    }
-});
-
-function showLoadingModal() {
-    const loadingModal = document.getElementById('loadingModal');
-    loadingModal.style.display = 'flex';
-}
-
-function hideLoadingModal() {
-    const loadingModal = document.getElementById('loadingModal');
-    loadingModal.style.display = 'none';
-}
-
-function fetchDataAndProceed(callback) {
-    showLoadingModal();
-    // Fetch data from CSV
-    fetch(
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vRatcGaxGBLX1co4pCozKTt24YBsOWuOiUYyRa37QyrY_5AoEgZq_FF5Hx_S3kv2DrAkuPB37A14Oel/pub?output=csv'
-    )
-        .then(response => response.text())
-        .then(data => {
-            hideLoadingModal();
-            callback(data);
-        })
-        .catch(error => {
-            hideLoadingModal();
-            console.error('Error fetching data:', error);
+            if (lastEnteredTime && Date.now() - parseInt(lastEnteredTime) < 600000) {
+                pinSection.style.display = 'none';
+                dataSection.style.display = 'block';
+            }
         });
-}
 
-function submitPinForm() {
-    const pinInput = document.getElementById('pin');
-    const pin = pinInput.value.trim();
-    const pinErrorMessageElement = document.getElementById('pinErrorMessage');
-    const pinSection = document.getElementById('pinSection');
-    const dataSection = document.getElementById('dataSection');
-
-    // Clear previous error message
-    pinErrorMessageElement.textContent = '';
-
-    fetchDataAndProceed(function (data) {
-        const rows = data.split('\n').map(row => row.split(','));
-
-        // Get the correct PIN from C11 cell
-        const correctPin = rows[11][2]; // Assuming C12 is the 10th row (index 9) and 3rd column (index 2)
-
-        // Check if the entered PIN is correct
-        if (pin === correctPin) {
-            // Hide the PIN entry section
-            pinSection.style.display = 'none';
-
-            // Show the data section
-            dataSection.style.display = 'block';
-
-            // Save the timestamp when the correct PIN was entered
-            localStorage.setItem('myCustomKey', Date.now().toString()); // Change here
-        } else {
-            pinErrorMessageElement.textContent = 'Incorrect PIN. Please try again.';
+        function showLoadingModal() {
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.style.display = 'flex';
         }
-    });
-}
 
-function submitDataForm() {
-    const usernameInput = document.getElementById('username');
-    const username = usernameInput.value.trim();
-    const errorMessageElement = document.getElementById('errorMessage');
+        function hideLoadingModal() {
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.style.display = 'none';
+        }
 
-    // Check if the username input is not empty
-    if (username === '') {
-        errorMessageElement.textContent = 'Please enter a username.';
-        return; // Stop the function if the input is empty
-    }
-
-    errorMessageElement.textContent = ''; // Clear previous error message
-
-    fetchDataAndProceed(function (data) {
-        const rows = data.split('\n').map(row => row.split(','));
-
-        // Get the usernames from the fourth row (index 3)
-        const usernames = rows[3];
-
-        // Check if the entered username exists in the usernames array
-        const isValid = usernames.includes(username);
-
-        if (isValid) {
+        function fetchDataAndProceed(callback) {
             showLoadingModal();
-            const dataInput = document.getElementById('dataInput').value;
-
-            // Fetch the data from the Google Apps Script endpoint
             fetch(
-                'https://script.google.com/macros/s/AKfycby5hVVIzymyz2S3KYFItQlU-qvgIVDPfsA7XiC73pFUTe6YnlSfFqWbevea8Orev6Ad/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'data=' + encodeURIComponent(dataInput) + '&username=' +
-                        encodeURIComponent(username),
-                }
+                'https://docs.google.com/spreadsheets/d/e/2PACX-1vRatcGaxGBLX1co4pCozKTt24YBsOWuOiUYyRa37QyrY_5AoEgZq_FF5Hx_S3kv2DrAkuPB37A14Oel/pub?output=csv'
             )
                 .then(response => response.text())
-                .then(updateResult => {
-                    console.log('Spreadsheet update result:', updateResult);
-
-                    // Handle the success scenario here, e.g., display a success message
-                    errorMessageElement.textContent = 'Update Successfull';
-
-                    // Clear the form fields
-                    document.getElementById('myForm').reset();
+                .then(data => {
+                    hideLoadingModal();
+                    callback(data);
                 })
                 .catch(error => {
-                    console.error('Error updating spreadsheet:', error);
-                    errorMessageElement.textContent = 'Error updating spreadsheet. Please try again.';
-                })
-                .finally(() => {
-                    hideLoadingModal(); // Hide loading modal after processing
+                    hideLoadingModal();
+                    console.error('Error fetching data:', error);
                 });
-        } else {
-            errorMessageElement.textContent = 'Wrong username. Please try again.';
         }
-    });
-}
 
+        function submitPinForm() {
+            const pinInput = document.getElementById('pin');
+            const pin = pinInput.value.trim();
+            const pinErrorMessageElement = document.getElementById('pinErrorMessage');
+            const pinSection = document.getElementById('pinSection');
+            const dataSection = document.getElementById('dataSection');
+
+            pinErrorMessageElement.textContent = '';
+
+            fetchDataAndProceed(function (data) {
+                const rows = data.split('\n').map(row => row.split(','));
+
+                const correctPin = rows[11][2];
+
+                if (pin === correctPin) {
+                    pinSection.style.display = 'none';
+                    dataSection.style.display = 'block';
+                    localStorage.setItem('myCustomKey', Date.now().toString());
+                } else {
+                    pinErrorMessageElement.textContent = 'Incorrect PIN. Please try again.';
+                }
+            });
+        }
+
+        function submitDataForm() {
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value.trim();
+            const errorMessageElement = document.getElementById('errorMessage');
+
+            if (username === '') {
+                errorMessageElement.textContent = 'Please enter a username.';
+                return;
+            }
+
+            errorMessageElement.textContent = '';
+
+            fetchDataAndProceed(function (data) {
+                const rows = data.split('\n').map(row => row.split(','));
+
+                const usernames = rows[3];
+
+                const isValid = usernames.includes(username);
+
+                if (isValid) {
+                    showLoadingModal();
+                    const dataInput = document.getElementById('dataInput').value;
+
+                    fetch(
+                        'https://script.google.com/macros/s/AKfycby5hVVIzymyz2S3KYFItQlU-qvgIVDPfsA7XiC73pFUTe6YnlSfFqWbevea8Orev6Ad/exec', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'data=' + encodeURIComponent(dataInput) + '&username=' +
+                                encodeURIComponent(username),
+                        }
+                    )
+                        .then(response => response.text())
+                        .then(updateResult => {
+                            console.log('Spreadsheet update result:', updateResult);
+                            errorMessageElement.textContent = 'Update Successful';
+                            document.getElementById('myForm').reset();
+                        })
+                        .catch(error => {
+                            console.error('Error updating spreadsheet:', error);
+                            errorMessageElement.textContent = 'Error updating spreadsheet. Please try again.';
+                        })
+                        .finally(() => {
+                            hideLoadingModal();
+                        });
+                } else {
+                    errorMessageElement.textContent = 'Wrong username. Please try again.';
+                }
+            });
+        }
     </script>
 </body>
 

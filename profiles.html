@@ -6,109 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 <style>
-    body{
-        background-image: none;
-    }
-#content{
-   width: 100vw;  
-}
-#profile{
-   text-align: center;
-}
-.s1{
-    margin-top: 10vh;
-    color: black;
-}
-.s1 img{
-    margin: 5px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 10px double rgb(123, 121, 121);
-    padding: 2px;
-}
-
-.s1 p:nth-child(2){
-    font-size: 1.3rem;
-}
-.s1 p:nth-child(3){
-    font-size: 0.8rem;
-}
-.s2{
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-    border-radius: 6px;
-    background-color: #ecf0f1;
-    width: 75vw;
-    overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-}
-.s2 p{
-    padding: 10px;
-    width: 25vw;
-    line-height: 1.5rem;
-}
-.s2 p:nth-child(2){
-    border-left: 0.4px solid rgba(0, 0, 0, 0.527);
-    border-right: 0.4px solid rgba(0, 0, 0, 0.527);
-}
-.s3{
-    text-align: left;
-    padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;   
-    padding: 5px 20px;
-}
-.s3 p{  
-    margin: 5px;
-}
-.s3 p:nth-child(odd){
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-top: 15px;
-}
-.s3 p:nth-child(even){
-    border-bottom: 0.5px solid;
-    padding-bottom: 5px;
-    font-size: 0.9rem;
-}
-.s3 p:last-child{
-    border-bottom: none;
-}
-.ediki a {
-    display: inline-block;
-    margin: 5px;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #4CAF50;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    font-family: 'Arial', sans-serif;
-}
-
-.ediki a:hover {
-    background-color: #45a049;
-    border-color: #45a049;
-    color: #fff;
-}
-
-.ediki a:active {
-    background-color: #3e8e41;
-    border-color: #3e8e41;
-}
-
-.ediki a:focus {
-    outline: none;
-    box-shadow: 0 0 5px #4CAF50;
-}
-
-
-
-
+   
 </style>
 
 <body>
@@ -121,6 +23,7 @@
         <a href="index.html" id="homeLink">Home</a>
         <a href="inbox.html">Inbox</a>
         <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="settings.html">Setting</a>
         <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
@@ -152,8 +55,6 @@
             <!-- Profile information will be displayed here -->
         </div>
     </div>
-
-
     
     
 <script src="navbar.js"></script>
@@ -196,6 +97,7 @@
                 document.getElementById("content").style.display = "block";
 
                 document.getElementById("profile").innerHTML = `
+                 <div class="forstic">
                     <div class="s1">
                         <img src="${imgSrc}" alt="Profile Image">
                         <p>${name}</p>
@@ -206,6 +108,7 @@
                         <p>${totalDonation}<br>Donation</p>
                         <p>${bloodDonationTimes}<br>Point</p>
                     </div>
+                </div>
                     <div class="s3">
                         <p>Blood Group</p>
                         <p>${bloodGroup}</p>
@@ -226,11 +129,6 @@
                         <p>Joining Date</p>
                         <p>${joiningDate}</p>
                     </div>
-
-                <div class="ediki">
-                    <a class="edit" href="editprofiles.html">Edit Profile</a>                  
-                    <a class="edit" href="changepassword.html">Change Password</a>
-                </div>
                 `;
             }
         } catch (error) {

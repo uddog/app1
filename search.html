@@ -5,13 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serach in UDDOG</title>
+    <link rel="stylesheet" href="universal.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            box-sizing: border-box;
-        }
         body{
             background-image: url(https://lh3.googleusercontent.com/drive-viewer/AEYmBYRCG3X9fpJl9Gbx9uAMgIwTiYhHs-1C7e3hHZfZ_23UD0_zGMcd-tAk8ik0ZZUm-vWe99VQVbwiWRxUeI5XKiX0uoqltA=s1600);
         }
@@ -134,17 +129,6 @@
             background-color: white;
         }
 
-        .showAllButton {
-            margin-top: 8px;
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-        }
-
-        .click-to-copy {
-            cursor: pointer;
-        }
-
     </style>
 </head>
 
@@ -223,7 +207,7 @@
                     <img src="${entry.imgSrc}" alt="Profile Image" id="ppimg"><br>
                     <p>${entry.name}</p>
                     </div>
-                    User Name : ${entry.username}<br>
+                    User Name : <span class="click-to-copy" onclick="copyToClipboard('${entry.username}')">${entry.username}</span><br>
                     Live in ${entry.address}<br>
                     <span class="click-to-copy" onclick="copyToClipboard('${entry.phoneNumber}')">${entry.phoneNumber}</span><br>
                     Blood Group ${entry.bloodGroup}<br>

@@ -4,16 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="test.css">
     <style>
-  
+        .setting-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 11vh;
+        }
+        
+        .option {
+            width: 80vw;
+            padding: 15px;
+            display: flex;
+            margin: 10px 0;
+            justify-content: space-between;
+            text-decoration: none;
+            color: black;
+            background-color: #f0f2f5; 
+            border: 1px solid #d1d8e0; /* Light border color */
+            border-radius: 10px;
+        }
+        
+        .option i {
+            margin-right: 10px;
+        }
+        
+        .option:hover {
+            background-color: #e4e6eb; /* Slightly darker background on hover */
+        }
+        
     </style>
 </head>
-
 <body>
+
+    <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-top" id="sidebarTop"></div>
@@ -21,7 +50,7 @@
         <a href="index.html" id="homeLink">Home</a>
         <a href="inbox.html">Inbox</a>
         <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Setting</a>
+        <a href="settings.html">Settings</a>
         <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
@@ -43,32 +72,18 @@
         <p>Are you sure you want to logout?</p>
         <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
         <button onclick="closeLogoutPopup()">No</button>
-    </div> 
-    <!-- ... (your existing body content) -->
+    </div>    
+    <!--NavBar End-->
 
-    <div class="ad2">
-            <a href="inspect.html"><div><ion-icon name="search-outline"></ion-icon><br>Inspect</div></a>  
-            <a href="SendMessegetoInbox.html"><div><ion-icon name="chatbox-outline"></ion-icon><br>Send Messege to Everyone</div></a>  
-            <a href="#"><div><ion-icon name="help-outline"></ion-icon><br>Coming Soon</div></a>  
-            <a href="#"><div><ion-icon name="help-outline"></ion-icon><br>Coming Soon</div></a>  
-    </div>
+
     
-     <script src="navbar.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-            //color picker
-                    function changeColor(newColor) {
-                document.documentElement.style.setProperty('--color', newColor);
-                localStorage.setItem('mainColor', newColor);
-            }
+    <div class="setting-option">
+        <h4>Information</h4>
+        <a class="option" href="editprofiles.html"><i class="fas fa-user-edit"></i><p>Edit Profile</p></a>
+        <a class="option" href="changepassword.html"><i class="fas fa-key"></i><p>Change Password</p></a>
+    </div>
 
-            // Check if there is a saved color in local storage and apply it
-            const savedColor = localStorage.getItem('mainColor');
-            if (savedColor) {
-                changeColor(savedColor);
-            }
-    </script>
+    <script src="navbar.js"></script>
 </body>
 
 </html>

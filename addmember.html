@@ -6,20 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffebcd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .info{
+            position: absolute;
+            top: 7vh;
+            width: 100vw;
+        }
+        .info p{
+            margin-left: 15vw;
+        }
+        .info li{
+            font-size: 0.9rem;
+            margin-left: 20vw;
+            list-style-type: circle;
+        }
+
+        .info span{
+            color: #ff7f50;
+        }
+
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffebcd; /* Light orange */
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            padding: 10px;
+            padding-bottom: 40px;
+            width: 90vw;
             border-radius: 10px;
-            margin-top: 50px;
+            max-width: 400px;
+            animation: fadeInDown 1s ease-in-out;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #ff7f50; /* Coral */
+            font-size: 32px;
+            margin-bottom: 20px;
         }
 
         /* Loading Modal */
@@ -44,7 +80,7 @@
 
         .loader {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border-top: 4px solid #ff7f50; /* Coral */
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -63,7 +99,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #4CAF50;
+            background-color: #ff7f50;
             color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -75,15 +111,21 @@
             display: none;
             position: fixed;
             top: 50%;
+            width: 60vw;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #fff;
+            background-color: #fff5e1; /* Light orange */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* Form styling */
+        .error-message {
+            display: none;
+            font-size: 0.8rem;
+            color: #ff0000; /* Red color for error messages */
+        }
         form {
             display: flex;
             flex-direction: column;
@@ -92,18 +134,26 @@
         }
 
         input {
-            margin-bottom: 15px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin: 14px 0;
             box-sizing: border-box;
-            font-size: 16px;
+            border: none;
+            border-bottom: 2px solid #ff7f50; /* Coral */
+            background-color: #fff5e1; /* Light orange */
+            outline: none;
+            transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            color: #333333;
+        }
+
+        input:focus {
+            border-color: #ffaa80; /* Light coral */
+            background-color: #fff; /* White */
         }
 
         button {
             padding: 12px;
-            background-color: #3498db;
+            background-color: #ff7f50; /* Coral */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -111,16 +161,17 @@
             width: 100%;
             box-sizing: border-box;
             font-size: 16px;
+            transition: background 0.3s ease-in-out;
         }
 
         button:hover {
-            background-color: #2980b9;
+            background-color: #ffaa80; /* Light coral */
         }
 
         /* Additional styling for the popup button */
         .popup button {
             margin-top: 15px;
-            background-color: #3498db;
+            background-color: #ff7f50; /* Coral */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -129,49 +180,49 @@
             width: 100%;
             box-sizing: border-box;
             font-size: 16px;
+            transition: background 0.3s ease-in-out;
         }
 
         .popup button:hover {
-            background-color: #2980b9;
+            background-color: #ffaa80; /* Light coral */
         }
+
+        @keyframes gradientChange {
+            0% { background: #ffebcd; }
+            50% { background: white; }
+            100% { background: #ffebcd; }
+        }
+
+
+        .back-arrow {
+            text-decoration: none;
+            color: #ffaa80;
+            font-size: 2.2rem;
+            cursor: pointer;
+            position: absolute;
+            top: -1.5vh;
+            left: 5px;
+          }
+          .back-arrow:hover{
+            color: white;
+          }
     </style>
 </head>
 
 <body>
+    <a href="admin1.html" class="back-arrow" >&#8592;</a>
 
-    
-    <!--NavBar Start-->
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+
+    <div class="info">
+        <p>UDDOG ACCOUT CREATE RULE</p>
+        <ul>
+            <li><span>Username</span> can't be change</li>
+            <li><span>Username</span> must be in small letter</li>
+            <li><span>Username</span> should contain user <span>Real Name</span></li>
+            <li>Don't use space in <span>Username</span></li>
+            <li>You can change <span>Password</span> later</li>
+        </ul>
     </div>
-    <!-- Main content -->
-    <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
-        </div>
-        <nav id="navbar">
-        </nav>
-    </header>
-
-    <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
-
-    <!-- Logout Popup -->
-    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
-    <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>    
-    <!--NavBar End-->
-
 
     <div class="container">
 
@@ -196,56 +247,55 @@
         </div>
 
         <form id="dataForm">
-            <input autocomplete="off" placeholder="Enter your username" type="text" id="dataInput1" name="dataInput1" required>
-            <input autocomplete="off" placeholder="Choose a strong password" type="password" id="dataInput2" name="dataInput2" required>
+            <p id="usernameError" class="error-message"></p>
+            <input autocomplete="off" placeholder="Enter user new Username" type="text" id="dataInput1" name="dataInput1" required>
+            <input autocomplete="off" placeholder="Choose a temporary Password" type="text" id="dataInput2" name="dataInput2" required>
             <button type="button" onclick="checkAndAddData()">Create Account</button>
         </form>
     </div>
 
-
-    <script src="navbar.js"></script>
-<script>
+    <script>
         function checkAndAddData() {
-            const dataInput1 = document.getElementById('dataInput1').value.trim();
+            const dataInput1 = document.getElementById('dataInput1').value.trim().toLowerCase();
             const dataInput2 = document.getElementById('dataInput2').value.trim();
 
-            // Check if input fields are not empty
             if (dataInput1 === '' || dataInput2 === '') {
                 showPopup('Please fill in both username and password.');
                 return;
             }
 
-            // Show loading modal
+            if (dataInput1.includes(' ')) {
+                showPopup('Username cannot contain spaces. Please choose another.');
+                return;
+            }
+
+
             document.getElementById('loadingModal').style.display = 'flex';
 
-            // Fetch CSV data from the spreadsheet
             fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv')
                 .then(response => response.text())
                 .then(csvData => {
-                    // Parse CSV data
                     const lines = csvData.split('\n');
-                    const usernames = lines.map(line => line.split(',')[1].trim()); // Assuming usernames are in column B
+                    const usernames = lines.map(line => line.split(',')[1].trim().toLowerCase());
 
-                    // Check if the entered username already exists
                     if (usernames.includes(dataInput1)) {
                         showPopup('This username is not available. Please choose another.');
                     } else {
-                        // If username is not found, proceed to send data
                         sendData(dataInput1, dataInput2);
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching CSV data:', error);
-                    // Handle error if needed
                 })
                 .finally(() => {
-                    // Hide loading modal
                     document.getElementById('loadingModal').style.display = 'none';
                 });
         }
 
+       
+       
+       
         function sendData(username, password) {
-            // Send the data to the Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbztVVu-jExg54opp8R8ICigmU0QSA87hqhahAUGMW1Axj3tlZ2FNvHCkrsVXkraJOOA/exec', {
                     method: 'POST',
                     headers: {
@@ -256,19 +306,15 @@
                 .then(response => response.text())
                 .then(responseText => {
                     console.log('Response:', responseText);
-                    // Handle success if needed
-                    // Show success message
                     document.getElementById('successMessage').style.display = 'block';
                     setTimeout(() => {
                         document.getElementById('successMessage').style.display = 'none';
-                    }, 3000); // Hide success message after 3 seconds
+                    }, 3000);
                 })
                 .catch(error => {
                     console.error('Error adding data:', error);
-                    // Handle error if needed
                 })
                 .finally(() => {
-                    // Hide loading modal
                     document.getElementById('loadingModal').style.display = 'none';
                 });
         }
@@ -281,6 +327,46 @@
         function closePopup() {
             document.getElementById('popup').style.display = 'none';
         }
+
+        document.getElementById('dataInput1').addEventListener('input', function () {
+            const usernameInput = this.value.trim().toLowerCase();
+            const usernameError = document.getElementById('usernameError');
+
+            if (usernameInput === '') {
+                usernameError.innerText = '';
+                usernameError.style.display = 'none';
+                return;
+            }
+
+            if (usernameInput.includes(' ')) {
+                usernameError.innerText = 'Username cannot contain spaces. Please choose another.';
+                usernameError.style.display = 'block';
+                return;
+            }
+
+
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv')
+                .then(response => response.text())
+                .then(csvData => {
+                    const lines = csvData.split('\n');
+                    const usernames = lines.map(line => line.split(',')[1].trim().toLowerCase());
+
+                    if (usernames.includes(usernameInput)) {
+                        usernameError.innerText = 'This username is not available. Please choose another.';
+                        usernameError.style.display = 'block';
+                    } else {
+                        usernameError.innerText = '';
+                        usernameError.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching CSV data:', error);
+                    usernameError.innerText = 'Error checking username availability.';
+                    usernameError.style.display = 'block';
+                });
+        });
+
+
     </script>
 
 </body>

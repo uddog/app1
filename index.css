@@ -1,7 +1,4 @@
-@font-face {
-   font-family: 'font3';
-   src: url(font3.ttf);
-}
+
 /*start*/
 .liafnav {
    position: fixed;
@@ -28,8 +25,8 @@
 
 
 .liafnav a {
-   font-weight: bold;
-   color: #000;
+   font-family: 'font1';
+   color: #ff7f50;
    font-size: 0.9rem;
    text-decoration: none;
 }
@@ -218,14 +215,14 @@
 #csvData {
    margin-top: 20px;
    display: flex;
-   min-height: 100vh;
-   flex-wrap: wrap;
+   min-height: 50vh;
+   flex-wrap: wrap-reverse;
    justify-content: space-around;
 }
 
 .threecontent {
    box-sizing: border-box;
-   width: 90vw;
+   width: 95vw;
    margin: 5px;
    padding: 15px;
    border: 1px solid #ccc;
@@ -276,10 +273,6 @@
 .threecontent button:hover {
    background-color: #c0392b;
 }
-
-
-
-
 
 
 

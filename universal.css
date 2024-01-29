@@ -1,0 +1,28 @@
+
+@font-face {
+    font-family: 'font1';
+    src: url(font1.ttf);
+ }
+ @font-face {
+    font-family: 'font2';
+    src: url(font2.ttf);
+ }
+ @font-face {
+    font-family: 'font3';
+    src: url(font3.ttf);
+ }
+@media only screen and (min-width: 600px) {
+    body{
+        display: none;
+    }
+}
+:root{
+    --text-color: black;
+    --back-color: white;
+}
+*{
+    margin: 0 ;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+}

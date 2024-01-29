@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css">
     <style>
       #profilesContainer {
             padding: 20px;
@@ -54,8 +55,10 @@
         }
 
         .profile img {
+            object-fit: cover;
+            object-position: center;
             width: 70px;
-            border-radius: 50%;
+            height: 70px;
             margin-right: 0 auto;
         }
         .profile div {
@@ -88,6 +91,7 @@
         <a href="index.html" id="homeLink">Home</a>
         <a href="inbox.html">Inbox</a>
         <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="settings.html">Setting</a>
         <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
@@ -138,23 +142,23 @@
                 for (let i = 1; i < rows.length; i++) {
                     const profileData = rows[i].split(',');
 
-                    const sectionName = profileData[0];
+                    const sectionName = profileData[1];
                     const profileDiv = document.createElement('div');
                     profileDiv.classList.add('profile');
 
                     // Create an image element and set its source (column B)
                     const imgElement = document.createElement('img');
-                    imgElement.src = profileData[1]; // Assuming column B contains the image source
+                    imgElement.src = profileData[2]; // Assuming column B contains the image source
                     profileDiv.appendChild(imgElement);
 
                     // Create a div for column C content
                     const columnCContent = document.createElement('div');
-                    columnCContent.textContent = profileData[2]; // Assuming column C contains content
+                    columnCContent.textContent = profileData[3]; // Assuming column C contains content
                     profileDiv.appendChild(columnCContent);
 
                     // Create an anchor tag and set its link (column D)
                     const anchorElement = document.createElement('a');
-                    anchorElement.href = profileData[3]; // Assuming column D contains the link
+                    anchorElement.href = profileData[4]; // Assuming column D contains the link
                     anchorElement.appendChild(profileDiv);
 
                     // Add anchor tag to the corresponding section

@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Local Storage Viewer</title>
 </head>
 <body>
-    <img src="" alt="">
+
+<h1>Local Storage Viewer</h1>
+
+<div id="categoryContainer"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const category = localStorage.getItem('category');
+    const categoryContainer = document.getElementById('categoryContainer');   
+    if (category) {
+        categoryContainer.textContent = `Category: ${category}`;
+    } else {
+        categoryContainer.textContent = 'No category data found in local storage.';
+    }
+});
+</script>
+
 </body>
 </html>

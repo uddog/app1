@@ -5,30 +5,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="style_dataentry.css">
+    <link rel="stylesheet" href="universal.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            animation: gradientChange 10s ease-in-out infinite;
+            color: #333333;
+        }
+        
+        .login-container {
+            background-color: #ffebcd; /* Light orange */
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            padding: 10px;
+            padding-bottom: 40px;
+            width: 90vw;
+            border-radius: 10px;
+            max-width: 400px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+        
+        h2 {
+            color: #ff7f50; /* Coral */
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        
+        .login-input {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin: 14px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #ff7f50; /* Coral */
+            background-color: #fff5e1; /* Light orange */
+            outline: none;
+            transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            color: #333333;
+        }
+        
+        .login-input:focus {
+            border-color: #ffaa80; /* Light coral */
+            background-color: #fff; /* White */
+        }
+        
+        .login-input::placeholder {
+            color: #ff7f50; /* Coral */
+        }
+        
+        .login-label {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+            font-size: 16px;
+            color: #ff7f50; /* Coral */
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: transform 0.3s ease-in-out, font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        
+        .login-input:focus + .login-label,
+        .login-input:not(:placeholder-shown) + .login-label {
+            transform: translateY(-80%);
+            font-size: 12px;
+            color: #333333;
+        }
+        
+        .login-button {
+            background: #ff7f50; /* Coral */
+            color: white;
+            padding: 12px;
+            border: 1px solid #ff7f50; /* Coral */
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
+            font-size: 16px;
+        }
+        
+        .login-button:hover {
+            background: #ffaa80; /* Light coral */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ffaa80; /* Light coral */
+        }
+        
+        #errorMessage {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading-spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #ff7f50; /* Coral */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes gradientChange {
+            0% { background: #f7f5f3; }
+            50% { background: #fff5e1; }
+            100% { background: white; }
+        }
+        
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+    </style>
 </head>
 
 <body>
-    <div class="bod" id="login-form">
-        <div class="man">
-            <h2>UDDOG ID</h2>
-            <p id="errorMessage"></p>
-            <form id="loginForm">
-                <input autocomplete="off" placeholder="Enter Username" type="text" id="username" name="username" required><br>
-                <input autocomplete="off" placeholder="Enter Password" type="password" id="password" name="password" required><br>
-                <button type="button" onclick="attemptLogin()">Login</button>
-            </form>
-        </div>
+    <div class="login-container">
+        <h2>UDDOG ID</h2>
+        <p id="errorMessage"></p>
+        <form id="loginForm">
+            <input autocomplete="off" placeholder="Enter Username" type="text" id="username" class="login-input" name="username" required><br>
+            <input autocomplete="off" placeholder="Enter Password" type="password" id="password" class="login-input" name="password" required><br>
+            <button type="button" onclick="attemptLogin()" class="login-button">Login</button>
+        </form>
     </div>
 
-    <div id="content" style="display: none;">
-        <div id="profile">
-            <!-- Profile information will be displayed here -->
-        </div>
-    </div>
-
-    <div id="loading-overlay" style="display: none;">
-        <div id="loading-spinner"></div>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
     </div>
 
     <script>
@@ -36,55 +167,53 @@
             const usernameInput = document.getElementById('username');
             const passwordInput = document.getElementById('password');
             const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim().toLowerCase();
+            const password = passwordInput.value.trim();
             const errorMessageElement = document.getElementById('errorMessage');
-
+        
             // Check if the username and password inputs are not empty
             if (username === '' || password === '') {
                 errorMessageElement.textContent = 'Please enter both username and password.';
                 return; // Stop the function if any input is empty
             }
-
+        
             errorMessageElement.textContent = ''; // Clear previous error message
-
+        
             // Show loading overlay
             document.getElementById('loading-overlay').style.display = 'flex';
-
+        
             const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
-
+        
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
                 const rows = data.split('\n').map(row => row.split(','));
-
+        
                 // Loop through the rows to check for matching credentials, starting from index 1 (skipping the first row)
                 let isValid = false;
                 let rowIndex;
-
-                for (let i = 1; i < rows.length; i++) {
+        
+                for (let i = 1; i < rows.length; i += 2) { // Increment by 2 to check every other row
                     const row = rows[i];
-                    console.log('Checking:', row[1]); // Assuming username is in column B
-                    console.log('Password:', row[26]); // Assuming password is in column AA
-                    if (row[1] === username && row[26].trim().toLowerCase() === password) {
+                    if (row[1].trim().toLowerCase() === username && row[26].trim() === password) {
                         isValid = true;
                         rowIndex = i;
                         break;
                     }
                 }
-
+        
                 if (isValid) {
-                    // Save row index to localStorage
                     localStorage.setItem('rowIndex', rowIndex);
-
+                    localStorage.setItem('userPassword', password);
+        
                     // Redirect to index.html
                     window.location.href = 'index.html';
-
+        
                     // Note: The code below won't be executed after the redirection,
                     // as the page will be unloaded and the script will be terminated.
                 } else {
                     errorMessageElement.textContent = 'Wrong username or password. Please try again.';
                 }
-
+        
             } catch (error) {
                 console.error('Error fetching data:', error);
                 errorMessageElement.textContent = 'An error occurred. Please try again later.';
@@ -92,16 +221,16 @@
                 // Hide loading overlay regardless of success or failure
                 document.getElementById('loading-overlay').style.display = 'none';
             }
-
+        
             // Check if there is a saved row index in localStorage
             const savedRowIndex = localStorage.getItem('rowIndex');
             if (savedRowIndex) {
                 // If a row index is saved, you might want to handle it accordingly (e.g., redirect or perform some action)
-                console.log('Saved row index:', savedRowIndex);
+                console.log('Log in Successfull!');
             }
         }
+        
     </script>
-
 </body>
 
 </html>

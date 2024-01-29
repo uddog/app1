@@ -3,22 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page</title>
+    <title>CSV Data Viewer</title>
 </head>
 <body>
-    <!-- Placeholder <p> tag with an id -->
-    <p id="welcome-message"></p>
 
-    <script>
-        const storedUserName = localStorage.getItem('userName');
+<h1>CSV Data Viewer</h1>
 
-        if (storedUserName) {
-            // Get the existing <p> element by its id
-            const welcomeParagraph = document.getElementById("welcome-message");
+<div id="buttonContainer"></div>
 
-            // Set the content of the <p> element
-            welcomeParagraph.innerText = `Welcome, ${storedUserName}!`;
-        }
-    </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Replace the CSV_URL with the link to your CSV file
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
+
+    // Fetch the CSV file
+    fetch(CSV_URL)
+        .then(response => response.text())
+        .then(csvData => {
+            const rows = csvData.split('\n');
+
+            // Container for buttons
+            const buttonContainer = document.getElementById('buttonContainer');
+
+            // Create buttons based on values in column A
+            for (let i = 1; i < rows.length; i++) {
+                const rowData = rows[i].split(',');
+
+                // Use the value in column A as the button name
+                const buttonName = rowData[0];
+
+                // Create a button for each row
+                const button = document.createElement('button');
+                button.textContent = buttonName;
+
+                // Add an event listener to the button
+                button.addEventListener('click', function() {
+                    // Store the button name in local storage
+                    localStorage.setItem('category', buttonName);
+
+                    // Redirect to test2.html
+                    window.location.href = 'test3.html';
+                });
+
+                // Append the button to the container
+                buttonContainer.appendChild(button);
+            }
+        })
+        .catch(error => console.error('Error fetching CSV:', error));
+});
+</script>
+
 </body>
 </html>

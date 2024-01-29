@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send SMS</title>
-    <link rel="stylesheet" href="style_dataentry.css">
+    <link rel="stylesheet" href="universal.css">
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+    
         #loadingModal {
             display: none;
             position: fixed;
@@ -14,45 +19,194 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
             text-align: center;
+            z-index: 999;
         }
-
+    
         #loadingModalContent {
             background: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
-
+    
         #successMessage {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffaa80;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
         }
+    
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        main {
+            background-color: #ffebcd;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        h2 {
+            color: #ff7f50;
+        }
+    
+        .send {
+            background-color: #ffebcd;
+            padding: 40px 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #ff7f50;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+    
+        input,textarea {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin: 14px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #ff7f50; /* Coral */
+            background-color: #fff5e1; /* Light orange */
+            outline: none;
+            transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            color: #333333;
+        }
+
+        input:focus, textarea:hover {
+            border-color: #ffaa80; /* Light coral */
+            background-color: #fff; /* White */
+        }
+    
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    
+        button {
+            padding: 12px;
+            background-color: #ff7f50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    
+        button:hover {
+            background-color: rgba(228, 112, 70, 0.824)
+        }
+        .popup button {
+            margin-top: 15px;
+            background-color: #ffaa80;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    
+        .popup button:hover {
+            background-color: #ffaa80;
+        }
+    
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ffaa80;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+    
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .back-arrow {
+            text-decoration: none;
+            color: #ffaa80;
+            font-size: 2.2rem;
+            cursor: pointer;
+            position: absolute;
+            top: -1.5vh;
+            left: 5px;
+          }
+          .back-arrow:hover{
+            color: white;
+          }
     </style>
+    
+    
 </head>
 
-<body class="bod">
+<body>
 
-  <main class="man">
-    <h2>Send SMS to UDDOG INBOX</h2>
-    <div id="successMessage">
-        Send successful!
+    <a href="admin1.html" class="back-arrow" >&#8592;</a>
+
+<main>
+    <div class="send">
+        <h2>Send SMS to UDDOG INBOX</h2>
+        <div id="successMessage">
+            Send successful!
+        </div>
+        <div id="popup" class="popup">
+            <p id="popupText"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+        <form id="dataForm">
+            <input autocomplete="off" placeholder="Message From" type="text" id="dataInput1" name="dataInput1" required>
+            <textarea autocomplete="off" placeholder="Message Body" id="dataInput2" name="dataInput2" required></textarea>
+            <button type="button" onclick="addData()">Send Message</button>
+        </form>
     </div>
-    <form id="dataForm">
-        <input autocomplete="off" placeholder="Messege Title" type="text" id="dataInput1" name="dataInput1" required>
-        <input autocomplete="off" placeholder="Messege Body" type="text" id="dataInput2" name="dataInput2" required>
-        <button type="button" onclick="addData()">Send Messege</button>
-    </form>
-
 </main>
+
+
     <div id="loadingModal">
         <div id="loadingModalContent">
-            Loading...
+            <div class="loader"></div>
         </div>
     </div>
-
 
     <script>
         function addData() {
@@ -61,7 +215,7 @@
 
             // Check if input fields are not empty
             if (dataInput1 === '' || dataInput2 === '') {
-                alert('Please fill in both message title and body.');
+                showPopup('Please fill in both message title and body.');
                 return;
             }
 
@@ -86,14 +240,23 @@
                 .catch(error => {
                     console.error('Error adding data:', error);
                     // Handle error if needed
+                    showPopup('An error occurred while sending the message. Please try again.');
                 })
                 .finally(() => {
                     // Hide loading modal
                     document.getElementById('loadingModal').style.display = 'none';
                 });
         }
-    </script>
 
+        function showPopup(message) {
+            document.getElementById('popupText').innerText = message;
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
