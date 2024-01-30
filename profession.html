@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css">
+    <style>
+#profilesContainer {
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden; /* Added to prevent container from collapsing */
+}
+
+.section {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+    position: relative;
+    border: 0.5px solid rgb(172, 172, 172);
+}
+
+.section a{
+    text-decoration: none;
+}
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    color: #333;
+}
+
+.profile {
+    flex-wrap: wrap;
+    width: 30vw;
+    border: 1px solid #ddd;
+    margin: 5px;
+    cursor: pointer;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    display: flex;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+.profile:hover {
+    background-color: #f9f8f8;
+}
+
+.profile img {
+    width: 30%;
+}
+.profile div {
+    text-align: center;
+    width: 70%;
+    color: black;
+}
+
+/*for counting*/
+    .count{
+    margin: 10vh auto;
+    margin-bottom: 0px ;
+    width: 85vw;
+    border: solid 1px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    }
+    .count p{
+        font-size: 1.2rem;
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="inbox.html">Inbox</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="settings.html">Setting</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+
+    <div class="count">   
+        <p>Total Member <span id="userProfessionLabel"></span> :&#160</p>
+        <p id="totalStudentRows"></p>
+       </div>
+   
+
+    <div id="profilesContainer">
+        <!-- Profile content will be dynamically generated here -->
+    </div>
+
+
+
+<script src="navbar.js"></script>
+<script>
+  // Get userProfession from Local Storage
+  const userProfession = localStorage.getItem('userProfession');
+
+  if (userProfession) {
+      // Replace 'your_csv_link_here' with the actual link to your CSV file
+      const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
+
+      fetch(csvLink)
+          .then(response => response.text())
+          .then(csvData => {
+              const rows = csvData.split('\n');
+              let sections = {};
+
+              for (let i = 1; i < rows.length; i++) {
+                  const profileData = rows[i].split(',');
+                  const professionInColumnA = profileData[0].toLowerCase();
+                  const sectionName = profileData[1].trim();
+
+                  if (userProfession.toLowerCase() === professionInColumnA) {
+                      if (!sections[sectionName]) {
+                          sections[sectionName] = document.createElement('div');
+                          sections[sectionName].classList.add('section');
+
+                          const sectionTitle = document.createElement('div');
+                          sectionTitle.classList.add('section-title');
+                          sectionTitle.textContent = sectionName;
+                          sections[sectionName].appendChild(sectionTitle);
+
+                          document.body.appendChild(sections[sectionName]);
+                      }
+
+                      const profileDiv = document.createElement('div');
+                      profileDiv.classList.add('profile');
+
+                      const imgElement = document.createElement('img');
+                      imgElement.src = profileData[2];
+                      profileDiv.appendChild(imgElement);
+
+                      const columnCContent = document.createElement('div');
+                      columnCContent.textContent = profileData[3];
+                      profileDiv.appendChild(columnCContent);
+
+                      const anchorElement = document.createElement('a');
+                      anchorElement.href = profileData[4];
+                      anchorElement.appendChild(profileDiv);
+
+                      sections[sectionName].appendChild(anchorElement);
+                  }
+              }
+          })
+          .catch(error => console.error('Error fetching CSV:', error));
+  }
+
+
+
+    //count student 
+
+    document.getElementById('userProfessionLabel').textContent = userProfession;
+
+        // Function to fetch CSV data and count rows with "student" in column P
+        function fetchAndCountStudentRows(url) {
+      fetch(url)
+        .then(response => response.text())
+        .then(csvData => {
+          const rows = csvData.split('\n');
+          let totalStudentRows = 0;
+
+          // Count rows with "student" in column P
+          rows.forEach(row => {
+            const columns = row.split(',');
+            const columnPValue = columns[15]; // Index 15 corresponds to column P
+            
+            if (columnPValue === userProfession) {
+              totalStudentRows++;
+            }
+          });
+
+          // Display the total number of rows with "student" in column P with counting effect
+          const totalStudentRowsP = document.getElementById('totalStudentRows');
+          countUp(totalStudentRowsP, totalStudentRows, 2000); // 2000ms = 2 seconds
+        })
+        .catch(error => console.error('Error fetching CSV data:', error));
+    }
+
+    // Replace 'YOUR_GOOGLE_SHEETS_CSV_LINK' with the actual link to your Google Sheets CSV file
+    const googleSheetsCsvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+    fetchAndCountStudentRows(googleSheetsCsvLink);
+
+    // Function to perform counting animation
+    function countUp(element, endValue, duration) {
+      let start = 0;
+      const increment = endValue / (duration / 16); // 16ms per frame for a smooth animation
+
+      const animatedCount = setInterval(function () {
+        start += increment;
+        element.textContent = `${Math.round(start)}`;
+
+        if (start >= endValue) {
+          clearInterval(animatedCount);
+          element.textContent = `${endValue}`;
+        }
+      }, 16);
+    }
+
+</script>
+</body>
+
+</html>

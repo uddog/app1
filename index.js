@@ -140,7 +140,7 @@ async function fetchProfileData() {
         // Start from index 1 to skip the header row
         rows.slice(1).forEach(row => {
             // Check if the profile data is empty
-            const isProfileEmpty = row.slice(1, 5).every(cell => cell.trim() === '');
+            const isProfileEmpty = row.slice(2, 5).every(cell => cell.trim() === '');
 
             if (!isProfileEmpty) {
                 const profileDiv = document.createElement("div");
@@ -210,7 +210,6 @@ async function fetchProfileData() {
 // Call the function to fetch and display profile data
 fetchProfileData();
 
-
 //for post
 const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv';
 
@@ -228,12 +227,13 @@ function displayData(csv) {
     const rows = csv.split('\n');
     const profilesContainer = document.getElementById('csvData');
 
-    const startIndex = Math.max(0, rows.length - 3);
+    // Display the last two rows
+    const startIndex = Math.max(0, rows.length - 2);
 
     for (let i = startIndex; i < rows.length; i++) {
         const columns = rows[i].split(',');
 
-        const profileImageSrc = columns[7].trim();
+        const profileImageSrc = columns[8].trim();
         if (profileImageSrc) {
             const profileDiv = document.createElement('div');
             profileDiv.classList.add('threecontent'); // Class name 'profile'
@@ -244,14 +244,14 @@ function displayData(csv) {
             profileDiv.appendChild(profileImage);
 
             const nameElement = document.createElement('h3');
-            nameElement.textContent = columns[8].trim();
+            nameElement.textContent = columns[9].trim();
             profileDiv.appendChild(nameElement);
 
-            for (let j = 9; j < columns.length; j++) {
+            for (let j = 10; j < columns.length; j++) {
                 const columnContent = columns[j].trim();
                 if (columnContent) {
-                    const element = document.createElement(j === 10 ? 'button' : 'p');
-                    if (j === 10) {
+                    const element = document.createElement(j === 11 ? 'button' : 'p');
+                    if (j === 11) {
                         element.textContent = 'Visit';
                         element.addEventListener('click', function () {
                             window.location.href = columnContent;
@@ -269,4 +269,3 @@ function displayData(csv) {
 }
 
 fetchAndDisplayData();
-

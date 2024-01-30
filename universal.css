@@ -17,7 +17,8 @@
     }
 }
 :root{
-    --text-color: black;
+    --text-color1: black;
+    --text-color2: black;
     --back-color: white;
 }
 *{

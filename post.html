@@ -18,7 +18,7 @@
 /* Styles for each individual profile (post) */
 .profile {
     box-sizing: border-box;
-    width: 90vw;
+    width: 95vw;
     margin: 5px;
     padding: 15px;
     border: 1px solid #ccc;
@@ -195,7 +195,7 @@
         for (let i = rows.length - 1; i > 0; i--) {
             const columns = rows[i].split(',');
 
-            const profileImageSrc = columns[7].trim();
+            const profileImageSrc = columns[8].trim();
             if (profileImageSrc) {
                 nonEmptyRows++;
                 if (nonEmptyRows >= (currentPage - 1) * rowsPerPage + 1 && nonEmptyRows <= (currentPage * rowsPerPage)) {
@@ -208,15 +208,15 @@
                     profileDiv.appendChild(profileImage);
 
                     const nameElement = document.createElement('h3');
-                    nameElement.textContent = columns[8].trim();
+                    nameElement.textContent = columns[9].trim();
                     profileDiv.appendChild(nameElement);
 
-                    for (let j = 9; j < columns.length; j++) {
+                    for (let j = 10; j < columns.length; j++) {
                         const columnContent = columns[j].trim();
                         if (columnContent) {
                             const element = document.createElement('p');
 
-                            if (j === 10) {
+                            if (j === 11) {
                                 const buttonElement = document.createElement('button');
                                 buttonElement.textContent = 'Visit';
                                 buttonElement.addEventListener('click', function () {

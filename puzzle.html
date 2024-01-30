@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #puzzle-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 5px;
+    }
+
+    .puzzle-piece {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    #timer {
+      margin-top: 20px;
+    }
+
+    #congratulations-popup {
+      text-align: center;
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div id="puzzle-container"></div>
+  <p id="timer">Time: 00:00</p>
+
+  <div id="congratulations-popup">
+    <p>Congratulations! Puzzle solved in <span id="solving-time"></span></p>
+  </div>
+
+  <script>
+    const puzzleContainer = document.getElementById('puzzle-container');
+    const timerElement = document.getElementById('timer');
+    const congratulationsPopup = document.getElementById('congratulations-popup');
+    const solvingTimeElement = document.getElementById('solving-time');
+
+    let puzzleSize = 3;
+    let puzzleArray = [];
+    let startTime;
+
+    function initPuzzle() {
+      puzzleArray = Array.from({ length: puzzleSize * puzzleSize }, (_, index) => index + 1);
+      puzzleArray[puzzleArray.length - 1] = null; // Empty tile
+
+      shufflePuzzle();
+      renderPuzzle();
+      startTime = new Date();
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    function shufflePuzzle() {
+      for (let i = puzzleArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [puzzleArray[i], puzzleArray[j]] = [puzzleArray[j], puzzleArray[i]];
+      }
+    }
+
+    function renderPuzzle() {
+      puzzleContainer.innerHTML = '';
+      puzzleArray.forEach((value, index) => {
+        const piece = document.createElement('div');
+        piece.className = 'puzzle-piece';
+        piece.textContent = value !== null ? value : '';
+        piece.addEventListener('click', () => movePiece(index));
+        puzzleContainer.appendChild(piece);
+      });
+    }
+
+    function movePiece(clickedIndex) {
+      const emptyIndex = puzzleArray.indexOf(null);
+      const rowDiff = Math.floor(emptyIndex / puzzleSize) - Math.floor(clickedIndex / puzzleSize);
+      const colDiff = emptyIndex % puzzleSize - clickedIndex % puzzleSize;
+
+      if ((rowDiff === 0 && Math.abs(colDiff) === 1) || (colDiff === 0 && Math.abs(rowDiff) === 1)) {
+        [puzzleArray[clickedIndex], puzzleArray[emptyIndex]] = [puzzleArray[emptyIndex], puzzleArray[clickedIndex]];
+        renderPuzzle();
+
+        if (isSolved()) {
+          const endTime = new Date();
+          const elapsedTime = Math.floor((endTime - startTime) / 1000);
+          showCongratulations(elapsedTime);
+        }
+      }
+    }
+
+    function isSolved() {
+      return puzzleArray.every((value, index) => value === index + 1 || (value === null && index === puzzleArray.length - 1));
+    }
+
+    function updateTimer() {
+      const currentTime = new Date();
+      const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+      timerElement.textContent = `Time: ${formatTime(elapsedTime)}`;
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+
+    function showCongratulations(time) {
+      solvingTimeElement.textContent = formatTime(time);
+      congratulationsPopup.style.display = 'block';
+    }
+
+    initPuzzle();
+  </script>
+</body>
+</html>

@@ -96,22 +96,12 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
                 default:
                     break;
             }
-
             switch (roleValue) {
-                case 'Student':
-                    addAdminButton('Student', 'student.html'); // Set the link for Student
-                    break;
-                 case 'Business':
-                    addAdminButton('Business', 'business.html'); // Set the link for Student
-                    break;       
-                case 'Job':
-                    addAdminButton('Job', 'job.html'); // Set the link for Student
-                    break; 
-                // Add more cases as needed
                 default:
+                    addAdminButton(roleValue,'profession.html'); // Use roleValue as button name and link to profession.html
                     break;
             }
-
+            
         } else {
             navbar.innerHTML = '<ul><li><a href="login.html">Login</a></li></ul>';
             console.error('Invalid row index:', rowIndex);
@@ -165,8 +155,15 @@ function closeLogoutPopup() {
 }
 
 function logout() {
+    
     localStorage.removeItem('rowIndex');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userBloodGroup');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userAddress');
+    localStorage.removeItem('userBirthDay');
+    localStorage.removeItem('userProfession');
+    
     localStorage.removeItem('mainColor');
     location.reload();
 }

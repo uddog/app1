@@ -1,5 +1,8 @@
  
    /*for main content */
+       body{
+        background-color: var(--back-color);
+       }
         .ad2 {
         width: 95vw;
         position: absolute;
@@ -20,7 +23,7 @@
         text-align: center;
         padding: 20px;
         text-decoration: none;
-        color: rgb(55, 46, 46); /* Text color */
+        color: var(--text-color1);
         border-radius: 5px; /* Rounded corners for buttons */
         transition: background-color 0.3s; /* Smooth transition for hover effect */
     }
@@ -28,7 +31,7 @@
     .ad2 a ion-icon {
         font-size: 4rem;
         margin-bottom: 10px;
-        color: rgb(55, 46, 46); /* Text color */
+        color: var(--text-color1);
     }
 
     .ad2 a:hover {

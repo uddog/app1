@@ -1,45 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Profile</title>
     <style>
-        *{
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-        }
-        main{
-        }
-        div{
-            background-color: red;
-            display: grid;
-            place-items: center;
-            height: 100vh;
-        }
-        div:nth-child(2){
-            position: sticky;
-            top: 0px;
+            background-color: #f5f5f5;
         }
 
-        div:nth-child(even){
-            background-color: black;
-            color: white;
+        .section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+            color: #333;
+            text-align: center;
+        }
+
+        .profile {
+            flex-wrap: wrap;
+            width: 30vw;
+            border: 1px solid #ddd;
+            margin: 10px;
+            cursor: pointer;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px;
+            display: flex;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            background-color: #fff;
+            text-align: center;
+            color: black;
+            text-decoration: none;
+        }
+
+        .profile:hover {
+            background-color: #f9f8f8;
+        }
+
+        .profile img {
+            width: 30%;
+            border-radius: 50%;
+        }
+
+        .profile div {
+            width: 100%;
+            margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
-    <main>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>10</div>
-    </main>
+    <!-- Profile content will be dynamically generated here -->
+    <script>
+        // Get userProfession from Local Storage
+        const userProfession = localStorage.getItem('userProfession');
+
+        if (userProfession) {
+            // Replace 'your_csv_link_here' with the actual link to your CSV file
+            const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
+
+            fetch(csvLink)
+                .then(response => response.text())
+                .then(csvData => {
+                    const rows = csvData.split('\n');
+                    let sections = {};
+
+                    for (let i = 1; i < rows.length; i++) {
+                        const profileData = rows[i].split(',');
+                        const professionInColumnA = profileData[0].toLowerCase();
+                        const sectionName = profileData[1].trim();
+
+                        if (userProfession.toLowerCase() === professionInColumnA) {
+                            if (!sections[sectionName]) {
+                                sections[sectionName] = document.createElement('div');
+                                sections[sectionName].classList.add('section');
+
+                                const sectionTitle = document.createElement('div');
+                                sectionTitle.classList.add('section-title');
+                                sectionTitle.textContent = sectionName;
+                                sections[sectionName].appendChild(sectionTitle);
+
+                                document.body.appendChild(sections[sectionName]);
+                            }
+
+                            const profileDiv = document.createElement('div');
+                            profileDiv.classList.add('profile');
+
+                            const imgElement = document.createElement('img');
+                            imgElement.src = profileData[2];
+                            profileDiv.appendChild(imgElement);
+
+                            const columnCContent = document.createElement('div');
+                            columnCContent.textContent = profileData[3];
+                            profileDiv.appendChild(columnCContent);
+
+                            const anchorElement = document.createElement('a');
+                            anchorElement.href = profileData[4];
+                            anchorElement.appendChild(profileDiv);
+
+                            sections[sectionName].appendChild(anchorElement);
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching CSV:', error));
+        }
+    </script>
 </body>
+
 </html>

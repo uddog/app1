@@ -23,7 +23,7 @@
         <a href="index.html" id="homeLink">Home</a>
         <a href="inbox.html">Inbox</a>
         <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Setting</a>
+        <a href="settings.html">Settings</a>
         <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
@@ -47,15 +47,17 @@
         <button onclick="closeLogoutPopup()">No</button>
     </div>   
     <!--NavBar End-->
-    
 
-    
+
+
     <div id="content" style="display: none;">
         <div id="profile">
             <!-- Profile information will be displayed here -->
         </div>
     </div>
-    
+
+
+
     
 <script src="navbar.js"></script>
 <script>
@@ -94,6 +96,12 @@
                 const columnY = storedRow[24].trim(); // Add this line for column Y
                 const columnZ = storedRow[25].trim(); // Add this line for column Z
 
+
+                const school = storedRow[12].trim();
+                const college = storedRow[13].trim();
+                const varsity = storedRow[14].trim();
+
+
                 document.getElementById("content").style.display = "block";
 
                 document.getElementById("profile").innerHTML = `
@@ -109,7 +117,10 @@
                         <p>${bloodDonationTimes}<br>Point</p>
                     </div>
                 </div>
+                  <div class="two">
                     <div class="s3">
+                        <p>Joining Date</p>
+                        <p>${joiningDate}</p>
                         <p>Blood Group</p>
                         <p>${bloodGroup}</p>
                         <p>Gender</p>
@@ -120,15 +131,23 @@
                         <p>${fatherName}</p>
                         <p>Address</p>
                         <p>${address}</p>
+                        <p>School Name</p>
+                        <p>${school}</p>
+                        <p>College Name</p>
+                        <p>${college}</p>
+                        <p>Varsity Name</p>
+                        <p>${varsity}</p>
                         <p>Profession</p>
                         <p>${profession}</p>
                         <p>Last Donate</p>
                         <p>${columnY}</p>
                         <p>Last Blood Donate</p>
                         <p>${columnZ}</p>
-                        <p>Joining Date</p>
-                        <p>${joiningDate}</p>
                     </div>
+                    <div id="hello"></div>
+                  </div>
+
+
                 `;
             }
         } catch (error) {
@@ -153,6 +172,10 @@
             if (savedColor) {
                 changeColor(savedColor);
             }
+
+    //hello
+
+   
 </script>
 </body>
 

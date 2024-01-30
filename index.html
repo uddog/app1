@@ -1,1 +1,165 @@
-<h1>Next Beta release will be in Ramadam</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDDOG</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+  </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>  
+    <!--NavBar End-->
+
+    <div class="liafnav">
+        <ul>
+            <li><a onclick="storeOptionCategory('Medical')" href="mainoption.html">স্বাস্থ্য</a></li>
+            <li><a onclick="storeOptionCategory('Education')" href="mainoption.html">শিক্ষা</a></li>
+            <li><a onclick="storeOptionCategory('Transport')" href="mainoption.html">পরিবহন</a></li>
+            <li><a onclick="storeOptionCategory('Bazar')" href="mainoption.html">বাজার</a></li>
+            <li><a onclick="storeOptionCategory('উদ্যোগ')" href="#fot">উদ্যোগ</a></li>
+        </ul>
+    </div>
+    
+
+<div class="instart">
+
+     <div class="udnam">
+        <h2>উদ্যোগ<br>একটি <span style="color: rgb(236, 28, 24);">সামাজিক</span> উন্নয়নমূলক সংগঠন </h2>
+     </div>
+      
+     <div class="udop">
+        <ul>
+            <li><a onclick="storeOptionCategory('Medical')" href="mainoption.html"><div><ion-icon name="medkit-outline"></ion-icon><br>স্বাস্থ্য</div></a></li>
+            <li><a onclick="storeOptionCategory('Education')" href="mainoption.html"><div><ion-icon name="book-outline"></ion-icon><br>শিক্ষা</div></a></li>
+            <li><a onclick="storeOptionCategory('Transport')" href="mainoption.html"><div><ion-icon name="car-outline"></ion-icon><br>পরিবহন</div></a></li>         
+            <li><a onclick="storeOptionCategory('Bazar')" href="mainoption.html"><div><ion-icon name="storefront-outline"></ion-icon><br>বাজার</div></a></li>
+            <li><a onclick="storeOptionCategory('Emergency')" href="mainoption.html"><div id="emmer"><ion-icon name="medical-outline"></ion-icon><br>ইমার্জেন্সি</div></a></li>
+            <li><a href="admin0.html"><div><ion-icon name="apps-outline"></ion-icon><br>সেবা</div></a></li>
+        </ul>
+     </div>
+
+
+    <!--Image Slider-->
+    <div class="slider-container" id="imageSliderContainer">
+        <div class="slider" id="imageSlider"></div>
+    </div>
+    <p style="color: rgb(68, 65, 65); font-size: 0.8rem;">Control the slide by touch</p>
+
+
+    <div class="profile-section" id="profileSection"></div>
+
+    <a class="aab" href="story.html"><div class="forstory"><h2>See Daily Activity</h2></div></a>
+
+    <div id="csvData"></div>
+
+    <a  id="fot" class="sepost" href="post.html"><button>See More</button></a>
+
+
+ </div>
+
+
+ <footer>
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h4>About Us</h4>
+        <p>টাকার পয়সা লেনদেনের সময় আমরা দুই এক টাকার হিসাবে খুব তেমন একটা গুরুত্ব দেই না। তবে " ছোট ছোট বালুকণা বিন্দু বিন্দু জল গড়ে তোলে মহাদেশ সাগর অতল "আপনার প্রতিদিনের সেই ১ টাকার সর্বোত্তম ব্যবহারের স্বার্থে উদ্যোগী হয়েছে একদল তরুণ-তরুণী। প্রতি সদস্যের প্রতিদিন ১ টাকা (বা মাসে ৩০ টাকা) করে সংগ্রহ করে সমাজসেবায় অংশ নেয়াই এই তরুণ-তরুণীদের "উদ্যোগ"।</p>
+      </div>
+      
+      <div class="footer-section contact">
+        <h4>Contact Us</h4>
+        <p>Email: <a href="mailto:uddog.sw@gmail.com">uddog.sw@gmail.com</a></p>
+        <p>Phone: <a href="tel:01816267777">01816267777</a></p>
+        <p>Phone: <a href="tel:01788702616">01788702616</a></p>
+        <p>Address: Mama Vagina Road, Swarupkathi</p>
+      </div>
+
+      
+      <div class="footer-section social">
+        <h4>Join Us</h4>
+        <div class="social-icons">
+           
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <br>&copy;2024 UDDOG. All rights reserved.</br>Designed by AI</p>
+    </div>
+  </footer>
+
+<script src="navbar.js"></script>
+<script src="index.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+
+
+          //store catagory
+          function storeOptionCategory(category) {
+            localStorage.setItem('optionCategory', category);
+        }
+
+
+      //color picker
+                function changeColor(newColor) {
+                document.documentElement.style.setProperty('--color', newColor);
+                localStorage.setItem('mainColor', newColor);
+            }
+
+            // Check if there is a saved color in local storage and apply it
+            const savedColor = localStorage.getItem('mainColor');
+            if (savedColor) {
+                changeColor(savedColor);
+            }
+
+//scroll smooth
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+</script>
+  
+</body>
+
+</html>
