@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="universal.css">
   <style>
+    h1{
+      margin: 5px;
+    }
+    p{
+      margin-bottom: 20px;
+    }
     body {
       display: flex;
       flex-direction: column;
@@ -50,14 +57,29 @@
   </style>
 </head>
 <body>
+
+  <h1>Puzzle Game by UDDOG</h1>
+  <p id="welcome-message">Hey, Can you solve it</p>
+
   <div id="puzzle-container"></div>
   <p id="timer">Time: 00:00</p>
 
+  
   <div id="congratulations-popup">
     <p>Congratulations! Puzzle solved in <span id="solving-time"></span></p>
   </div>
 
   <script>
+
+
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+        const welcomeParagraph = document.getElementById("welcome-message");
+        welcomeParagraph.innerText = `Hey, ${storedUserName}! Can you Solve it`;
+    }
+      
+
+
     const puzzleContainer = document.getElementById('puzzle-container');
     const timerElement = document.getElementById('timer');
     const congratulationsPopup = document.getElementById('congratulations-popup');

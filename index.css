@@ -214,7 +214,7 @@
 #csvData {
    margin-top: 20px;
    display: flex;
-   min-height: 50vh;
+   min-height: 100vh;
    flex-wrap: wrap-reverse;
    justify-content: space-around;
 }
