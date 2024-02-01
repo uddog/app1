@@ -6,12 +6,10 @@
   <link rel="stylesheet" href="universal.css">
   <style>
     h1{
-      margin: 10px;
-      font-size: 1.7rem;
+      margin: 5px;
     }
     p{
       margin-bottom: 20px;
-      font-size: 0.8rem;
     }
     body {
       display: flex;
@@ -56,21 +54,6 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
-    #restart-button {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-    
-    #restart-button:hover {
-      background-color: #45a049;
-    }
-    
   </style>
 </head>
 <body>
@@ -84,9 +67,7 @@
   
   <div id="congratulations-popup">
     <p>Congratulations! Puzzle solved in <span id="solving-time"></span></p>
-    <button id="restart-button">Restart</button>
-</div>
-
+  </div>
 
   <script>
 
@@ -174,18 +155,6 @@
       solvingTimeElement.textContent = formatTime(time);
       congratulationsPopup.style.display = 'block';
     }
-
-
-
-    const restartButton = document.getElementById('restart-button');
-restartButton.addEventListener('click', restartPuzzle);
-
-function restartPuzzle() {
-    congratulationsPopup.style.display = 'none'; // Hide the popup
-    initPuzzle(); // Reinitialize the puzzle
-}
-
-
 
     initPuzzle();
   </script>
