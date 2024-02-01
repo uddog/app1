@@ -1,78 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
 
-    .parallax-container {
-      height: 100vh;
-      overflow-x: hidden;
-      overflow-y: auto;
-      perspective: 1px;
-    }
+        .hi {
+            background-color: #ffffff; /* White */
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; /* Set position to relative for child positioning */
+        }
 
-    .parallax-section {
-      position: relative;
-      height: 100vh;
-      transform-style: inherit;
-    }
+        .resultDiv {
+            background-color: #ffffff; /* White */
+            font-size: 1.4rem;
+            height: 60vh;
+            overflow-y: scroll;
+            padding: 10px;
+            text-align: left;
+            margin-bottom: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            width: 30%;
+            box-sizing: border-box;
+        }
 
-    .parallax-section::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-    }
+        .resultDiv p {
+            background-color: #ffffff; /* White */
+            color: #333; /* Dark Gray */
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
 
-    .parallax-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      text-align: center;
-    }
+        /* Optional: Add a subtle box shadow for a more modern look */
+        .resultDiv {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .parallax-one {
-      background: url('background1.jpg') center/cover no-repeat;
-    }
+        /* Optional: Add a hover effect on the paragraphs */
+        .resultDiv p:hover {
+            background-color: #f2f2f2; /* Light Gray on hover */
+        }
 
-    .parallax-two {
-      background: url('background2.jpg') center/cover no-repeat;
-    }
+        /* Loading scene styles */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: absolute; /* Position loading div absolutely within hello div */
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
 
-    /* Add more parallax sections as needed */
+        /* Spinner styles */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
 
-  </style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
 </head>
+
 <body>
-
-  <div class="parallax-container">
-    <div class="parallax-section parallax-one">
-      <div class="parallax-content">
-        <h1>Section 1</h1>
-        <p>This is the first parallax section.</p>
-      </div>
+    <!-- Loading scene -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
     </div>
 
-    <div class="parallax-section parallax-two">
-      <div class="parallax-content">
-        <h1>Section 2</h1>
-        <p>This is the second parallax section.</p>
-      </div>
+    <div class="hi">
+        <div id="resultDiv1" class="resultDiv"></div>
+        <div id="resultDiv2" class="resultDiv"></div>
+        <div id="resultDiv3" class="resultDiv"></div>
     </div>
 
-    <!-- Add more parallax sections as needed -->
+    <script>
+        // Function to show/hide the loading scene
+        function toggleLoading(isLoading) {
+            const loadingElement = document.getElementById('loading');
+            loadingElement.style.display = isLoading ? 'flex' : 'none';
+        }
 
-  </div>
+        // Function to fetch and display CSV data
+        async function displayCSV(csvUrl, resultDivId) {
+            try {
+                const response = await fetch(csvUrl);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const csvData = await response.text();
+
+                const rows = csvData.split('\n');
+
+                // Get userUsername from local storage
+                const userUsername = localStorage.getItem('userUsername');
+
+                // Find the index of userUsername in the headers
+                const columnIndex = rows[3].split(',').indexOf(userUsername);
+
+                if (columnIndex !== -1) {
+                    // Display full column and next column for rows starting from index 4
+                    const resultDiv = document.getElementById(resultDivId);
+                    resultDiv.innerHTML = ''; // Clear existing content
+
+                    for (let i = 4; i < rows.length; i++) {
+                        const rowData = rows[i].split(',');
+
+                        // Check if the row is not empty
+                        if (rowData.length > columnIndex + 1 && rowData[columnIndex].trim() !== "") {
+                            const data1 = rowData[columnIndex].trim();
+                            const data2 = rowData[columnIndex + 1].trim();
+
+                            // Append data to the resultDiv using <p> tags
+                            resultDiv.innerHTML += `<p>${data1} - ${data2}</p>`;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching or displaying CSV data:', error);
+            } finally {
+                // Check if all resultDivs have content
+                const resultDiv1 = document.getElementById('resultDiv1');
+                const resultDiv2 = document.getElementById('resultDiv2');
+                const resultDiv3 = document.getElementById('resultDiv3');
+
+                if (resultDiv1.innerHTML !== '' && resultDiv2.innerHTML !== '' && resultDiv3.innerHTML !== '') {
+                    // Hide loading scene after fetching is complete
+                    toggleLoading(false);
+                }
+            }
+        }
+
+        // Replace 'YOUR_CSV_URL_1', 'YOUR_CSV_URL_2', and 'YOUR_CSV_URL_3' with the links to your CSV files
+        const csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv';
+        const csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=692804136';
+        const csvUrl3 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=909176802';
+
+        // Call the function to display CSV data for the first CSV link
+        displayCSV(csvUrl1, 'resultDiv1');
+
+        // Call the function to display CSV data for the second CSV link
+        displayCSV(csvUrl2, 'resultDiv2');
+
+        // Call the function to display CSV data for the third CSV link
+        displayCSV(csvUrl3, 'resultDiv3');
+    </script>
 
 </body>
+
 </html>

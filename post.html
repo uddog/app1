@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post</title>
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css">
     <style>
   /* Styles for the container of all profiles */
 #csvData {
@@ -144,7 +145,7 @@
 
     <script src="navbar.js"></script>
 <script>
-    const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv';
+    const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
 
     let currentPage = 1;
     const rowsPerPage = 5;
@@ -188,14 +189,13 @@
         const rows = csv.split('\n');
         const profilesContainer = document.getElementById('csvData');
 
-        // Clear previous content
         profilesContainer.innerHTML = '';
 
         let nonEmptyRows = 0;
         for (let i = rows.length - 1; i > 0; i--) {
             const columns = rows[i].split(',');
 
-            const profileImageSrc = columns[8].trim();
+            const profileImageSrc = columns[0].trim();
             if (profileImageSrc) {
                 nonEmptyRows++;
                 if (nonEmptyRows >= (currentPage - 1) * rowsPerPage + 1 && nonEmptyRows <= (currentPage * rowsPerPage)) {
@@ -208,35 +208,35 @@
                     profileDiv.appendChild(profileImage);
 
                     const nameElement = document.createElement('h3');
-                    nameElement.textContent = columns[9].trim();
+                    nameElement.textContent = columns[1].trim();
                     profileDiv.appendChild(nameElement);
 
-                    for (let j = 10; j < columns.length; j++) {
+                    for (let j = 2; j < columns.length; j++) {
                         const columnContent = columns[j].trim();
-                        if (columnContent) {
+                        if (columnContent && j !== 4) {  // Skip column E (index 4)
                             const element = document.createElement('p');
-
-                            if (j === 11) {
+                    
+                            if (j === 3) {
                                 const buttonElement = document.createElement('button');
-                                buttonElement.textContent = 'Visit';
+                                buttonElement.textContent = 'Details';
                                 buttonElement.addEventListener('click', function () {
+                                    localStorage.setItem('PostNo', i);
                                     window.location.href = columnContent;
                                 });
                                 element.appendChild(buttonElement);
                             } else {
                                 element.textContent = columnContent;
                             }
-
+                    
                             profileDiv.appendChild(element);
                         }
                     }
-
+                    
                     profilesContainer.appendChild(profileDiv);
                 }
             }
         }
 
-        // Scroll to the top of the page with smooth effect
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 

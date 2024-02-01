@@ -52,6 +52,7 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
 
             const bioSection = document.getElementById('bioSection');
             const userName = userRow[4];
+            const userUsername= userRow[1];
             const bloodGroup = userRow[9].trim();
             const address = userRow[11].trim();
             const balance = userRow[20].trim();
@@ -63,6 +64,7 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
 
           
             //saving in local storage
+            localStorage.setItem('userUsername', userUsername);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userBloodGroup', bloodGroup);
             localStorage.setItem('userName', userName);
