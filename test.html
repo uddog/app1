@@ -1,78 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-    }
-
-    .parallax-container {
-      height: 100vh;
-      overflow-x: hidden;
-      overflow-y: auto;
-      perspective: 1px;
-    }
-
-    .parallax-section {
-      position: relative;
-      height: 100vh;
-      transform-style: inherit;
-    }
-
-    .parallax-section::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-    }
-
-    .parallax-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      text-align: center;
-    }
-
-    .parallax-one {
-      background: url('background1.jpg') center/cover no-repeat;
-    }
-
-    .parallax-two {
-      background: url('background2.jpg') center/cover no-repeat;
-    }
-
-    /* Add more parallax sections as needed */
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Background Color</title>
 </head>
 <body>
 
-  <div class="parallax-container">
-    <div class="parallax-section parallax-one">
-      <div class="parallax-content">
-        <h1>Section 1</h1>
-        <p>This is the first parallax section.</p>
-      </div>
-    </div>
+<script>
+    // Function to fetch CSV data from a URL
+    function fetchCSV(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(xhr.responseText);
+            }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
 
-    <div class="parallax-section parallax-two">
-      <div class="parallax-content">
-        <h1>Section 2</h1>
-        <p>This is the second parallax section.</p>
-      </div>
-    </div>
+    // Function to parse CSV data and get background color from B1 cell
+    function getBackgroundColor(csvData) {
+        // Split CSV rows
+        var rows = csvData.split('\n');
+        if (rows.length > 0) {
+            // Split columns of the first row
+            var columns = rows[0].split(',');
+            if (columns.length > 1) {
+                // Get background color from B1 cell (assuming B1 is the second column)
+                var backgroundColor = columns[1].trim();
+                // Apply background color to the body element
+                document.body.style.backgroundColor = backgroundColor;
+            }
+        }
+    }
 
-    <!-- Add more parallax sections as needed -->
+    // CSV URL
+    var csvURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374';
 
-  </div>
+    // Fetch CSV data and get background color
+    fetchCSV(csvURL, getBackgroundColor);
+</script>
 
 </body>
 </html>

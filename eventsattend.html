@@ -201,12 +201,12 @@
 
             <div class="form-container">
 
-                <h2>UDDOG Blood Donation</h2>
+                <h2>UDDOG Event Attendance</h2>
 
                 <p id="dataErrorMessage"></p>
                 <form id="dataForm">
                     <input autocomplete="off" placeholder="Enter Username" type="text" id="usernameInput" name="username" required><br>
-                    <input autocomplete="off" placeholder="Enter Amount" type="text" id="dataInput" name="dataInput" required>
+                    <input autocomplete="off" placeholder="Enter Details" type="text" id="dataInput" name="dataInput" required>
                     <button type="button" id="updateButton" onclick="submitDataForm()"><span id="buttonText">Update</span></button>
                </form>    
             </div>
@@ -223,7 +223,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const lastEnteredTime = localStorage.getItem('lastEnteredTime3');
+            const lastEnteredTime = localStorage.getItem('lastEnteredTime1');
             const pinSection = document.getElementById('pinSection');
             const dataSection = document.getElementById('dataSection');
 
@@ -245,7 +245,7 @@
 
         function fetchDataAndProceed(callback) {
             showLoadingModal();
-            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=909176802')
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv')
                 .then(response => response.text())
                 .then(data => {
                     hideLoadingModal();
@@ -274,7 +274,7 @@
                 if (pin === correctPin) {
                     pinSection.style.display = 'none';
                     dataSection.style.display = 'block';
-                    localStorage.setItem('lastEnteredTime3', Date.now().toString());
+                    localStorage.setItem('lastEnteredTime1', Date.now().toString());
                 } else {
                     pinErrorMessageElement.textContent = 'Incorrect PIN. Please try again.';
                 }
@@ -303,7 +303,7 @@
                     showLoadingModal();
                     const dataInput = document.getElementById('dataInput').value;
 
-                    fetch('https://script.google.com/macros/s/AKfycbxv0yeepaIzyoeWst66nk6Md4bcM3wFQsZv7dyjQtI-9iiPjAk9vFPDnHLz93vlRVSLJw/exec', {
+                    fetch('https://script.google.com/macros/s/AKfycbysOKdkG7Cv7U1qLO0KRCDdiNErnXkPkgMzFC0qdT8ycjanzt_duXX4O923HKVcLmwQfA/exec', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -313,7 +313,7 @@
                         .then(response => response.text())
                         .then(updateResult => {
                             console.log('Spreadsheet update result:', updateResult);
-                            errorMessageElement.textContent = 'Donation added Successfully';
+                            errorMessageElement.textContent = 'Event Attend Successfully';
                             document.getElementById('dataForm').reset();
                         })
                         .catch(error => {

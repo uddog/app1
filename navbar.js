@@ -58,6 +58,7 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
             const additionalValue = userRow[27].trim(); // Assuming column AB is at index 27
             const roleValue = userRow[15].trim(); // Assuming column P is at index 15
             const birthdate = userRow[8].trim(); 
+            const school = userRow[12].trim();
 
 
           
@@ -66,6 +67,7 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
             localStorage.setItem('userBloodGroup', bloodGroup);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userAddress', address);
+            localStorage.setItem('userSchool', school);
             localStorage.setItem('userBirthDay', birthdate);
             localStorage.setItem('userProfession', roleValue);
 

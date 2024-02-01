@@ -259,18 +259,12 @@
 
 /* Styles for the button */
 .threecontent button {
-   background-color: #e74c3c;
-   color: #fff;
    padding: 8px 15px;
    border: none;
+   position: relative;
    border-radius: 4px;
+   transform: translateX(-200%);
    cursor: pointer;
-   transition: background-color 0.3s ease-in-out;
-}
-
-/* Hover effect for the button */
-.threecontent button:hover {
-   background-color: #c0392b;
 }
 
 
