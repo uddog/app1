@@ -249,22 +249,21 @@
    color: #333;
 }
 
-.threecontent p,
-.threecontent button {
+.threecontent p{
    font-family: 'font1';
    text-align: justify;
    margin-bottom: 8px;
    color: #555;
 }
 
-/* Styles for the button */
 .threecontent button {
-   padding: 8px 15px;
    border: none;
-   position: relative;
-   border-radius: 4px;
-   transform: translateX(-200%);
    cursor: pointer;
+   background-color: transparent;
+   color: blue;
+   font-weight: bolder;
+   position: relative;
+   left: -38vw;
 }
 
 
