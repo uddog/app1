@@ -47,9 +47,17 @@
                 justify-content: center;
                 display: flex;
                 border-radius: 8px;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.3s ease, opacity 0.5s ease, transform 0.5s ease; /* Added transform transition */
                 text-align: center;
+                opacity: 0; /* Initially set opacity to 0 */
+                transform: translateY(20px); /* Initially move profile down by 20px */
             }
+            
+            .profile.show {
+                opacity: 1; /* When profile is shown, set opacity to 1 */
+                transform: translateY(0); /* When profile is shown, reset transform to move it up */
+            }
+            
             .profile:hover {
                 background-color: #f9f8f8;
             }
@@ -114,64 +122,70 @@
         const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
 
         fetch(csvLink)
-            .then(response => response.text())
-            .then(csvData => {
-                const profilesContainer = document.getElementById('profilesContainer');
-                const rows = csvData.split('\n');
-
-                let sections = {};
-
-                for (let i = 1; i < rows.length; i++) {
-                    const profileData = rows[i].split(',');
-
-                    const sectionName = profileData[1];
-                    const profileDiv = document.createElement('div');
-                    profileDiv.classList.add('profile');
-
-                    const imgElement = document.createElement('img');
-                    imgElement.src = profileData[2]; // Assuming column B contains the image source
-                    profileDiv.appendChild(imgElement);
-
-                    const columnCContent = document.createElement('div');
-                    columnCContent.textContent = profileData[3]; // Assuming column C contains content
-                    profileDiv.appendChild(columnCContent);
-
-                    const anchorElement = document.createElement('a');
-                    anchorElement.href = profileData[4]; // Assuming column D contains the link
-                    anchorElement.appendChild(profileDiv);
-
-                    // Add anchor tag to the corresponding section
-                    if (!sections[sectionName]) {
-                        sections[sectionName] = {
-                            sectionElement: document.createElement('div'),
-                            hasMatchingProfile: false
-                        };
-                        sections[sectionName].sectionElement.classList.add('section');
-                        profilesContainer.appendChild(sections[sectionName].sectionElement);
-
-                        const sectionTitle = document.createElement('div');
-                        sectionTitle.classList.add('section-title');
-                        sectionTitle.textContent = sectionName;
-                        sections[sectionName].sectionElement.appendChild(sectionTitle);
-                    }
-
-                    sections[sectionName].sectionElement.appendChild(anchorElement);
-
-                    
-                    const storedOptionCategory = localStorage.getItem('optionCategory');
-                    if (sectionName.toLowerCase() === storedOptionCategory.toLowerCase()) {
-                        sections[sectionName].hasMatchingProfile = true;
-                    }
+        .then(response => response.text())
+        .then(csvData => {
+            const profilesContainer = document.getElementById('profilesContainer');
+            const rows = csvData.split('\n');
+    
+            let sections = {};
+    
+            for (let i = 1; i < rows.length; i++) {
+                const profileData = rows[i].split(',');
+    
+                const sectionName = profileData[1];
+                const profileDiv = document.createElement('div');
+                profileDiv.classList.add('profile');
+    
+                const imgElement = document.createElement('img');
+                imgElement.src = profileData[2]; // Assuming column B contains the image source
+                profileDiv.appendChild(imgElement);
+    
+                const columnCContent = document.createElement('div');
+                columnCContent.textContent = profileData[3]; // Assuming column C contains content
+                profileDiv.appendChild(columnCContent);
+    
+                const anchorElement = document.createElement('a');
+                anchorElement.href = profileData[4]; // Assuming column D contains the link
+                anchorElement.appendChild(profileDiv);
+    
+                // Add anchor tag to the corresponding section
+                if (!sections[sectionName]) {
+                    sections[sectionName] = {
+                        sectionElement: document.createElement('div'),
+                        hasMatchingProfile: false
+                    };
+                    sections[sectionName].sectionElement.classList.add('section');
+                    profilesContainer.appendChild(sections[sectionName].sectionElement);
+    
+                    const sectionTitle = document.createElement('div');
+                    sectionTitle.classList.add('section-title');
+                    sectionTitle.textContent = sectionName;
+                    sections[sectionName].sectionElement.appendChild(sectionTitle);
                 }
-
-                // Initially hide sections without matching profiles
-                Object.values(sections).forEach(section => {
-                    if (!section.hasMatchingProfile) {
-                        section.sectionElement.style.display = 'none';
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching CSV:', error));
+    
+                sections[sectionName].sectionElement.appendChild(anchorElement);
+    
+                
+                const storedOptionCategory = localStorage.getItem('optionCategory');
+                if (sectionName.toLowerCase() === storedOptionCategory.toLowerCase()) {
+                    sections[sectionName].hasMatchingProfile = true;
+                }
+    
+                // Add class to show profile with fade-in effect
+                setTimeout(() => {
+                    profileDiv.classList.add('show');
+                }, 200 * i); // Adjust timing as per your preference
+            }
+    
+            // Initially hide sections without matching profiles
+            Object.values(sections).forEach(section => {
+                if (!section.hasMatchingProfile) {
+                    section.sectionElement.style.display = 'none';
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching CSV:', error));
+    
     </script>
 
 </body>
