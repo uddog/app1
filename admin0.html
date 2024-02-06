@@ -47,9 +47,15 @@
             justify-content: center;
             display: flex;
             border-radius: 8px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, opacity 0.5s ease; /* Added opacity transition */
             text-align: center;
+            opacity: 0; /* Initially set opacity to 0 */
         }
+        
+        .profile.show {
+            opacity: 1; /* When profile is shown, set opacity to 1 */
+        }
+        
         .profile:hover {
             background-color: #f9f8f8;
         }
@@ -132,69 +138,74 @@
         const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
 
         fetch(csvLink)
-            .then(response => response.text())
-            .then(csvData => {
-                const profilesContainer = document.getElementById('profilesContainer');
-                const rows = csvData.split('\n');
+    .then(response => response.text())
+    .then(csvData => {
+        const profilesContainer = document.getElementById('profilesContainer');
+        const rows = csvData.split('\n');
 
-                let sections = {};
+        let sections = {};
 
-                // Group profiles by section
-                for (let i = 1; i < rows.length; i++) {
-                    const profileData = rows[i].split(',');
+        // Group profiles by section
+        for (let i = 1; i < rows.length; i++) {
+            const profileData = rows[i].split(',');
 
-                    const sectionName = profileData[1];
-                    const profileDiv = document.createElement('div');
-                    profileDiv.classList.add('profile');
+            const sectionName = profileData[1];
+            const profileDiv = document.createElement('div');
+            profileDiv.classList.add('profile');
 
-                    // Create an image element and set its source (column B)
-                    const imgElement = document.createElement('img');
-                    imgElement.src = profileData[2]; // Assuming column B contains the image source
-                    profileDiv.appendChild(imgElement);
+            // Create an image element and set its source (column B)
+            const imgElement = document.createElement('img');
+            imgElement.src = profileData[2]; // Assuming column B contains the image source
+            profileDiv.appendChild(imgElement);
 
-                    // Create a div for column C content
-                    const columnCContent = document.createElement('div');
-                    columnCContent.textContent = profileData[3]; // Assuming column C contains content
-                    profileDiv.appendChild(columnCContent);
+            // Create a div for column C content
+            const columnCContent = document.createElement('div');
+            columnCContent.textContent = profileData[3]; // Assuming column C contains content
+            profileDiv.appendChild(columnCContent);
 
-                    // Create an anchor tag and set its link (column D)
-                    const anchorElement = document.createElement('a');
-                    anchorElement.href = profileData[4]; // Assuming column D contains the link
-                    anchorElement.appendChild(profileDiv);
+            // Create an anchor tag and set its link (column D)
+            const anchorElement = document.createElement('a');
+            anchorElement.href = profileData[4]; // Assuming column D contains the link
+            anchorElement.appendChild(profileDiv);
 
-                    // Add anchor tag to the corresponding section
-                    if (!sections[sectionName]) {
-                        sections[sectionName] = {
-                            sectionElement: document.createElement('div'),
-                            hasMatchingProfile: false
-                        };
-                        sections[sectionName].sectionElement.classList.add('section');
-                        profilesContainer.appendChild(sections[sectionName].sectionElement);
+            // Add anchor tag to the corresponding section
+            if (!sections[sectionName]) {
+                sections[sectionName] = {
+                    sectionElement: document.createElement('div'),
+                    hasMatchingProfile: false
+                };
+                sections[sectionName].sectionElement.classList.add('section');
+                profilesContainer.appendChild(sections[sectionName].sectionElement);
 
-                        const sectionTitle = document.createElement('div');
-                        sectionTitle.classList.add('section-title');
-                        sectionTitle.textContent = sectionName;
-                        sections[sectionName].sectionElement.appendChild(sectionTitle);
-                    }
+                const sectionTitle = document.createElement('div');
+                sectionTitle.classList.add('section-title');
+                sectionTitle.textContent = sectionName;
+                sections[sectionName].sectionElement.appendChild(sectionTitle);
+            }
 
-                    sections[sectionName].sectionElement.appendChild(anchorElement);
+            sections[sectionName].sectionElement.appendChild(anchorElement);
 
-                    // Check if the profile matches the search term
-                    const searchTerm = document.getElementById('searchBox').value.toLowerCase();
-                    if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
-                        sections[sectionName].hasMatchingProfile = true;
-                    }
-                }
+            // Check if the profile matches the search term
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
+                sections[sectionName].hasMatchingProfile = true;
+            }
 
-                // Initially hide sections without matching profiles
-                Object.values(sections).forEach(section => {
-                    if (!section.hasMatchingProfile) {
-                        section.sectionElement.style.display = 'none';
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching CSV:', error));
-           
+            // Add class to show profile with fade-in effect
+            setTimeout(() => {
+                profileDiv.classList.add('show');
+            }, 200 * i); // Adjust timing as per your preference
+        }
+
+        // Initially hide sections without matching profiles
+        Object.values(sections).forEach(section => {
+            if (!section.hasMatchingProfile) {
+                section.sectionElement.style.display = 'none';
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching CSV:', error));
+
            
      function searchProfiles() {
         const searchBox = document.getElementById('searchBox');
