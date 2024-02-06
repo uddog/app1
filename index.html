@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<style>
+    /* Add this CSS code to your existing stylesheet */
+  
+    /* Initial state of the list items */
+
+</style>
 
 <body>
 
@@ -82,16 +88,16 @@
     <p style="color: rgb(68, 65, 65); font-size: 0.8rem;">Control the slide by touch</p>
 
 
-    <div class="profile-section" id="profileSection"></div>
+  <div class="profile-section" id="profileSection"></div>
 
-    <a class="aab" href="story.html"><div class="forstory"><h2>See Daily Activity</h2></div></a>
-
+  <div class="post">    
+    <h3>Post</h3>
     <div id="csvData"></div>
-
     <a  id="fot" class="sepost" href="post.html"><button>See More</button></a>
-
+  </div>
 
  </div>
+
 
 
  <footer>
@@ -109,13 +115,6 @@
         <p>Address: Mama Vagina Road, Swarupkathi</p>
       </div>
 
-      
-      <div class="footer-section social">
-        <h4>Join Us</h4>
-        <div class="social-icons">
-           
-        </div>
-      </div>
     </div>
     
     <div class="footer-bottom">
@@ -125,6 +124,7 @@
 
 <script src="navbar.js"></script>
 <script src="index.js"></script>
+<script src="universal.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
@@ -136,7 +136,7 @@
         }
 
 
-      //color picker
+  //color picker
                 function changeColor(newColor) {
                 document.documentElement.style.setProperty('--color', newColor);
                 localStorage.setItem('mainColor', newColor);
@@ -158,6 +158,7 @@
         });
       });
     });
+
 </script>
   
 </body>

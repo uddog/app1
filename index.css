@@ -117,6 +117,19 @@
    font-size: 2.2rem;
 }
 
+
+.udop li {
+   opacity: 0;
+   transform: translateY(50px); /* Move the items down initially */
+   transition: opacity 0.5s ease, transform 0.5s ease;
+ }
+
+ .udop li.animate {
+   opacity: 1;
+   transform: translateY(0); /* Move the items back to their original position */
+ }
+
+
 /*for img slider*/
 
 .slider-container {
@@ -157,7 +170,6 @@
    border-radius: 4px;
    text-align: center;
 }
-
 .profile a {
    text-decoration: none;
    color: black;
@@ -187,34 +199,20 @@
    transform: scale(1.05);
 }
 
-/*for story*/
-.aab {
-   text-decoration: none;
-}
-
-.forstory {
-   width: 95vw;
-   margin: 10px auto;
-   height: 120px;
-   background-position: center;
-   background-size: cover;
-   display: flex;
-   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-   justify-content: center;
-   align-items: center;
-   cursor: pointer;
-   background: linear-gradient(to right, #d9534f, #ff4500);
-   border: none;
-   outline: none;
-   color: white; /* Dark grayish-blue text color */
-}
 
 /*for psot*/
-
+.post{
+   text-align: center;
+   margin-bottom: 10px;
+   width: 100vw;
+}
+.post h3{
+   font-size: 2rem;
+   text-transform: uppercase;
+}
 #csvData {
-   margin-top: 20px;
-   display: flex;
    min-height: 100vh;
+   display: flex;
    flex-wrap: wrap-reverse;
    justify-content: space-around;
 }
@@ -265,20 +263,12 @@
    position: relative;
    left: -38vw;
 }
-
-
-
-
-
-
-/* Style the link */
 a.sepost {
-   margin: 20px;
+   margin-top: 5px;
    text-decoration: none; /* Remove underline */
    display: inline-block; /* Make it a block-level element */
  }
  
- /* Style the button */
  a.sepost button {
    background-color: #4caf50; /* Set background color */
    color: white; /* Set text color */
@@ -288,7 +278,6 @@ a.sepost {
    cursor: pointer; /* Add pointer cursor on hover */
  }
  
- /* Hover effect for the button */
  a.sepost button:hover {
    background-color: #45a049; /* Change background color on hover */
  }
@@ -384,3 +373,7 @@ a.sepost {
      flex: 100%;
    }
  }
+
+
+
+ 

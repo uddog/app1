@@ -252,3 +252,34 @@ async function fetchAndDisplayData() {
 fetchImageSources();
 fetchProfileData();
 fetchAndDisplayData();
+
+//animation
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    // Function to handle scroll animation
+    function handleScrollAnimation(elements) {
+      elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight) {
+          element.classList.add('animate');
+        } else {
+          element.classList.remove('animate');
+        }
+      });
+    }
+
+    // Select elements to animate (you can pass any CSS selector to this function)
+    function animateOnScroll(selector) {
+      const elements = document.querySelectorAll(selector);
+      handleScrollAnimation(elements);
+
+      // Add scroll event listener
+      window.addEventListener('scroll', function() {
+        handleScrollAnimation(elements);
+      });
+    }
+
+    // Example usage: animate list items inside .udop class
+    animateOnScroll('.udop li');
+
+  });
