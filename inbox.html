@@ -8,62 +8,60 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
     <style>
-      /* CSS for SMS Container */
-#smsContainer {
-    margin-top: 10vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
+        /* CSS for SMS Container */
+        #smsContainer {
+            margin-top: 10vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
 
-.sms-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    width: 90vw;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        .sms-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 5px;
+            width: 90vw;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.sms-card:hover {
-    background-color: #f5f5f5;
-}
+        .sms-card:hover {
+            background-color: #f5f5f5;
+        }
 
-.al {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .al {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.al h3 {
-    font-family: "font2";
-    margin: 0;
-}
+        .al h3 {
+            font-family: "font2";
+            margin: 0;
+        }
 
-.det {
-    color: #888;
-    font-size: 0.5rem;
-    width: 35%;
-    text-align: right;
-}
+        .det {
+            color: #888;
+            font-size: 0.5rem;
+            width: 35%;
+            text-align: right;
+        }
 
-.sms-details {
-    font-family: 'font1';
-    display: none;
-    margin-top: 10px;
-}
+        .sms-details {
+            font-family: 'font1';
+            display: none;
+            margin-top: 10px;
+        }
 
-/* Optional: Add transition effect for smooth details toggle */
-.sms-details {
-    transition: max-height 0.3s ease-in-out;
-    overflow: hidden;
-}
+        /* Optional: Add transition effect for smooth details toggle */
+        .sms-details {
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
 
-.sms-details p {
-    margin: 0;
-}
-
+        /* NavBar styling */
+        /* Your existing styles for the navbar can go here */
     </style>
 </head>
 
@@ -104,74 +102,81 @@
 
 
 
-  <div id="smsContainer"></div>
+    <!-- SMS Container -->
+    <div id="smsContainer"></div>
 
+    <!-- Papaparse Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+   <script src="navbar.js"></script>
+    <!-- JavaScript code -->
+    <script>
+        // Replace the CSV_URL with the actual link to your CSV file
+        const GID = '1429441367';
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?gid=${GID}&output=csv`;
 
+        // Function to format the date
+        function formatDate(inputDate) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(inputDate).toLocaleDateString('en-US', options);
+        }
 
+        // Function to fetch and display SMS data with collapsible details
+        async function fetchAndDisplaySMS() {
+            try {
+                const response = await fetch(CSV_URL);
+                const csvText = await response.text();
 
-  <script src="navbar.js"></script>
-<!-- ... (previous HTML code) ... -->
+                // Use Papaparse to parse the CSV data
+                Papa.parse(csvText, {
+                    complete: function (results) {
+                        const rows = results.data;
 
-<!-- Fetch and display SMS data with collapsible details when the page loads -->
-<script>
-  // Replace the CSV_URL with the actual link to your CSV file
-  const GID = '1429441367';
-  const CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?gid=${GID}&output=csv`;
+                        // Create SMS cards with collapsible details
+                        let smsHTML = '';
 
-  // Function to format the date
-  function formatDate(inputDate) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(inputDate).toLocaleDateString('en-US', options);
-  }
+                        for (let i = rows.length - 1; i > 0; i--) {
+                            const rowData = rows[i];
+                            const date = formatDate(rowData[0]); // Format the date
+                            const smsSender = rowData[1];
+                            const smsDetails = rowData.slice(2).join(','); // Join remaining fields if any
 
-  // Function to fetch and display SMS data with collapsible details
-  async function fetchAndDisplaySMS() {
-      try {
-          const response = await fetch(CSV_URL);
-          const csvData = await response.text();
+                            smsHTML += `
+                                <div class="sms-card" onclick="toggleDetails(this)">
+                                    <div class="al">
+                                        <h3>${smsSender}</h3>
+                                        <p class="det">${date}</p>
+                                    </div>
+                                    <div class="sms-details">
+                                        <p>${smsDetails}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
 
-          // Parse CSV data
-          const rows = csvData.split('\n');
-          const headers = rows[0].split(',');
+                        // Display the SMS in the specified container
+                        document.getElementById('smsContainer').innerHTML = smsHTML;
+                    },
+                    error: function (error) {
+                        console.error('Error parsing CSV:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching CSV data:', error);
+            }
+        }
 
-          // Create SMS cards with collapsible details
-          let smsHTML = '';
+        // Toggle collapsible details when an SMS card is clicked
+        function toggleDetails(card) {
+            const details = card.querySelector('.sms-details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        }
 
-          for (let i = rows.length - 1; i > 0; i--) {
-              const rowData = rows[i].split(',');
-              const date = formatDate(rowData[0]); // Format the date
-              const smsSender = rowData[1];
-              const smsDetails = rowData[2];
+        // Fetch and display SMS data with collapsible details when the page loads
+        document.addEventListener('DOMContentLoaded', fetchAndDisplaySMS);
+    </script>
 
-              smsHTML += `
-                  <div class="sms-card" onclick="toggleDetails(this)">
-                      <div class="al">
-                          <h3>${smsSender}</h3>
-                          <p class="det">${date}</p>
-                      </div>
-                      <div class="sms-details">
-                          <p>${smsDetails}</p>
-                      </div>
-                  </div>
-              `;
-          }
+    <!-- Your other JavaScript code can go here -->
 
-          // Display the SMS in the specified container
-          document.getElementById('smsContainer').innerHTML = smsHTML;
-      } catch (error) {
-          console.error('Error fetching CSV data:', error);
-      }
-  }
-
-  // Toggle collapsible details when an SMS card is clicked
-  function toggleDetails(card) {
-      const details = card.querySelector('.sms-details');
-      details.style.display = details.style.display === 'block' ? 'none' : 'block';
-  }
-
-  // Fetch and display SMS data with collapsible details when the page loads
-  document.addEventListener('DOMContentLoaded', fetchAndDisplaySMS);
-</script>
-<!-- ... (remaining HTML code) ... -->
 </body>
+
 </html>

@@ -164,7 +164,7 @@ function closeLogoutPopup() {
 
 function logout() {
     
-    localStorage.removeItem.clear();
+    localStorage.clear();
     location.reload();
 }
 
