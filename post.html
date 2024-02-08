@@ -112,8 +112,6 @@
 </head>
 
 <body>
-
-
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
@@ -151,9 +149,9 @@
 
     <!-- Loading Scene -->
     <div id="loadingScene" style="display: none; text-align: center; margin-top: 20px;">
-            Loading...
+        Loading...
     </div>
-    
+
     <!-- Page Buttons -->
     <div class="navigation-buttons" id="pageButtons"></div>
 
@@ -163,11 +161,12 @@
     </div>
 
     <script src="navbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
 
         let currentPage = 1;
-        const rowsPerPage = 5;
+        const rowsPerPage = 4;
         let totalRows = 0;
 
         const nextButton = document.getElementById('nextButton');
@@ -194,10 +193,19 @@
                 loadingScene.style.display = 'block'; // Show loading scene
                 const response = await fetch(csvDataURL);
                 const csvData = await response.text();
-                totalRows = csvData.split('\n').length - 1;
-                updateNavigationButtons();
-                displayData(csvData);
-                loadingScene.style.display = 'none'; // Hide loading scene after data is fetched
+
+                Papa.parse(csvData, {
+                    header: false,
+                    complete: function (results) {
+                        totalRows = results.data.length - 1;
+                        updateNavigationButtons();
+                        displayData(results.data);
+                        loadingScene.style.display = 'none'; // Hide loading scene after data is fetched
+                    },
+                    error: function (error) {
+                        console.error('Error parsing CSV data:', error);
+                    }
+                });
             } catch (error) {
                 console.error('Error fetching CSV data:', error);
             }
@@ -208,10 +216,8 @@
             prevButton.style.display = currentPage > 1 ? 'inline-block' : 'none';
         }
 
-        function displayData(csv) {
-            const rows = parseCSV(csv);
+        function displayData(rows) {
             const profilesContainer = document.getElementById('csvData');
-
             profilesContainer.innerHTML = '';
 
             let nonEmptyRows = 0;
@@ -263,7 +269,6 @@
             }
 
             updatePageButtons(); // Update page buttons
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -281,36 +286,6 @@
                 });
                 pageButtonsContainer.appendChild(pageButton);
             }
-        }
-
-        function parseCSV(csvData) {
-            const rows = csvData.split('\n');
-            const parsedData = [];
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i].trim();
-                let insideQuotes = false;
-                let currentValue = '';
-                const parsedRow = [];
-
-                for (let j = 0; j < row.length; j++) {
-                    const char = row[j];
-
-                    if (char === '"') {
-                        insideQuotes = !insideQuotes;
-                    } else if (char === ',' && !insideQuotes) {
-                        parsedRow.push(currentValue);
-                        currentValue = '';
-                    } else {
-                        currentValue += char;
-                    }
-                }
-
-                parsedRow.push(currentValue); // Push the last cell value
-                parsedData.push(parsedRow);
-            }
-
-            return parsedData;
         }
 
         fetchAndDisplayData();
