@@ -72,6 +72,37 @@
         font-size: 1.2rem;
     }
 
+
+
+
+    @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .profile {
+        flex-wrap: wrap;
+        width: 30vw;
+        border: 1px solid #ddd;
+        margin: 5px;
+        cursor: pointer;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        display: flex;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        animation: fadeInUp 0.3s ease forwards;
+        opacity: 0; /* Initially hide the profile */
+      }
+      
+
     </style>
 </head>
 
@@ -227,6 +258,37 @@
         }
       }, 16);
     }
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const profiles = document.querySelectorAll(".profile");
+      
+        function isInViewport(element) {
+          const rect = element.getBoundingClientRect();
+          return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <=
+              (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+        }
+      
+        function handleScroll() {
+          profiles.forEach((profile) => {
+            if (isInViewport(profile)) {
+              profile.classList.add("visible");
+            }
+          });
+        }
+      
+        window.addEventListener("scroll", handleScroll);
+        handleScroll(); // Check for visible profiles on page load
+      });
+      
 
 </script>
 </body>

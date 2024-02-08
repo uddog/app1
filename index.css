@@ -70,6 +70,17 @@
    font-family: 'font3';
    font-size: 6rem;
 }
+.udnam .typing::after {
+   content: "|"; /* Cursor blinking */
+   animation: blink 0.7s infinite;
+ }
+ 
+ @keyframes blink {
+   50% {
+     opacity: 0;
+   }
+ }
+ /*end uddog name*/
 
 .udop {
    width: 90vw;
@@ -208,10 +219,6 @@
    margin-bottom: 10px;
    width: 100vw;
 }
-.post h3{
-   font-size: 2rem;
-   text-transform: uppercase;
-}
 #csvData {
    min-height: 100vh;
    display: flex;
@@ -272,7 +279,7 @@ a.sepost {
  }
  
  a.sepost button {
-   background-color: #4caf50; /* Set background color */
+   background-color: coral;
    color: white; /* Set text color */
    padding: 10px 15px; /* Add padding to the button */
    border: none; /* Remove border */
@@ -281,8 +288,11 @@ a.sepost {
  }
  
  a.sepost button:hover {
-   background-color: #45a049; /* Change background color on hover */
+   background: linear-gradient(135deg, #ff6b6b, #ffa69e); /* Change background gradient on hover */
+   background-size: 200% 200%; /* Increase size for a more dynamic hover effect */
  }
+ 
+
  
 
 

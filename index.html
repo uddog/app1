@@ -66,9 +66,34 @@
 <div class="instart">
 
      <div class="udnam">
-        <h2>উদ্যোগ<br>একটি <span style="color: rgb(236, 28, 24);">সামাজিক</span> উন্নয়নমূলক সংগঠন </h2>
+        <h2>উদ্যোগ<br><span class="typing" style="color: rgb(236, 28, 24);"></span></h2>
      </div>
-      
+
+
+
+      <script>
+          const text = "একটি সামাজিক উন্নয়নমূলক সংগঠন ";
+                  const delay = 100; // Typing delay in milliseconds
+
+                  function typeEffect(element, text, speed) {
+                    let i = 0;
+                    const typingInterval = setInterval(() => {
+                      if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                      } else {
+                        clearInterval(typingInterval);
+                      }
+                    }, speed);
+                  }
+
+                  const typingElement = document.querySelector('.typing');
+                  typeEffect(typingElement, text, delay);
+
+      </script>
+
+
+
      <div class="udop">
         <ul>
             <li><a onclick="storeOptionCategory('Medical')" href="mainoption.html"><div><ion-icon name="medkit-outline"></ion-icon><br>স্বাস্থ্য</div></a></li>
@@ -92,7 +117,6 @@
 
   
   <div class="post">    
-    <h3>Post</h3>
     <div id="csvData"></div>
     <a  id="fot" class="sepost" href="post.html"><button>See More</button></a>
   </div>
