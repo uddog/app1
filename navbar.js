@@ -164,15 +164,7 @@ function closeLogoutPopup() {
 
 function logout() {
     
-    localStorage.removeItem('rowIndex');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userBloodGroup');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userAddress');
-    localStorage.removeItem('userBirthDay');
-    localStorage.removeItem('userProfession');
-    
-    localStorage.removeItem('mainColor');
+    localStorage.removeItem.clear();
     location.reload();
 }
 

@@ -93,12 +93,9 @@
     </div>    
     <!--NavBar End-->
 
-
-
-
     <div id="singlePost"></div>
 
-  <script src="navbar.js"></script>
+    <script src="navbar.js"></script>
     <script>
         const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
 
@@ -113,8 +110,8 @@
         }
 
         function displaySinglePost(csv, postNo) {
-            const rows = csv.split('\n');
-            const columns = rows[postNo].split(',');
+            const rows = parseCSV(csv);
+            const columns = rows[postNo];
 
             const singlePostContainer = document.getElementById('singlePost');
 
@@ -144,6 +141,36 @@
             }
     
             singlePostContainer.appendChild(profileDiv);
+        }
+
+        function parseCSV(csvData) {
+            const rows = csvData.split('\n');
+            const parsedData = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i].trim();
+                let insideQuotes = false;
+                let currentValue = '';
+                const parsedRow = [];
+
+                for (let j = 0; j < row.length; j++) {
+                    const char = row[j];
+
+                    if (char === '"') {
+                        insideQuotes = !insideQuotes;
+                    } else if (char === ',' && !insideQuotes) {
+                        parsedRow.push(currentValue);
+                        currentValue = '';
+                    } else {
+                        currentValue += char;
+                    }
+                }
+
+                parsedRow.push(currentValue); // Push the last cell value
+                parsedData.push(parsedRow);
+            }
+
+            return parsedData;
         }
 
         // Retrieve the stored PostNo from localStorage

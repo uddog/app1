@@ -24,6 +24,7 @@ h1 {
 }
 
 p {
+    margin: 6px;
     font-size: 0.8rem;
     color: #95a5a6; /* Subtle text color */
 }
@@ -63,10 +64,13 @@ select {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #ecf0f1; /* Light background color */
-    color: #34495e; /* Dark text color */
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    color: #ffffff; /* Dark text color */
 }
-
+option{
+    background-color: black;
+}
 button {
     padding: 8px 12px;
     font-size: 14px; /* Adjusted for smaller screens */

@@ -147,9 +147,6 @@
     </div>
     <!--NavBar End-->
 
-
-
-
     <div id="csvData"></div>
 
     <!-- Loading Scene -->
@@ -164,9 +161,6 @@
         <button class="navigation-button" id="prevButton" style="display: none;">Previous</button>
         <button class="navigation-button" id="nextButton" style="display: none;">Next</button>
     </div>
-
-
-
 
     <script src="navbar.js"></script>
     <script>
@@ -215,14 +209,14 @@
         }
 
         function displayData(csv) {
-            const rows = csv.split('\n');
+            const rows = parseCSV(csv);
             const profilesContainer = document.getElementById('csvData');
 
             profilesContainer.innerHTML = '';
 
             let nonEmptyRows = 0;
             for (let i = rows.length - 1; i > 0; i--) {
-                const columns = rows[i].split(',');
+                const columns = rows[i];
 
                 const profileImageSrc = columns[0].trim();
                 if (profileImageSrc) {
@@ -287,6 +281,36 @@
                 });
                 pageButtonsContainer.appendChild(pageButton);
             }
+        }
+
+        function parseCSV(csvData) {
+            const rows = csvData.split('\n');
+            const parsedData = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i].trim();
+                let insideQuotes = false;
+                let currentValue = '';
+                const parsedRow = [];
+
+                for (let j = 0; j < row.length; j++) {
+                    const char = row[j];
+
+                    if (char === '"') {
+                        insideQuotes = !insideQuotes;
+                    } else if (char === ',' && !insideQuotes) {
+                        parsedRow.push(currentValue);
+                        currentValue = '';
+                    } else {
+                        currentValue += char;
+                    }
+                }
+
+                parsedRow.push(currentValue); // Push the last cell value
+                parsedData.push(parsedRow);
+            }
+
+            return parsedData;
         }
 
         fetchAndDisplayData();

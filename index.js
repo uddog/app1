@@ -132,7 +132,7 @@ async function fetchProfileData() {
     const data = await fetchData(csvUrl);
 
     if (data) {
-        const rows = data.split('\n').map(row => row.split(','));
+        const rows = parseCSV(data);
 
         const profileSection = document.getElementById("profileSection");
 
@@ -194,6 +194,47 @@ async function fetchProfileData() {
     }
 }
 
+function parseCSV(csvData) {
+    const rows = csvData.split('\n');
+    const parsedData = [];
+
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i].trim();
+        let insideQuotes = false;
+        let currentValue = '';
+        const parsedRow = [];
+
+        for (let j = 0; j < row.length; j++) {
+            const char = row[j];
+
+            if (char === '"') {
+                insideQuotes = !insideQuotes;
+            } else if (char === ',' && !insideQuotes) {
+                parsedRow.push(currentValue);
+                currentValue = '';
+            } else {
+                currentValue += char;
+            }
+        }
+
+        parsedRow.push(currentValue); // Push the last cell value
+        parsedData.push(parsedRow);
+    }
+
+    return parsedData;
+}
+
+// Mock fetchData function for testing
+async function fetchData(url) {
+    // This is a mock function, you should replace it with your actual fetchData implementation
+    const response = await fetch(url);
+    if (response.ok) {
+        return await response.text();
+    } else {
+        throw new Error('Failed to fetch data');
+    }
+}
+
 //for post
 async function fetchAndDisplayData() {
 
@@ -202,12 +243,12 @@ async function fetchAndDisplayData() {
     const data = await fetchData(csvPost);
 
     if (data) {
-        const rows = data.split('\n');
+        const rows = parseCSV(data);
         const profilesContainer = document.getElementById('csvData');
         const startIndex = Math.max(0, rows.length - 2);
 
         for (let i = startIndex; i < rows.length; i++) {
-            const columns = rows[i].split(',');
+            const columns = rows[i];
 
             const profileImageSrc = columns[0].trim();
             if (profileImageSrc) {
@@ -240,12 +281,54 @@ async function fetchAndDisplayData() {
                     }
                 }
                 
-
                 profilesContainer.appendChild(profileDiv);
             }
         }
     }
 }
+
+function parseCSV(csvData) {
+    const rows = csvData.split('\n');
+    const parsedData = [];
+
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i].trim();
+        let insideQuotes = false;
+        let currentValue = '';
+        const parsedRow = [];
+
+        for (let j = 0; j < row.length; j++) {
+            const char = row[j];
+
+            if (char === '"') {
+                insideQuotes = !insideQuotes;
+            } else if (char === ',' && !insideQuotes) {
+                parsedRow.push(currentValue);
+                currentValue = '';
+            } else {
+                currentValue += char;
+            }
+        }
+
+        parsedRow.push(currentValue); // Push the last cell value
+        parsedData.push(parsedRow);
+    }
+
+    return parsedData;
+}
+
+// Mock fetchData function for testing
+async function fetchData(url) {
+    // This is a mock function, you should replace it with your actual fetchData implementation
+    const response = await fetch(url);
+    if (response.ok) {
+        return await response.text();
+    } else {
+        throw new Error('Failed to fetch data');
+    }
+}
+
+// Call fetchAndDisplayData function
 
 
 // Call the functions
