@@ -223,7 +223,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const lastEnteredTime = localStorage.getItem('lastEnteredTime2');
+            const lastEnteredTime = localStorage.getItem('lastEnteredTime4');
             const pinSection = document.getElementById('pinSection');
             const dataSection = document.getElementById('dataSection');
 
@@ -274,7 +274,7 @@
                 if (pin === correctPin) {
                     pinSection.style.display = 'none';
                     dataSection.style.display = 'block';
-                    localStorage.setItem('lastEnteredTime2', Date.now().toString());
+                    localStorage.setItem('lastEnteredTime4', Date.now().toString());
                 } else {
                     pinErrorMessageElement.textContent = 'Incorrect PIN. Please try again.';
                 }
