@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
     <style>
+        main{
+            margin-top: 10vh;
+        }
         .setting-option {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 11vh;
+            margin-top: 10px;
         }
-        
         .option {
             width: 80vw;
             padding: 15px;
@@ -75,12 +77,18 @@
     <!--NavBar End-->
 
 
-    
+ <main>
     <div class="setting-option">
         <h4>Information</h4>
-        <a class="option" href="editprofiles.html"><i class="fas fa-user-edit"></i><p>Update Profile</p></a>
+        <a class="option" href="changephoto.html"><i class="fa-solid fa-user"></i><p>Change Profile Photo</p></a>
+        <a class="option" href="editprofiles.html"><i class="fas fa-user-edit"></i><p>Update Profile Information</p></a>
+    </div>
+
+    <div class="setting-option">
+        <h4>Security</h4>
         <a class="option" href="changepassword.html"><i class="fas fa-key"></i><p>Change Password</p></a>
     </div>
+</main>   
 
     <script src="navbar.js"></script>
 </body>
