@@ -1,3 +1,26 @@
+
+const text = "একটি সামাজিক উন্নয়নমূলক সংগঠন ";
+const delay = 100; // Typing delay in milliseconds
+
+function typeEffect(element, text, speed) {
+  let i = 0;
+  const typingInterval = setInterval(() => {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(typingInterval);
+    }
+  }, speed);
+}
+
+const typingElement = document.querySelector('.typing');
+typeEffect(typingElement, text, delay);
+
+
+//TYPING EFFECT END
+
+
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=0';
 
 async function fetchData(url) {
@@ -193,6 +216,7 @@ async function fetchProfileData() {
         });
     }
 }
+
 
 function parseCSV(csvData) {
     const rows = csvData.split('\n');

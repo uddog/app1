@@ -70,16 +70,7 @@
    font-family: 'font3';
    font-size: 6rem;
 }
-.udnam .typing::after {
-   content: "|"; /* Cursor blinking */
-   animation: blink 0.7s infinite;
- }
- 
- @keyframes blink {
-   50% {
-     opacity: 0;
-   }
- }
+
  /*end uddog name*/
 
 .udop {

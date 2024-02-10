@@ -58,7 +58,7 @@
             <li><a onclick="storeOptionCategory('Education')" href="mainoption.html">শিক্ষা</a></li>
             <li><a onclick="storeOptionCategory('Transport')" href="mainoption.html">পরিবহন</a></li>
             <li><a onclick="storeOptionCategory('Bazar')" href="mainoption.html">বাজার</a></li>
-            <li><a onclick="storeOptionCategory('উদ্যোগ')" href="#fot">উদ্যোগ</a></li>
+            <li><a onclick="storeOptionCategory('উদ্যোগ')">উদ্যোগ</a></li>
         </ul>
     </div>
     
@@ -72,24 +72,7 @@
 
 
       <script>
-          const text = "একটি সামাজিক উন্নয়নমূলক সংগঠন ";
-                  const delay = 100; // Typing delay in milliseconds
-
-                  function typeEffect(element, text, speed) {
-                    let i = 0;
-                    const typingInterval = setInterval(() => {
-                      if (i < text.length) {
-                        element.textContent += text.charAt(i);
-                        i++;
-                      } else {
-                        clearInterval(typingInterval);
-                      }
-                    }, speed);
-                  }
-
-                  const typingElement = document.querySelector('.typing');
-                  typeEffect(typingElement, text, delay);
-
+        
       </script>
 
 
@@ -147,16 +130,18 @@
     </div>
   </footer>
 
+  <script src="universal.js"></script>
 <script src="navbar.js"></script>
 <script src="index.js"></script>
 <script src="universal.js"></script>
+<!-- Add this script tag in the <head> section of your HTML file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
 
-
-          //store catagory
-          function storeOptionCategory(category) {
+      //store catagory
+        function storeOptionCategory(category) {
             localStorage.setItem('optionCategory', category);
         }
 
