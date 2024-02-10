@@ -12,7 +12,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffebcd;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -20,9 +19,9 @@
         }
         
         .container {
-            background-color: #fff5e1; /* Light orange */
+            background-color: #fff; /* White background */
             border-radius: 8px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Darker box shadow */
             text-align: center;
             padding: 10px;
             max-width: 400px;
@@ -31,12 +30,11 @@
         }
         
         h2 {
-            color: #ff7f50; /* Coral */
+            color: #000; /* Black text */
             font-size: 28px;
             margin-bottom: 20px;
         }
         
-        /* Style the error message */
         #message {
             display: none;
             font-size: 0.8rem;
@@ -44,7 +42,6 @@
             margin-top: 10px;
         }
         
-        /* Style the button */
         button {
             padding: 12px;
             background-color: #ff7f50; /* Coral */
@@ -62,35 +59,26 @@
         button:hover {
             background-color: #ffaa80; /* Light coral */
         }
-        /* Style the input box */
+        
         input[type="text"] {
             padding: 12px;
             margin-top: 20px;
+            outline: none;
             width: 100%;
             box-sizing: border-box;
             border: none;
-            border-bottom: 2px solid #ff7f50; /* Coral */
-            background-color: #fff5e1; /* Light orange */
+            border-bottom: 2px solid #000; /* Black border bottom */
+            background-color: #fff; /* White background */
             border-radius: 5px;
             font-size: 16px;
-            color: #333;
+            color: #000; /* Black text */
             transition: border-bottom-color 0.3s ease-in-out;
         }
-
-        /* Style the placeholder text */
+        
         input[type="text"]::placeholder {
             color: #999;
         }
-
-        /* Add focus effect */
-        input[type="text"]:focus {
-            outline: none;
-            border-bottom-color: #ffaa80; /* Light coral */
-            box-shadow: 0 0 5px rgba(255, 127, 80, 0.5); /* Coral shadow */
-        }
-
-
-        /* Loading Modal */
+        
         .modal {
             display: none;
             position: fixed;
@@ -104,17 +92,12 @@
         }
         
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #ff7f50; /* Coral */
+            border: 4px solid #ff7f50; /* Coral border */
+            border-top: 4px solid #000; /* Black top border */
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
         
         .back-arrow {
@@ -125,10 +108,12 @@
             position: absolute;
             top: -1.5vh;
             left: 5px;
-          }
-          .back-arrow:hover{
-            color: white;
-          }
+        }
+        
+        .back-arrow:hover {
+            color: #fff; /* White on hover */
+        }
+        
     </style>
 </head>
 

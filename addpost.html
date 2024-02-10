@@ -8,47 +8,46 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
 </head>
+
 <style>
     body {
         margin: 0;
         padding: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #ffebcd;
+        background: #f5f5f5; /* Changed background color to a light gray */
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        min-height: 100vh; /* Make sure the body covers the entire viewport height */
     }
-    
+
     .container {
-        background-color: #fff5e1; /* Light orange */
         border-radius: 8px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
         text-align: center;
-        padding: 10px;
-        max-width: 400px;
-        width: 90vw;
+        padding: 30px; /* Increased padding for better spacing */
+        max-width: 500px; /* Increased max-width for better readability */
+        width: 90%; /* Set width to a percentage for responsiveness */
         animation: fadeInDown 1s ease-in-out;
     }
-    
+
     h2 {
-        color: #ff7f50; /* Coral */
+        color: #333;
         font-size: 28px;
         margin-bottom: 20px;
     }
-    
+
     /* Style the error message */
     #message {
         display: none;
         font-size: 0.8rem;
-        color: #ff7f50; 
+        color: #ff7f50;
         margin-top: 10px;
     }
-    
+
     /* Style the button */
     button {
         padding: 12px;
-        background-color: #ff7f50; /* Coral */
+        background-color: #ff7f50;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -59,37 +58,32 @@
         transition: background 0.3s ease-in-out;
         margin-top: 20px;
     }
-    
+
     button:hover {
-        background-color: #ffaa80; /* Light coral */
+        background-color: #ffaa80;
     }
+
     /* Style the input box */
-    input[type="text"] {
+    input[type="text"],
+    textarea {
         padding: 12px;
         margin-top: 20px;
         width: 100%;
         box-sizing: border-box;
         border: none;
-        border-bottom: 2px solid #ff7f50; /* Coral */
-        background-color: #fff5e1; /* Light orange */
-        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        background-color: #f9f9f9; /* Light gray background for inputs */
         font-size: 16px;
         color: #333;
         transition: border-bottom-color 0.3s ease-in-out;
+        outline: none;
     }
 
     /* Style the placeholder text */
-    input[type="text"]::placeholder {
+    input[type="text"]::placeholder,
+    textarea::placeholder {
         color: #999;
     }
-
-    /* Add focus effect */
-    input[type="text"]:focus {
-        outline: none;
-        border-bottom-color: #ffaa80; /* Light coral */
-        box-shadow: 0 0 5px rgba(255, 127, 80, 0.5); /* Coral shadow */
-    }
-
 
     /* Loading Modal */
     .modal {
@@ -103,21 +97,26 @@
         justify-content: center;
         align-items: center;
     }
-    
+
     .spinner {
         border: 4px solid #f3f3f3;
-        border-top: 4px solid #ff7f50; /* Coral */
+        border-top: 4px solid #ff7f50;
         border-radius: 50%;
         width: 40px;
         height: 40px;
         animation: spin 1s linear infinite;
     }
-    
+
     @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
     }
-    
+
     .back-arrow {
         text-decoration: none;
         color: #ffaa80;
@@ -126,30 +125,34 @@
         position: absolute;
         top: -1.5vh;
         left: 5px;
-      }
-      .back-arrow:hover{
-        color: white;
-      }
+    }
+
+    .back-arrow:hover {
+        color: black;
+    }
+
 </style>
 
 <body>
 
+    <a href="admin3.html" class="back-arrow">&#8592;</a>
+
     <div class="container">
-        <h2>Change Photo</h2>
+        <h2>Create a POST</h2>
         <div id="message"></div>
-        
+
         <!-- Add the data input boxes -->
-        <input autocomplete="off" placeholder="Enter Data 1" type="text" id="data1" name="data1">
+        <input autocomplete="off" placeholder="Add IMG URL" type="text" id="data1" name="data1">
         <br>
-        <input autocomplete="off" placeholder="Enter Data 2" type="text" id="data2" name="data2">
+        <input autocomplete="off" placeholder="ADD Title" type="text" id="data2" name="data2">
         <br>
-        <input autocomplete="off" placeholder="Enter Data 3" type="text" id="data3" name="data3">
+        <textarea autocomplete="off" placeholder="ADD Mini Details" id="data3" name="data3" rows="4"></textarea>
         <br>
-        <input autocomplete="off" placeholder="Enter Data 4" type="text" id="data4" name="data4">
+        <textarea autocomplete="off" placeholder="ADD Full Details(if have)" id="data4" name="data4" rows="4"></textarea>
         <br>
-        
-        <button onclick="sendData()">Change</button>
-        
+
+        <button onclick="sendData()">POST</button>
+
         <!-- Loading Modal -->
         <div id="loading" class="modal">
             <div class="spinner"></div>
@@ -158,17 +161,17 @@
 
     <script>
         document.getElementById('message').style.display = 'none';
-    
+
         function sendData() {
             // Display loading modal
             document.getElementById('loading').style.display = 'flex';
-            
+
             // Retrieve input data from the input boxes
             var data1 = document.getElementById('data1').value;
             var data2 = document.getElementById('data2').value;
             var data3 = document.getElementById('data3').value;
             var data4 = document.getElementById('data4').value;
-    
+
             // Create a JSON object with the data
             var formData = {
                 data1: data1,
@@ -176,7 +179,7 @@
                 data3: data3,
                 data4: data4
             };
-    
+
             // Send data to the Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbyjltDx7jQvJWrPetpHv635vC7PhfFuiFmJwrtUEeB_SXGCXaHQzJg-L_9nmQbYkVo/exec', {
                     method: 'POST',
@@ -188,7 +191,7 @@
                     // Hide loading modal
                     document.getElementById('loading').style.display = 'none';
                     // Display success message in the HTML
-                    document.getElementById('message').innerHTML = "Data added Successfully.";
+                    document.getElementById('message').innerHTML = "Post Successfully";
                     document.getElementById('message').style.display = 'block'; // Show the message div
                 })
                 .catch(error => {
@@ -200,6 +203,8 @@
                     document.getElementById('message').style.display = 'block'; // Show the error div
                 });
         }
+
     </script>
 </body>
+
 </html>
