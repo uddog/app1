@@ -1,132 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scroll Animation</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    scroll-snap-type: y mandatory;
-    font-family: Arial, sans-serif;
-  }
-  section {
-    scroll-snap-align: start;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    color: white;
-  }
-  #section1 {
-    background-color: #3498db;
-  }
-  #section2 {
-    background-color: #2ecc71;
-  }
-  #section3 {
-    background-color: #e74c3c;
-  }
-  .animation1 {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .animation1.animate {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .animation2 {
-    opacity: 0;
-    transform: scale(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .animation2.animate {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .animation3 {
-    opacity: 0;
-    transform: rotate(-180deg);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .animation3.animate {
-    opacity: 1;
-    transform: rotate(0);
-  }
-  .box {
-    width: 100px;
-    height: 100px;
-    background-color: white;
-    margin: 20px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      background-color: #f5f5f5; /* Light gray */
+    }
+    
+  </style>
 </head>
 <body>
-<section id="section1" class="section">
-  <div class="box animation1">
-    Box 1
+  <div class="button-container">
+    <a href="history.html"><button class="button"><ion-icon name="stats-chart-outline"></ion-icon><br>History</button></a>
+    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
+    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
+    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
   </div>
-  <div class="box animation1">
-    Box 2
-  </div>
-  <div class="box animation1">
-    Box 3
-  </div>
-</section>
-<section id="section2" class="section">
-  <div class="box animation2">
-    Box 4
-  </div>
-  <div class="box animation2">
-    Box 5
-  </div>
-  <div class="box animation2">
-    Box 6
-  </div>
-</section>
-<section id="section3" class="section">
-  <div class="box animation3">
-    Box 7
-  </div>
-  <div class="box animation3">
-    Box 8
-  </div>
-  <div class="box animation3">
-    Box 9
-  </div>
-</section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function(event) { 
-    const boxes1 = document.querySelectorAll('#section1 .box');
-    const boxes2 = document.querySelectorAll('#section2 .box');
-    const boxes3 = document.querySelectorAll('#section3 .box');
-
-    function checkScroll(boxes) {
-      for (let i = 0; i < boxes.length; i++) {
-        const box = boxes[i];
-        const rect = box.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight) {
-          box.classList.add('animate');
-        } else {
-          box.classList.remove('animate');
-        }
-      }
-    }
-
-    window.addEventListener('scroll', function() {
-      checkScroll(boxes1);
-      checkScroll(boxes2);
-      checkScroll(boxes3);
-    });
-    checkScroll(boxes1);
-    checkScroll(boxes2);
-    checkScroll(boxes3);
-  });
-</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

@@ -163,6 +163,7 @@
         <button class="btn" onclick="displayCSV('Event', 'resultDiv', this)">Event</button>
         <button class="btn" onclick="displayCSV('Blood', 'resultDiv', this)">Blood</button>
         <button class="btn" onclick="displayCSV('Money', 'resultDiv', this)">Money</button>
+        <button class="btn" onclick="displayCSV('Reference', 'resultDiv', this)">Reference</button>
     </div>
 
     <div class="hello">
@@ -254,11 +255,13 @@
                     return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=692804136';
                 case 'Money':
                     return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=909176802';
+                case 'Reference': // New case for Reference
+                    return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqO2wnCm7qgYrAPmti7eLwgiVpLaTdUSrWebr_KLKQ9h0mS2WYIubB-9epYRF6Ro9ihvA9Qe5vZxBC/pub?output=csv&gid=54672331'; // Replace with your CSV link for Reference data
                 default:
                     return '';
             }
         }
-
+        
         // Initial call to display 'Event' data on page load
         displayCSV('Event', 'resultDiv', document.querySelector('.btn'));
     </script>

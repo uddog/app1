@@ -7,9 +7,9 @@
     <title>Serach in UDDOG</title>
     <link rel="stylesheet" href="universal.css">
     <style>
+       
         body{
-            background-image: url(https://i.pinimg.com/564x/60/6a/34/606a342f6d5105c33d02269ba12371f2.jpg);
-            background-attachment: fixed;
+            background-color: #f0f0f0; /* Light gray */
         }
         .srch {
             display: flex;
@@ -20,25 +20,25 @@
             width: 100vw;
             height: 8vh;
             top: 0px;
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid rgb(0, 0, 0);
             border-radius: 0 0 10px 10px;
             z-index: 2;
         }
         .srch input{
             margin: 3px;
         }
-
+        
         #filterType {
             padding: 5px;
             text-align: center;
             border: none;
-            color: white;
+            color: rgb(0, 0, 0);
             background-color: transparent;
             outline: none;
-            border: 1px solid white;
+            border: 1px solid rgb(0, 0, 0);
         }
         #filterType option{
-            background-color: black;
+            background-color: rgb(0, 0, 0);
             color: white;
         }
         #infoFilter {
@@ -47,13 +47,13 @@
             text-align: center;
             border: none;
             background-color: transparent;
-            border: solid 1px white;
-            color: white;
+            border: solid 1px rgb(0, 0, 0);
+            color: rgb(2, 2, 2);
             outline: none;
         }
         #infoFilter::placeholder{
             text-align: center;
-            color: white;
+            color: rgb(4, 4, 4);
         }
         
         input[type="checkbox"] {
@@ -61,49 +61,40 @@
             background-color: transparent;
             width: 1.6rem;
             height: 1.6rem;
-            border: solid 1px white;
+            border: solid 1px rgb(8, 8, 8);
         }
         
         input[type="checkbox"]:checked {
-          background-color: white; 
-}
-        .availability-count {
-            position: fixed;
-            right: 0px;
-            color: white;
-            top: 20px;
-            font-size: 1.4rem;
-            border-radius: 10px 0px 0px 10px;
-            padding: 3px 10px;
-            background-color: black;
+          background-color: rgb(9, 9, 9); 
         }
-
+        
         #info {
             display: flex;
             margin-top: 10vh;
             justify-content: center;
             flex-wrap: wrap;
+
         }
         .imgp{
             text-align: center;
             margin: 10px;
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid rgb(0, 0, 0);
         }
         #info>div {
-            color: white;
             line-height: 1.3rem;
             margin: 7px;
+            border: 1px solid #0a0a0a;
+            background-color: white;
             width: 300px;
             padding: 15px;
             backdrop-filter: blur(5px);
-            border: 2px solid white;
             border-radius: 12px;
             font-size: 0.8rem;
          }
         #info div p {
            font-weight: bolder;
         }
-
+        
         #info div img {
             border: 3px solid white;
             border-radius: 50%;
@@ -116,7 +107,7 @@
                width: 85vw;
           }
         }
-
+        
         .availability-count {
             margin-top: 10vh;
             position: fixed;
@@ -124,12 +115,11 @@
             right: 0px;
             top: 20px;
             font-size: 1.3rem;
-            color: black;
+            color: rgb(255, 255, 255);
             border-radius: 10px 0px 0px 10px;
             padding: 3px 10px;
-            background-color: white;
+            background-color: rgb(10, 10, 10);
         }
-
     </style>
 </head>
 

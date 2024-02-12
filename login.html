@@ -10,34 +10,39 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
-            animation: gradientChange 10s ease-in-out infinite;
-            color: #333333;
+            display: flex;
+            flex-wrap: wrap;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            justify-content: center;
+            background-color: #f0f0f0; /* Light gray */
+        }
+        
+        p {
+            position: absolute;
+            height: fit-content;
+            top: 10vh;
+            font-size: 2rem;
+            position: relative;
+            color: #333333; /* Dark gray */
         }
         
         .login-container {
-            background-color: #ffebcd; /* Light orange */
-            border-radius: 8px;
+            margin-top: -20vh;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             overflow: hidden;
-            position: relative;
-            padding: 10px;
-            padding-bottom: 40px;
             width: 90vw;
-            border-radius: 10px;
             max-width: 400px;
-            animation: fadeInDown 1s ease-in-out;
+            padding: 20px;
+            border-radius: 30px;
+            background-color: #ffffff; /* White */
         }
         
         h2 {
-            color: #ff7f50; /* Coral */
             margin-bottom: 20px;
             font-size: 32px;
+            color: #333333; /* Dark gray */
         }
         
         .login-input {
@@ -46,20 +51,16 @@
             margin: 14px 0;
             box-sizing: border-box;
             border: none;
-            border-bottom: 2px solid #ff7f50; /* Coral */
-            background-color: #fff5e1; /* Light orange */
+            border-bottom: 1px solid #555555; /* Dark gray */
             outline: none;
-            transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
-            color: #333333;
         }
         
         .login-input:focus {
-            border-color: #ffaa80; /* Light coral */
-            background-color: #fff; /* White */
+            background-color: #ffffff; /* White */
         }
         
         .login-input::placeholder {
-            color: #ff7f50; /* Coral */
+            color: #555555; /* Dark gray */
         }
         
         .login-label {
@@ -67,29 +68,27 @@
             left: 10px;
             top: 12px;
             font-size: 16px;
-            color: #ff7f50; /* Coral */
             transform: translateY(-50%);
             pointer-events: none;
-            transition: transform 0.3s ease-in-out, font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+            color: #555555; /* Dark gray */
         }
         
         .login-input:focus + .login-label,
         .login-input:not(:placeholder-shown) + .login-label {
             transform: translateY(-80%);
             font-size: 12px;
-            color: #333333;
+            color: #333333; /* Dark gray */
         }
         
         .login-button {
-            background: #ff7f50; /* Coral */
-            color: white;
             padding: 12px;
+            background-color: transparent;
             border: 1px solid #ff7f50; /* Coral */
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
+            width: 50%;
             margin-top: 10px;
-            transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
+            transition: 0.1s;
             font-size: 16px;
         }
         
@@ -100,11 +99,17 @@
             border: 1px solid #ffaa80; /* Light coral */
         }
         
+
+
+
+        
         #errorMessage {
             color: #ff4444;
             font-size: 14px;
             margin-top: 10px;
+            font-weight: lighter;
         }
+
         
         .loading-overlay {
             display: none;
@@ -133,24 +138,20 @@
             100% { transform: rotate(360deg); }
         }
         
-        @keyframes gradientChange {
-            0% { background: #f7f5f3; }
-            50% { background: #fff5e1; }
-            100% { background: white; }
-        }
-        
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+
         
     </style>
 </head>
 
 <body>
+
+
+
+    <p>Welcome to UDDOG</p>
+
     <div class="login-container">
-        <h2>UDDOG ID</h2>
         <p id="errorMessage"></p>
+        <h2>UDDOG ID</h2>
         <form id="loginForm">
             <input autocomplete="off" placeholder="Enter Username" type="text" id="username" class="login-input" name="username" required><br>
             <input autocomplete="off" placeholder="Enter Password" type="password" id="password" class="login-input" name="password" required><br>

@@ -12,53 +12,133 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffebcd;
-            display: flex;
-            align-items: center;
+            background-color: #f0f0f0; /* Light gray */
             justify-content: center;
+            display: flex;
             height: 100vh;
         }
-        .info{
-            position: absolute;
-            top: 4vh;
-            width: 100vw;
-        }
-        .info p{
-            margin-left: 15vw;
-        }
-        .info li{
-            font-size: 0.9rem;
-            margin-left: 20vw;
-            list-style-type: circle;
-        }
-
-        .info span{
-            color: #ff7f50;
-        }
-
+  
         .container {
-            background-color: #ffebcd; /* Light orange */
-            border-radius: 8px;
+            width: 100vw;
+            margin-top: 20vh;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
-            overflow: hidden;
-            position: relative;
             padding: 10px;
-            padding-bottom: 40px;
-            width: 90vw;
-            border-radius: 10px;
-            max-width: 400px;
-            animation: fadeInDown 1s ease-in-out;
+            border-radius: 30px 30px 0px 0px;
+            background-color: #ffffff; /* White */
         }
+        
 
         h1 {
             text-align: center;
-            color: #ff7f50; /* Coral */
             font-size: 32px;
             margin-bottom: 20px;
         }
 
-        /* Loading Modal */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+
+        input {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid; /* Coral */
+            outline: none;
+            color: #333333;
+        }
+
+        input:focus {
+            background-color: #fff; /* White */
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 5px;
+            margin: 20px;
+            background-color: transparent;
+            cursor: pointer;
+            width: 50%;
+            box-sizing: border-box;
+            transform: 0.1s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            color: white;
+            background-color: rgb(0, 0, 0); /* Light coral */
+        }
+
+       
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ff7f50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            width: 60vw;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff5e1; /* Light orange */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+        
+        /* Form styling */
+        .error-message {
+            display: none;
+            font-size: 0.8rem;
+            color: #ff0000; /* Red color for error messages */
+        }
+
+
+     
+        /* Additional styling for the popup button */
+        .popup button {
+            margin-top: 15px;
+            background-color: #ff7f50; /* Coral */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .popup button:hover {
+            background-color: #000000; /* Light coral */
+        }
+
+
+ /* Loading Modal */
         .modal {
             display: none;
             position: fixed;
@@ -92,137 +172,23 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Success Message */
-        .success-message {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ff7f50;
-            color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        /* Popup */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            width: 60vw;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff5e1; /* Light orange */
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Form styling */
-        .error-message {
-            display: none;
-            font-size: 0.8rem;
-            color: #ff0000; /* Red color for error messages */
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        input {
-            width: calc(100% - 20px);
-            padding: 12px 10px;
-            margin: 14px 0;
-            box-sizing: border-box;
-            border: none;
-            border-bottom: 2px solid #ff7f50; /* Coral */
-            background-color: #fff5e1; /* Light orange */
-            outline: none;
-            transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
-            color: #333333;
-        }
-
-        input:focus {
-            border-color: #ffaa80; /* Light coral */
-            background-color: #fff; /* White */
-        }
-
-        button {
-            padding: 12px;
-            background-color: #ff7f50; /* Coral */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: background 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: #ffaa80; /* Light coral */
-        }
-
-        /* Additional styling for the popup button */
-        .popup button {
-            margin-top: 15px;
-            background-color: #ff7f50; /* Coral */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 12px;
-            cursor: pointer;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .popup button:hover {
-            background-color: #ffaa80; /* Light coral */
-        }
-
-        @keyframes gradientChange {
-            0% { background: #ffebcd; }
-            50% { background: white; }
-            100% { background: #ffebcd; }
-        }
-
-
         .back-arrow {
             text-decoration: none;
-            color: #ffaa80;
             font-size: 2.2rem;
+            color: black;
             cursor: pointer;
             position: absolute;
             top: -1.5vh;
             left: 5px;
           }
           .back-arrow:hover{
-            color: white;
+            color: coral;
           }
     </style>
 </head>
 
 <body>
     <a href="admin1.html" class="back-arrow" >&#8592;</a>
-
-
-    <div class="info">
-        <p>UDDOG ACCOUT CREATE RULE</p>
-        <ul>
-            <li><span>Username</span> can't be change</li>
-            <li><span>Username</span> must be in small letter</li>
-            <li><span>Username</span> should contain user <span>Real Name</span></li>
-            <li>Don't use space in <span>Username</span></li>
-            <li>You can change <span>Password</span> later</li>
-        </ul>
-    </div>
 
     <div class="container">
 
@@ -248,8 +214,8 @@
 
         <form id="dataForm">
             <p id="usernameError" class="error-message"></p>
-            <input autocomplete="off" placeholder="Enter user new Username" type="text" id="dataInput1" name="dataInput1" required>
-            <input autocomplete="off" placeholder="Choose a temporary Password" type="text" id="dataInput2" name="dataInput2" required>
+            <input autocomplete="off" placeholder="Create Username" type="text" id="dataInput1" name="dataInput1" required>
+            <input autocomplete="off" placeholder="Create a temporary Password" type="text" id="dataInput2" name="dataInput2" required>
             <button type="button" onclick="checkAndAddData()">Create Account</button>
         </form>
     </div>
