@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Photo</title>
-    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
 </head>
 
@@ -13,29 +12,49 @@
     body {
         margin: 0;
         padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #f5f5f5; /* Changed background color to a light gray */
+        background: #f0f0f0; /* Changed background color to a light gray */
         display: flex;
-        align-items: center;
         justify-content: center;
-        min-height: 100vh; /* Make sure the body covers the entire viewport height */
+        height: 100vh; /* Make sure the body covers the entire viewport height */
     }
-
+    
     .container {
-        border-radius: 8px;
+        margin-top: 10vh;
+        background-color: white;
+        border-radius: 30px 30px 0px 0px;
         text-align: center;
+        width: 100vw;
         padding: 30px; /* Increased padding for better spacing */
-        max-width: 500px; /* Increased max-width for better readability */
-        width: 90%; /* Set width to a percentage for responsiveness */
-        animation: fadeInDown 1s ease-in-out;
+        position: relative; /* Added to set the position of the confirmation popup */
     }
-
+    
     h2 {
-        color: #333;
         font-size: 28px;
         margin-bottom: 20px;
     }
-
+    
+        /* Style the input box */
+        input[type="text"],
+        textarea {
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            font-size: 0.9rem;
+            background-color: transparent;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+            outline: none;
+        }
+    
+        /* Style the placeholder text */
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            font-size: 0.7rem;
+            color: black;
+        }
+    
     /* Style the error message */
     #message {
         display: none;
@@ -43,11 +62,11 @@
         color: #ff7f50;
         margin-top: 10px;
     }
-
+    
     /* Style the button */
     button {
         padding: 12px;
-        background-color: #ff7f50;
+        background-color: black;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -58,33 +77,11 @@
         transition: background 0.3s ease-in-out;
         margin-top: 20px;
     }
-
-    button:hover {
+    button:hover{
         background-color: #ffaa80;
-    }
 
-    /* Style the input box */
-    input[type="text"],
-    textarea {
-        padding: 12px;
-        margin-top: 20px;
-        width: 100%;
-        box-sizing: border-box;
-        border: none;
-        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-        background-color: #f9f9f9; /* Light gray background for inputs */
-        font-size: 16px;
-        color: #333;
-        transition: border-bottom-color 0.3s ease-in-out;
-        outline: none;
     }
-
-    /* Style the placeholder text */
-    input[type="text"]::placeholder,
-    textarea::placeholder {
-        color: #999;
-    }
-
+    
     /* Loading Modal */
     .modal {
         display: none;
@@ -97,7 +94,7 @@
         justify-content: center;
         align-items: center;
     }
-
+    
     .spinner {
         border: 4px solid #f3f3f3;
         border-top: 4px solid #ff7f50;
@@ -106,47 +103,71 @@
         height: 40px;
         animation: spin 1s linear infinite;
     }
-
+    
     @keyframes spin {
         0% {
             transform: rotate(0deg);
         }
-
+    
         100% {
             transform: rotate(360deg);
         }
     }
-
-    .back-arrow {
-        text-decoration: none;
-        color: #ffaa80;
-        font-size: 2.2rem;
-        cursor: pointer;
+    
+    /* Popup style */
+    .popup {
+        display: none;
         position: absolute;
-        top: -1.5vh;
-        left: 5px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
     }
-
-    .back-arrow:hover {
-        color: black;
+    .cnt{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
-
+    
+    .popup p {
+        width: 100%;
+    }
+    
+    .popup button {
+        padding: 10px 20px;
+        margin-right: 3px;
+        border: none;
+        border-radius: 5px;
+        width: 40%;
+        cursor: pointer;
+        background-color: black;
+        color: #fff;
+        transition: background 0.3s ease-in-out;
+    }
+    
+    .popup button:hover {
+        background-color: #ffaa80;
+    }
+    
 </style>
 
 <body>
 
-    <a href="admin3.html" class="back-arrow">&#8592;</a>
 
     <div class="container">
         <h2>Create a POST</h2>
         <div id="message"></div>
 
         <!-- Add the data input boxes -->
-        <input autocomplete="off" placeholder="Add IMG URL" type="text" id="data1" name="data1">
+        <input autocomplete="off" placeholder="Add img url" type="text" id="data1" name="data1">
         <br>
-        <input autocomplete="off" placeholder="ADD Title" type="text" id="data2" name="data2">
+        <input autocomplete="off" placeholder="Add Title" type="text" id="data2" name="data2">
         <br>
-        <textarea autocomplete="off" placeholder="ADD Mini Details" id="data3" name="data3" rows="4"></textarea>
+        <textarea autocomplete="off" placeholder="Add mini Details" id="data3" name="data3" rows="4"></textarea>
         <br>
         <textarea autocomplete="off" placeholder="ADD Full Details(if have)" id="data4" name="data4" rows="4"></textarea>
         <br>
@@ -157,12 +178,29 @@
         <div id="loading" class="modal">
             <div class="spinner"></div>
         </div>
+
+        <!-- Confirmation Popup -->
+        <div id="confirmationPopup" class="popup">
+            <div class="cnt">
+            <p>Are you sure you want to post this?</p>
+            <button onclick="confirmPost()">Yes</button>
+            <button onclick="closeConfirmationPopup()">No</button>
+           </div>
+        </div>
     </div>
 
     <script>
         document.getElementById('message').style.display = 'none';
 
         function sendData() {
+            // Show confirmation popup
+            document.getElementById('confirmationPopup').style.display = 'flex';
+        }
+
+        function confirmPost() {
+            // Hide confirmation popup
+            document.getElementById('confirmationPopup').style.display = 'none';
+
             // Display loading modal
             document.getElementById('loading').style.display = 'flex';
 
@@ -202,6 +240,11 @@
                     document.getElementById('message').innerHTML = 'Error occurred while sending the data.';
                     document.getElementById('message').style.display = 'block'; // Show the error div
                 });
+        }
+
+        function closeConfirmationPopup() {
+            // Hide confirmation popup
+            document.getElementById('confirmationPopup').style.display = 'none';
         }
 
     </script>
