@@ -50,21 +50,21 @@
       }
       .touch__1:hover ~ .main .icon {
         transform: translateX(-20px) translateY(-10px) translateZ(60px);
-        box-shadow: 20px 20px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 20px 24px rgba(183, 173, 173, 0.2);
       }
       .touch__2:hover ~ .main {
         transform: rotateX(20deg) rotateY(0) rotateZ(0);
       }
       .touch__2:hover ~ .main .icon {
         transform: translateX(0) translateY(-10px) translateZ(60px);
-        box-shadow: 0 20px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 20px 24px rgba(183, 173, 173, 0.2);
       }
       .touch__3:hover ~ .main {
         transform: rotateX(20deg) rotateY(20deg) rotateZ(-10deg);
       }
       .touch__3:hover ~ .main .icon {
         transform: translateX(20px) translateY(-10px) translateZ(60px);
-        box-shadow: -20px 20px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 20px 24px rgba(183, 173, 173, 0.2);
       }
       .touch__4:hover ~ .main {
         transform: rotateX(0) rotateY(-40deg) rotateZ(0);

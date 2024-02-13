@@ -17,18 +17,16 @@
             justify-content: center;
             background-color: #f0f0f0; /* Light gray */
         }
-        
-        p {
+        .wel{
             position: absolute;
-            height: fit-content;
-            top: 10vh;
-            font-size: 2rem;
-            position: relative;
-            color: #333333; /* Dark gray */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
         }
         
         .login-container {
-            margin-top: -20vh;
+            z-index: 1;
+            margin-top: 15vh;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             overflow: hidden;
@@ -37,10 +35,17 @@
             padding: 20px;
             border-radius: 30px;
             background-color: #ffffff; /* White */
+            animation: up 1.5s linear;
+        }
+        @keyframes up {
+            from{
+                  margin-top: 100vh;
+            }
         }
         
         h2 {
             margin-bottom: 20px;
+            margin-top: 20px;
             font-size: 32px;
             color: #333333; /* Dark gray */
         }
@@ -83,17 +88,17 @@
         .login-button {
             padding: 12px;
             background-color: transparent;
-            border: 1px solid #ff7f50; /* Coral */
+            border: 1px solid; /* Coral */
             border-radius: 4px;
             cursor: pointer;
             width: 50%;
-            margin-top: 10px;
+            margin-top: 20px;
             transition: 0.1s;
             font-size: 16px;
         }
         
         .login-button:hover {
-            background: #ffaa80; /* Light coral */
+            background: black; /* Light coral */
             color: white;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border: 1px solid #ffaa80; /* Light coral */
@@ -126,7 +131,7 @@
         
         .loading-spinner {
             border: 8px solid #f3f3f3;
-            border-top: 8px solid #ff7f50; /* Coral */
+            border-top: 8px solid; /* Coral */
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -145,13 +150,12 @@
 
 <body>
 
-
-
+   <div class="wel">
     <p>Welcome to UDDOG</p>
-
+   </div>
     <div class="login-container">
-        <p id="errorMessage"></p>
         <h2>UDDOG ID</h2>
+        <p id="errorMessage"></p>
         <form id="loginForm">
             <input autocomplete="off" placeholder="Enter Username" type="text" id="username" class="login-input" name="username" required><br>
             <input autocomplete="off" placeholder="Enter Password" type="password" id="password" class="login-input" name="password" required><br>
