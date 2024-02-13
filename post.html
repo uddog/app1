@@ -111,6 +111,54 @@
             outline: none;
             border-radius: 4px;
         }
+
+        /* Styles for the loading scene */
+        #loadingScene {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999; /* Ensure the loading scene is on top of other elements */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Styles for the loading spinner */
+        .spinner {
+            margin: 0 auto;
+            width: 50px;
+            height: 50px;
+            position: relative;
+            text-align: center;
+        }
+
+        .spinner div {
+            width: 10px;
+            height: 10px;
+            background-color: #333; /* Dark gray */
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .spinner div:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .spinner div:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
     </style>
 </head>
 
@@ -151,9 +199,16 @@
     <div id="csvData"></div>
 
     <!-- Loading Scene -->
-    <div id="loadingScene" style="display: none; text-align: center; margin-top: 20px;">
-        Loading...
+    <div id="loadingScene">
+        <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
+
 
     <!-- Page Buttons -->
     <div class="navigation-buttons" id="pageButtons"></div>

@@ -84,6 +84,33 @@
             box-sizing: border-box;
         }
           
+
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid ;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -127,6 +154,12 @@
 
     <input type="text" id="searchBox" placeholder="Search" oninput="searchProfiles()">
 
+
+       <!-- Loading screen -->
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div id="profilesContainer">
         <!-- Profile content will be dynamically generated here -->
     </div>
@@ -134,77 +167,86 @@
 
     <script src="navbar.js"></script>
     <script>
-        // Replace 'your_csv_link_here' with the actual link to your CSV file
         const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
 
+        // Show loading screen
+        document.getElementById('loading-screen').style.display = 'flex';
+
         fetch(csvLink)
-    .then(response => response.text())
-    .then(csvData => {
-        const profilesContainer = document.getElementById('profilesContainer');
-        const rows = csvData.split('\n');
+            .then(response => response.text())
+            .then(csvData => {
+                // Hide loading screen
+                document.getElementById('loading-screen').style.display = 'none';
 
-        let sections = {};
+                const profilesContainer = document.getElementById('profilesContainer');
+                const rows = csvData.split('\n');
 
-        // Group profiles by section
-        for (let i = 1; i < rows.length; i++) {
-            const profileData = rows[i].split(',');
+                let sections = {};
 
-            const sectionName = profileData[1];
-            const profileDiv = document.createElement('div');
-            profileDiv.classList.add('profile');
+                // Group profiles by section
+                for (let i = 1; i < rows.length; i++) {
+                    const profileData = rows[i].split(',');
 
-            // Create an image element and set its source (column B)
-            const imgElement = document.createElement('img');
-            imgElement.src = profileData[2]; // Assuming column B contains the image source
-            profileDiv.appendChild(imgElement);
+                    const sectionName = profileData[1];
+                    const profileDiv = document.createElement('div');
+                    profileDiv.classList.add('profile');
 
-            // Create a div for column C content
-            const columnCContent = document.createElement('div');
-            columnCContent.textContent = profileData[3]; // Assuming column C contains content
-            profileDiv.appendChild(columnCContent);
+                    // Create an image element and set its source (column B)
+                    const imgElement = document.createElement('img');
+                    imgElement.src = profileData[2]; // Assuming column B contains the image source
+                    profileDiv.appendChild(imgElement);
 
-            // Create an anchor tag and set its link (column D)
-            const anchorElement = document.createElement('a');
-            anchorElement.href = profileData[4]; // Assuming column D contains the link
-            anchorElement.appendChild(profileDiv);
+                    // Create a div for column C content
+                    const columnCContent = document.createElement('div');
+                    columnCContent.textContent = profileData[3]; // Assuming column C contains content
+                    profileDiv.appendChild(columnCContent);
 
-            // Add anchor tag to the corresponding section
-            if (!sections[sectionName]) {
-                sections[sectionName] = {
-                    sectionElement: document.createElement('div'),
-                    hasMatchingProfile: false
-                };
-                sections[sectionName].sectionElement.classList.add('section');
-                profilesContainer.appendChild(sections[sectionName].sectionElement);
+                    // Create an anchor tag and set its link (column D)
+                    const anchorElement = document.createElement('a');
+                    anchorElement.href = profileData[4]; // Assuming column D contains the link
+                    anchorElement.appendChild(profileDiv);
 
-                const sectionTitle = document.createElement('div');
-                sectionTitle.classList.add('section-title');
-                sectionTitle.textContent = sectionName;
-                sections[sectionName].sectionElement.appendChild(sectionTitle);
-            }
+                    // Add anchor tag to the corresponding section
+                    if (!sections[sectionName]) {
+                        sections[sectionName] = {
+                            sectionElement: document.createElement('div'),
+                            hasMatchingProfile: false
+                        };
+                        sections[sectionName].sectionElement.classList.add('section');
+                        profilesContainer.appendChild(sections[sectionName].sectionElement);
 
-            sections[sectionName].sectionElement.appendChild(anchorElement);
+                        const sectionTitle = document.createElement('div');
+                        sectionTitle.classList.add('section-title');
+                        sectionTitle.textContent = sectionName;
+                        sections[sectionName].sectionElement.appendChild(sectionTitle);
+                    }
 
-            // Check if the profile matches the search term
-            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
-            if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
-                sections[sectionName].hasMatchingProfile = true;
-            }
+                    sections[sectionName].sectionElement.appendChild(anchorElement);
 
-            // Add class to show profile with fade-in effect
-            setTimeout(() => {
-                profileDiv.classList.add('show');
-            }, 50 * i); // Adjust timing as per your preference
-        }
+                    // Check if the profile matches the search term
+                    const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+                    if (columnCContent.textContent.toLowerCase().includes(searchTerm)) {
+                        sections[sectionName].hasMatchingProfile = true;
+                    }
 
-        // Initially hide sections without matching profiles
-        Object.values(sections).forEach(section => {
-            if (!section.hasMatchingProfile) {
-                section.sectionElement.style.display = 'none';
-            }
-        });
-    })
-    .catch(error => console.error('Error fetching CSV:', error));
+                    // Add class to show profile with fade-in effect
+                    setTimeout(() => {
+                        profileDiv.classList.add('show');
+                    }, 50 * i); // Adjust timing as per your preference
+                }
+
+                // Initially hide sections without matching profiles
+                Object.values(sections).forEach(section => {
+                    if (!section.hasMatchingProfile) {
+                        section.sectionElement.style.display = 'none';
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching CSV:', error);
+                // Hide loading screen in case of an error
+                document.getElementById('loading-screen').style.display = 'none';
+            });
 
            
      function searchProfiles() {

@@ -78,6 +78,35 @@
                 opacity: 1;
             }
         }
+
+
+
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 6px solid kisuNaBhai;
+            border-top: 6px solid ;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -117,6 +146,10 @@
     <!--NavBar End-->
 
 
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div id="profilesContainer">
         <!-- Profile content will be dynamically generated here -->
     </div>
@@ -127,9 +160,15 @@
         // Replace 'your_csv_link_here' with the actual link to your CSV file
         const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
 
+        // Show loading screen
+        document.getElementById('loading-screen').style.display = 'flex';
+
         fetch(csvLink)
             .then(response => response.text())
             .then(csvData => {
+                // Hide loading screen
+                document.getElementById('loading-screen').style.display = 'none';
+
                 const profilesContainer = document.getElementById('profilesContainer');
                 const rows = csvData.split('\n');
 
@@ -184,7 +223,11 @@
                     }
                 });
             })
-            .catch(error => console.error('Error fetching CSV:', error));
+            .catch(error => {
+                console.error('Error fetching CSV:', error);
+                // Hide loading screen in case of an error
+                document.getElementById('loading-screen').style.display = 'none';
+            });
     </script>
 
 </body>
