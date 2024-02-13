@@ -108,10 +108,45 @@
             margin-bottom: 10px;
         }
 
+
+
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 6px solid white;
+            border-top: 6px solid;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         
   </style>
 </head>
 <body>
+
+
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+    
 
 <div class="filter-container">
     <select id="columnSelect"></select>
@@ -121,13 +156,19 @@
 <div id="profilesContainer" class="profiles-container"></div>
 
 <script>
- // Define the CSV URL
+  // Define the CSV URL
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
+
+// Show loading screen
+document.getElementById('loading-screen').style.display = 'flex';
 
 // Fetch the CSV data
 fetch(csvUrl)
     .then(response => response.text())
     .then(csvData => {
+        // Hide loading screen
+        document.getElementById('loading-screen').style.display = 'none';
+
         // Split the CSV data into rows
         const rows = csvData.split('\n');
 
@@ -234,8 +275,11 @@ for (let i = 1; i < rows.length; i++) {
             displayProfiles(filterTerm, selectedColumn);
         });
     })
-    .catch(error => console.error('Error fetching CSV:', error));
-
+    .catch(error => {
+        console.error('Error fetching CSV:', error);
+        // Hide loading screen in case of an error
+        document.getElementById('loading-screen').style.display = 'none';
+    });
 </script>
 </body>
 </html>

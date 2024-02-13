@@ -120,10 +120,49 @@
             padding: 3px 10px;
             background-color: rgb(10, 10, 10);
         }
+
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        
+
+
     </style>
 </head>
 
 <body>
+
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+
+
+
     <div class="srch">
         <label for="filterType"></label>
         <select id="filterType">
@@ -137,6 +176,9 @@
         <div class="availability-count" id="availabilityCount"></div>
     </div>
 
+
+
+    
     <div id="content" style="display: none;">
         <div id="info">
             <!-- User information will be displayed here -->
@@ -148,13 +190,17 @@
         let filterType = "name";
 
         async function fetchUserData() {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
-
             try {
+                // Show loading screen
+                document.getElementById('loading-screen').style.display = 'flex';
+
+                // Fetch data
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
                 const response = await fetch(csvUrl);
                 const data = await response.text();
                 const rows = data.split('\n').map(row => row.split(','));
 
+                // Process data
                 allInfo = rows.slice(1).map(row => ({
                     name: row[4].trim(),
                     customFieldU: row[20].trim(),
@@ -168,6 +214,8 @@
                     allData: [row[2].trim(), row[5].trim(), row[8].trim(), row[25].trim()]
                 })).filter(entry => entry.name !== '' && entry.address !== '');
 
+                // Hide loading screen and display content
+                document.getElementById('loading-screen').style.display = 'none';
                 document.getElementById("content").style.display = "block";
                 displayInfo();
             } catch (error) {
@@ -232,40 +280,39 @@
             return `${monthsLeft} months and ${daysLeft} days`;
         }
 
-    function filterData() {
-    const filterText = document.getElementById('infoFilter').value.toLowerCase();
-    const availabilityCheckbox = document.getElementById('availabilityCheckbox');
-    const isAvailable = availabilityCheckbox.checked;
+        function filterData() {
+            const filterText = document.getElementById('infoFilter').value.toLowerCase();
+            const availabilityCheckbox = document.getElementById('availabilityCheckbox');
+            const isAvailable = availabilityCheckbox.checked;
 
-    let filteredInfo;
+            let filteredInfo;
 
-    if (filterType === 'bloodGroup') {
-        filteredInfo = allInfo.filter(entry => {
-            const matchesSearch = entry[filterType].toLowerCase() === filterText;
-            const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
+            if (filterType === 'bloodGroup') {
+                filteredInfo = allInfo.filter(entry => {
+                    const matchesSearch = entry[filterType].toLowerCase() === filterText;
+                    const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
 
-            if (isAvailable) {
-                return matchesSearch && isDonationAvailable;
+                    if (isAvailable) {
+                        return matchesSearch && isDonationAvailable;
+                    } else {
+                        return matchesSearch;
+                    }
+                });
             } else {
-                return matchesSearch;
+                filteredInfo = allInfo.filter(entry => {
+                    const matchesSearch = entry[filterType].toLowerCase().includes(filterText);
+                    const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
+
+                    if (isAvailable) {
+                        return matchesSearch && isDonationAvailable;
+                    } else {
+                        return matchesSearch;
+                    }
+                });
             }
-        });
-    } else {
-        filteredInfo = allInfo.filter(entry => {
-            const matchesSearch = entry[filterType].toLowerCase().includes(filterText);
-            const isDonationAvailable = calculateTimeLeft(entry.donationDate) <= 0;
 
-            if (isAvailable) {
-                return matchesSearch && isDonationAvailable;
-            } else {
-                return matchesSearch;
-            }
-        });
-    }
-
-    displayInfo(filteredInfo);
-}
-
+            displayInfo(filteredInfo);
+        }
 
         function copyToClipboard(text) {
             const dummyElement = document.createElement("textarea");
