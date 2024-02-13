@@ -62,6 +62,7 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
             const school = userRow[12].trim();
 
 
+
           
             //saving in local storage
             localStorage.setItem('userUsername', userUsername);
@@ -72,6 +73,8 @@ async function displayUserProfile(rowIndex, userPassword, navbar) {
             localStorage.setItem('userSchool', school);
             localStorage.setItem('userBirthDay', birthdate);
             localStorage.setItem('userProfession', roleValue);
+            localStorage.setItem('userImg', photoUrl);
+
 
 
             bioSection.innerHTML = `<p>${userName}</p><p>Blood Group: ${bloodGroup}</p><p>Address: ${address}</p><p>Total Donate ${balance}</p>`;

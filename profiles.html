@@ -7,7 +7,6 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
-    <link rel="stylesheet" href="test.css">
 </head>
 <style>
   
@@ -260,13 +259,16 @@
                 const message = storedRow[21].trim();
                 const attendedEvents = storedRow[22].trim();
                 const bloodDonationTimes = storedRow[17].trim();
-                const columnY = storedRow[24].trim(); // Add this line for column Y
-                const columnZ = storedRow[25].trim(); // Add this line for column Z
-
-
                 const school = storedRow[12].trim();
                 const college = storedRow[13].trim();
                 const varsity = storedRow[14].trim();
+                const columnY = storedRow[24].trim(); // Add this line for column Y
+                const columnZ = storedRow[25].trim(); // Add this line for column Z
+
+                localStorage.setItem('useBloodDonate',columnZ);
+                localStorage.setItem('userPoint',bloodDonationTimes);
+                localStorage.setItem('userPower',role);
+
 
 
                 document.getElementById("content").style.display = "block";
@@ -315,7 +317,7 @@
                         <h3>More</h3>
                         <div class="button-container">
                             <a href="history.html"><button class="button"><ion-icon name="stats-chart-outline"></ion-icon><br>History</button></a>
-                            <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
+                            <a href="card.html"><button class="button"><ion-icon name="id-card-outline"></ion-icon><br>Card</button></a>
                             <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
                             <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
                           </div>

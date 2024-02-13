@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="test.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        background-image: url(https://i.pinimg.com/564x/df/ab/be/dfabbe3f8d7dcbeaac63203ab177bb3f.jpg);
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+      }
+      .card {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        width: 80vw;
+        text-align: center;
+        height: 70vh;
+        box-sizing: border-box;
+        text-decoration: none;
+        perspective: 700px;
+      }
+      .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 32px;
+        box-sizing: border-box;
+        border-radius: 24px;
+        backdrop-filter: blur(6px);
+        border: solid 2px rgba(255, 255, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 8%,
+          rgba(255, 255, 255, 0.1) 60%,
+          rgba(255, 255, 255, 0.2) 92%
+        );
+        transition: all ease 0.7s;
+        color: #fff;
+        box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.2) inset;
+      }
+
+      .icon {
+        position: relative;
+        z-index: 10;
+        width: 140px;
+        margin-bottom: 20px;
+        height: 140px;
+        border-radius: 50%;
+        overflow: hidden;
+        transition: all ease 1s;
+      }
+      img{
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      .tails>p{
+        border-bottom: 1px solid;
+        padding-bottom: 3px;
+      }
+      .adblod{
+        margin: 10px;
+        width: 60vw;
+        display: flex;
+        justify-content: center;
+      }
+      .adblod p{
+        width: 50%;
+        margin: 2px;
+        text-align: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <p></p>
+    <div class="container">
+      <a href="#" class="card">
+        <div class="touch touch__1"></div>
+        <div class="touch touch__2"></div>
+        <div class="touch touch__3"></div>
+        <div class="touch touch__4"></div>
+        <div class="touch touch__6"></div>
+        <div class="touch touch__7"></div>
+        <div class="touch touch__8"></div>
+        <div class="touch touch__9"></div>
+      </a>
+    </div>
+
+    <script>
+
+
+      const img = localStorage.getItem('userImg');
+      const name = localStorage.getItem('userName');
+      const address = localStorage.getItem('userAddress');
+      const blood = localStorage.getItem('userBloodGroup');
+      const point = localStorage.getItem('userPoint');
+      const role = localStorage.getItem('userPower');
+
+
+
+
+
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const mainHTML = `
+        <div class="main">
+          <div class="icon">
+            <img src="${img}">
+          </div>
+        <div class="tails">
+          <div class="adblod">
+            <p>${name}</p>
+            <p>${role}</p>
+          </div>
+          <div class="adblod">
+              <p>Uddog Point</p>
+              <p>${point}</p>
+          </div>
+          <div class="adblod">
+            <p>${address}</p>
+            <p>${blood}</p>
+          </div>
+          <p>
+            
+
+
+
+        </div>
+      </div>
+      `;
+
+        const cardLink = document.querySelector(".card");
+        cardLink.innerHTML += mainHTML;
+      });
+
+      
+    </script>
+  </body>
+</html>

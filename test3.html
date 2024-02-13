@@ -1,298 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
-    <style>
-        /* Styles for the container of all profiles */
-        #csvData {
-            margin-top: 10vh;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-        /* Styles for each individual profile (post) */
-        .profile {
-            box-sizing: border-box;
-            width: 95vw;
-            margin: 5px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            text-align: center;
-            background-color: #f8f8f8;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        /* Hover effect for each profile */
-        .profile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Styles for the profile image */
-        .profile img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-        }
-
-        /* Styles for the profile name */
-        .profile h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            font-family: 'font2';
-            color: #333;
-        }
-
-        /* Styles for the additional content (paragraphs and button) */
-        .profile p,
-        .profile button {
-            text-align: justify;
-            margin-bottom: 8px;
-            color: #555;
-            font-family: 'font1';
-        }
-
-        /* Styles for the button */
-        .profile button {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        /* Hover effect for the button */
-        .profile button:hover {
-            background-color: #c0392b;
-        }
-
-        .navigation-buttons {
-            margin-bottom: 20px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .navigation-button {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 7px 15px;
-            margin: 0 8px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .navigation-button:hover {
-            background-color: #0056b3;
-        }
-
-        .page-button {
-            padding: 7px 10px;
-            margin: 5px 4px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.7rem;
-            outline: none;
-            border-radius: 4px;
-        }
-    </style>
+    #editableContent {
+      border: 2px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
-
 <body>
+  <div id="editableContent" contenteditable="true"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const editableContent = document.getElementById('editableContent');
 
+      // Load content from local storage if available
+      const savedContent = localStorage.getItem('editableContent');
+      if (savedContent) {
+        editableContent.innerHTML = savedContent;
+      }
 
-    <!--NavBar Start-->
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Setting</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
-    </div>
-    <!-- Main content -->
-    <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
-        </div>
-        <nav id="navbar">
-        </nav>
-    </header>
+      // Auto-save content
+      editableContent.addEventListener('input', function() {
+        // Get the edited content
+        const editedContent = editableContent.innerHTML;
 
-    <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
-
-    <!-- Logout Popup -->
-    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
-    <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>
-    <!--NavBar End-->
-
-
-
-
-    <div id="csvData"></div>
-
-    <!-- Loading Scene -->
-    <div id="loadingScene" style="display: none; text-align: center; margin-top: 20px;">
-            Loading...
-    </div>
-    
-    <!-- Page Buttons -->
-    <div class="navigation-buttons" id="pageButtons"></div>
-
-    <div class="navigation-buttons">
-        <button class="navigation-button" id="prevButton" style="display: none;">Previous</button>
-        <button class="navigation-button" id="nextButton" style="display: none;">Next</button>
-    </div>
-
-
-
-
-    <script src="navbar.js"></script>
-    <script>
-        const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
-
-        let currentPage = 1;
-        const rowsPerPage = 5;
-        let totalRows = 0;
-
-        const nextButton = document.getElementById('nextButton');
-        const prevButton = document.getElementById('prevButton');
-        const pageButtonsContainer = document.getElementById('pageButtons');
-
-        nextButton.addEventListener('click', function () {
-            if (currentPage * rowsPerPage < totalRows) {
-                currentPage++;
-                fetchAndDisplayData();
-            }
-        });
-
-        prevButton.addEventListener('click', function () {
-            if (currentPage > 1) {
-                currentPage--;
-                fetchAndDisplayData();
-            }
-        });
-
-        async function fetchAndDisplayData() {
-            try {
-                const loadingScene = document.getElementById('loadingScene');
-                loadingScene.style.display = 'block'; // Show loading scene
-                const response = await fetch(csvDataURL);
-                const csvData = await response.text();
-                totalRows = csvData.split('\n').length - 1;
-                updateNavigationButtons();
-                displayData(csvData);
-                loadingScene.style.display = 'none'; // Hide loading scene after data is fetched
-            } catch (error) {
-                console.error('Error fetching CSV data:', error);
-            }
-        }
-
-        function updateNavigationButtons() {
-            nextButton.style.display = currentPage * rowsPerPage < totalRows ? 'inline-block' : 'none';
-            prevButton.style.display = currentPage > 1 ? 'inline-block' : 'none';
-        }
-
-        function displayData(csv) {
-            const rows = csv.split('\n');
-            const profilesContainer = document.getElementById('csvData');
-
-            profilesContainer.innerHTML = '';
-
-            let nonEmptyRows = 0;
-            for (let i = rows.length - 1; i > 0; i--) {
-                const columns = rows[i].split(',');
-
-                const profileImageSrc = columns[0].trim();
-                if (profileImageSrc) {
-                    nonEmptyRows++;
-                    if (nonEmptyRows >= (currentPage - 1) * rowsPerPage + 1 && nonEmptyRows <= (currentPage * rowsPerPage)) {
-                        const profileDiv = document.createElement('div');
-                        profileDiv.classList.add('profile');
-
-                        const profileImage = document.createElement('img');
-                        profileImage.src = profileImageSrc;
-                        profileImage.alt = 'Profile Image';
-                        profileDiv.appendChild(profileImage);
-
-                        const nameElement = document.createElement('h3');
-                        nameElement.textContent = columns[1].trim();
-                        profileDiv.appendChild(nameElement);
-
-                        for (let j = 2; j < columns.length; j++) {
-                            const columnContent = columns[j].trim();
-                            if (columnContent && j !== 4) {  // Skip column E (index 4)
-                                const element = document.createElement('p');
-
-                                if (j === 3) {
-                                    const buttonElement = document.createElement('button');
-                                    buttonElement.textContent = 'Details';
-                                    buttonElement.addEventListener('click', function () {
-                                        localStorage.setItem('PostNo', i);
-                                        window.location.href = columnContent;
-                                    });
-                                    element.appendChild(buttonElement);
-                                } else {
-                                    element.textContent = columnContent;
-                                }
-
-                                profileDiv.appendChild(element);
-                            }
-                        }
-
-                        profilesContainer.appendChild(profileDiv);
-                        // Apply scroll animation to profile
-                        profileDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            }
-
-            updatePageButtons(); // Update page buttons
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function updatePageButtons() {
-            const totalPages = Math.ceil(totalRows / rowsPerPage);
-            pageButtonsContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.classList.add('page-button');
-                pageButton.textContent = i;
-                pageButton.style.backgroundColor = currentPage === i ? '#007BFF' : '';
-                pageButton.addEventListener('click', function () {
-                    currentPage = i;
-                    fetchAndDisplayData();
-                });
-                pageButtonsContainer.appendChild(pageButton);
-            }
-        }
-
-        fetchAndDisplayData();
-    </script>
-
+        // Save the content to local storage
+        localStorage.setItem('editableContent', editedContent);
+      });
+    });
+  </script>
 </body>
-
 </html>
