@@ -1,3 +1,42 @@
+.loading-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+   z-index: 9999; /* Make sure it's above other elements */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+/* Progress bar styles */
+.progress-bar {
+   width: 150px; /* Adjust width as needed */
+   height: 5px; /* Adjust height as needed */
+   background-color: rgba(255, 255, 255, 0.11); /* Semi-transparent white background */
+   border-radius: 5px; /* Rounded corners */
+   overflow: hidden; /* Hide overflow */
+   position: relative; /* Relative positioning for absolute positioning of progress */
+}
+
+.progress {
+   width: 0; /* Initial width */
+   height: 100%;
+   background-color: #fff; /* White progress color */
+   position: absolute; /* Absolute positioning */
+   top: 0;
+   left: 0;
+   animation: progressAnimation 1s linear forwards; /* Animation for progress */
+}
+
+/* Animation keyframes */
+@keyframes progressAnimation {
+   0% { width: 0; }
+   100% { width: 100%; }
+}
+
 /*start*/
 .liafnav {
    position: fixed;
@@ -269,7 +308,7 @@ a.sepost {
  }
  
  a.sepost button {
-   background-color: coral;
+   background-color: black;
    color: white; /* Set text color */
    padding: 10px 15px; /* Add padding to the button */
    border: none; /* Remove border */
@@ -278,8 +317,7 @@ a.sepost {
  }
  
  a.sepost button:hover {
-   background: linear-gradient(135deg, #ff6b6b, #ffa69e); /* Change background gradient on hover */
-   background-size: 200% 200%; /* Increase size for a more dynamic hover effect */
+   background: rgba(0, 0, 0, 0.495); /* Change background gradient on hover */
  }
  
 

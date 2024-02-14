@@ -17,41 +17,82 @@
       transition: background-image 0.5s ease-in-out;
     }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+    #bottomArea {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      background-color: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<button onclick="changeBackground()">Change Background</button>
+<div id="bottomArea">
+  Swipe right or left to change background
+</div>
 
 <script>
-  
   let currentIndex = 0;
-function changeBackground() {
-  // CSV link to your spreadsheet (replace with your own link)
-  const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374';
+  let touchStartX = 0;
+  let touchEndX = 0;
 
-  // Fetch the CSV data
-  fetch(csvLink)
-    .then(response => response.text())
-    .then(csvData => {
-      // Convert CSV data to an array of image URLs
-      const rows = csvData.split('\n');
-      const imgUrls = rows.slice(1).map(row => row.split(',')[0]); // Skip the first row
+  function nextBackground() {
+    changeBackground(1); // Passing 1 as argument to indicate next image
+  }
 
-      // Set the background image
-      document.body.style.backgroundImage = `url(${imgUrls[currentIndex]})`;
+  function prevBackground() {
+    changeBackground(-1); // Passing -1 as argument to indicate previous image
+  }
 
-      // Increment index for the next background image
-      currentIndex = (currentIndex + 1) % imgUrls.length;
-    })
-    .catch(error => console.error('Error fetching CSV data:', error));
-}
+  function changeBackground(direction) {
+    // CSV link to your spreadsheet (replace with your own link)
+    const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374';
 
+    // Fetch the CSV data
+    fetch(csvLink)
+      .then(response => response.text())
+      .then(csvData => {
+        // Convert CSV data to an array of image URLs
+        const rows = csvData.split('\n');
+        const imgUrls = rows.slice(1).map(row => row.split(',')[0]); // Skip the first row
+
+        // Update currentIndex based on direction
+        currentIndex = (currentIndex + direction + imgUrls.length) % imgUrls.length;
+
+        // Set the background image
+        document.body.style.backgroundImage = `url(${imgUrls[currentIndex]})`;
+      })
+      .catch(error => console.error('Error fetching CSV data:', error));
+  }
+
+  // Swipe functionality for touch devices
+  document.addEventListener('touchstart', function(event) {
+    touchStartX = event.touches[0].clientX;
+  });
+
+  document.addEventListener('touchend', function(event) {
+    touchEndX = event.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // Adjust the threshold as needed
+    const swipeLength = touchEndX - touchStartX;
+
+    if (swipeLength > swipeThreshold) {
+      // Swipe right
+      prevBackground();
+    } else if (swipeLength < -swipeThreshold) {
+      // Swipe left
+      nextBackground();
+    }
+  }
 </script>
 
 </body>

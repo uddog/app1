@@ -11,13 +11,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <style>
-    /* Add this CSS code to your existing stylesheet */
   
-    /* Initial state of the list items */
-
 </style>
 
 <body>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
 
     <!--NavBar Start-->
     <!-- Sidebar -->
@@ -158,16 +162,24 @@
                 changeColor(savedColor);
             }
 
-//scroll smooth
-       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
+//loading scene
+
+window.addEventListener('load', function () {
+    var progressBar = document.getElementById('progress');
+
+    // Simulate a delay for data fetching (you should replace this with your actual data fetching logic)
+    var progress = 0;
+    var interval = setInterval(function () {
+        progress += 1;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(interval);
+            // Hide loading overlay when progress reaches 100%
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    }, 10); // Adjust interval as needed (in milliseconds)
+});
 
 </script>
   

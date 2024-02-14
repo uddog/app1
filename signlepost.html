@@ -8,6 +8,34 @@
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="navbar.css">
     <style>
+        /* Styles for loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999; /* Ensure it's above other elements */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Spinner styles */
+        .spinner {
+            border-top: 4px solid ; /* Blue border on top for spinner effect */
+            border-radius: 50%; /* Circle shape */
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite; /* Spin animation */
+        }
+
+        /* Animation for spinner */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Styles for the container of all profiles */
         #singlePost {
             margin-top: 10vh;
@@ -60,6 +88,11 @@
 
 <body>
 
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
@@ -107,6 +140,8 @@
                 Papa.parse(csvData, {
                     complete: function(results) {
                         displaySinglePost(results.data, postNo);
+                        // Hide loading overlay after displaying the post
+                        document.getElementById('loadingOverlay').style.display = 'none';
                     },
                     error: function(error) {
                         console.error('Error parsing CSV data:', error);
@@ -155,6 +190,8 @@
 
         // Fetch and display the single post based on PostNo
         if (storedPostNo !== null) {
+            // Show loading overlay before fetching data
+            document.getElementById('loadingOverlay').style.display = 'flex';
             fetchSinglePost(storedPostNo);
         } else {
             console.error('No PostNo found in localStorage.');

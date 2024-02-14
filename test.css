@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    justify-content: center;
+    background-color: #f0f0f0; /* Light gray */
+}
+.wel{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
+
+.login-container {
+    z-index: 1;
+    margin-top: 15vh;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    overflow: hidden;
+    width: 90vw;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #ffffff; /* White */
+    animation: u 1.5s linear;
+}
+@keyframes up {
+    from{
+          margin-top: 100vh;
+    }
+}
+
+h2 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 32px;
+    color: #333333; /* Dark gray */
+}
+
+.login-input {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    margin: 14px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #555555; /* Dark gray */
+    outline: none;
+}
+
+.login-input:focus {
+    background-color: #ffffff; /* White */
+}
+
+.login-input::placeholder {
+    color: #555555; /* Dark gray */
+}
+
+.login-label {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    font-size: 16px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555555; /* Dark gray */
+}
+
+.login-input:focus + .login-label,
+.login-input:not(:placeholder-shown) + .login-label {
+    transform: translateY(-80%);
+    font-size: 12px;
+    color: #333333; /* Dark gray */
+}
+
+.login-button {
+    padding: 12px;
+    background-color: transparent;
+    border: 1px solid; /* Coral */
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 20px;
+    transition: 0.1s;
+    font-size: 16px;
+    background-color: black;
+    color: white;
+}
+
+.login-button:hover {
+    background: rgb(102, 99, 99); /* Light coral */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffaa80; /* Light coral */
+}
+
+
+
+
+
+#errorMessage {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: lighter;
+}
+
+
+.loading-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner {
+    border: 8px solid ;
+    border-top: 8px solid black; /* Coral */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

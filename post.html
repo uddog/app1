@@ -7,7 +7,9 @@
     <title>Post</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="test.css">
     <style>
+       
         body{
             background-color: #f0f0f0; /* Light gray */
         }
@@ -18,7 +20,7 @@
             flex-wrap: wrap;
             justify-content: space-around;
         }
-
+        
         /* Styles for each individual profile (post) */
         .profile {
             box-sizing: border-box;
@@ -32,13 +34,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
+        
         /* Hover effect for each profile */
         .profile:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-
+        
         /* Styles for the profile image */
         .profile img {
             width: 100%;
@@ -46,7 +48,7 @@
             margin-bottom: 15px;
             border-radius: 10px;
         }
-
+        
         /* Styles for the profile name */
         .profile h3 {
             margin-bottom: 10px;
@@ -54,40 +56,38 @@
             font-family: 'font2';
             color: #333;
         }
-
         /* Styles for the additional content (paragraphs and button) */
         .profile p,
         .profile button {
             text-align: justify;
-            margin-bottom: 8px;
             color: #555;
             font-family: 'font1';
         }
-
+        
         /* Styles for the button */
         .profile button {
-            background-color: #e74c3c;
+            margin-top: 10px;
+            background-color: black;
             color: #fff;
             padding: 8px 15px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
         }
-
+        
         /* Hover effect for the button */
         .profile button:hover {
             background-color: #c0392b;
         }
-
+        
         .navigation-buttons {
             margin-bottom: 5px;
             text-align: center;
             margin-top: 5px;
         }
-
+        
         .navigation-button {
-            background-color: #007BFF;
+            background-color: black;
             color: #fff;
             padding: 7px 15px;
             border: none;
@@ -96,11 +96,11 @@
             font-size: 0.9rem;
             outline: none;
         }
-
+        
         .navigation-button:hover {
-            background-color: #0056b3;
+            background-color: #151515b4;
         }
-
+        
         .page-button {
             padding: 7px 10px;
             margin: 5px 4px;
@@ -111,7 +111,7 @@
             outline: none;
             border-radius: 4px;
         }
-
+        
         /* Styles for the loading scene */
         #loadingScene {
             display: none;
@@ -123,7 +123,7 @@
             padding: 20px;
             border-radius: 10px;
         }
-
+        
         /* Styles for the loading spinner */
         .spinner {
             margin: 0 auto;
@@ -132,24 +132,24 @@
             position: relative;
             text-align: center;
         }
-
+        
         .spinner div {
             width: 10px;
             height: 10px;
-            background-color: #333; /* Dark gray */
+            background-color: black; /* Dark gray */
             border-radius: 50%;
             display: inline-block;
             animation: bounce 1.4s infinite ease-in-out both;
         }
-
+        
         .spinner div:nth-child(1) {
             animation-delay: -0.32s;
         }
-
+        
         .spinner div:nth-child(2) {
             animation-delay: -0.16s;
         }
-
+        
         @keyframes bounce {
             0%, 80%, 100% {
                 transform: scale(0);
@@ -158,7 +158,6 @@
                 transform: scale(1);
             }
         }
-
     </style>
 </head>
 
@@ -224,7 +223,7 @@
         const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
 
         let currentPage = 1;
-        const rowsPerPage = 4;
+        const rowsPerPage = 10;
         let totalRows = 0;
 
         const nextButton = document.getElementById('nextButton');
@@ -337,7 +336,7 @@
                 const pageButton = document.createElement('button');
                 pageButton.classList.add('page-button');
                 pageButton.textContent = i;
-                pageButton.style.backgroundColor = currentPage === i ? '#007BFF' : '';
+                pageButton.style.backgroundColor = currentPage === i ? 'white' : '';
                 pageButton.addEventListener('click', function () {
                     currentPage = i;
                     fetchAndDisplayData();
