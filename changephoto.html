@@ -8,34 +8,75 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        main{
+        main {
             height: 100vh;
-            display: grid;
-            place-items: center;
-            overflow-y: scroll;
+            display: flex;
+            width: 100vw;
+            overflow: scroll;
+            scroll-snap-type: x mandatory;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
         }
-        .container {
-            position: sticky;
-            z-index: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #fff; /* White background */
-            border-radius: 8px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Darker box shadow */
+        .custom-img{
+            background-color: white;
+            margin-top: 5vh;
+            padding-top: 20px;
+            scroll-snap-align: start;
+            border-radius: 30px 30px 0px 0px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            min-width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tet{
             text-align: center;
-            padding: 50px 10px;
-            width: 90vw;
+        }
+        #imageUrlInput {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        
+        #addImageButton {
+            padding: 10px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .container {
+            margin-top: 5vh;
+            padding-top: 20px;
+            background-color: white;
+            padding-bottom: 20px;
+            scroll-snap-align: start;
+            border-radius: 30px 30px 0px 0px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            min-width: 100vw;
+            overflow-y: scroll;
         }
         
         h2 {
-            color: #000; /* Black text */
+            color: #000;
             font-size: 28px;
             margin-bottom: 20px;
+        }
+        
+        .container img {
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            border-radius: 50%;
+            height: 15vw;
+            object-fit: cover;
+            object-position: center;
+            width: 15vw;
+            margin: 10px;
         }
         
         #message {
@@ -44,40 +85,7 @@
             margin-top: 10px;
         }
         
-        button {
-            padding: 12px;
-            background-color: transparent; /* Coral */
-            border: none;
-            border: solid 1px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 50%;
-            box-sizing: border-box;
-            font-size: 16px;
-            margin-top: 30px;
-        }
         
-        button:hover {
-            background-color: black;
-            color: white; /* Light coral */
-        }
-        
-        input[type="text"] {
-            padding: 12px;
-            margin-top: 20px;
-            outline: none;
-            width: 100%;
-            box-sizing: border-box;
-            border: none;
-            border-bottom: 2px solid #000; /* Black border bottom */
-            background-color: #fff; /* White background */
-            font-size: 16px;
-            color: #000; /* Black text */
-        }
-        
-        input[type="text"]::placeholder {
-            color: #999;
-        }
         
         .modal {
             display: none;
@@ -88,10 +96,11 @@
             height: 100%;
             justify-content: center;
             align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
         }
         
         .spinner {
-            border-top: 4px solid #000; /* Black top border */
+            border-top: 4px solid #000;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -108,117 +117,217 @@
             }
         }
         
-        .howto{
-            margin-top: 65vh;
-            padding: 10px;
-            position: relative;
-            border-radius: 30px 30px 0px 0px;
-            z-index: 1;
-            background-color: white;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-            height: 100vh;
-        }
-        .howto::before {
-            content: '';
-            width: 30px;
-            position: absolute;
-            left: 50%;
-            border-radius: 2px;
-            transform: translateX(-50%);
-            height: 5px;
-            background-color: rgb(209, 209, 209);
-        }
-        .one{
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            width: 60vw;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
             text-align: center;
+        }
+        .popup-content button {
+            padding: 5px;
+            background-color: transparent;
+            border: none;
+            border: solid 1px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 30%;
+            box-sizing: border-box;
+            font-size: 1rem;
             margin-top: 10px;
         }
-        .one img{
-            width: 100%;
+        
+        button:hover {
+            transition: 0.5s;
+            background-color: black;
+            color: white;
         }
+       
     </style>
 </head>
 
 <body>
 
-<main>
-    <div class="container">
-        <h2>Change Photo</h2>
-        <div id="message"></div>
-        
-        <!-- Add the image URL input box -->
-        <input autocomplete="off" placeholder="Enter Image URL" type="text" id="imgUrl" name="imgUrl">
-        <br>
-        
-        <button onclick="sendData()">Change</button>
-     
-        <div id="loading" class="modal">
-            <div class="spinner"></div>
+    <main>
+
+
+        <div class="container">
+            <h2>Change Photo</h2>
+            <div id="message"></div>
+            <!-- Images will be dynamically added here -->
+            <div id="imageContainer"></div>
+
+            <div id="loading" class="modal">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Confirmation popup -->
+            <div id="confirmationPopup" class="modal">
+                <div class="popup-content">
+                    <p>Are you sure you want to change the photo?</p>
+                    <button id="confirmChange">Yes</button>
+                    <button id="cancelChange">No</button>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="howto">
-        <div class="one">
-            <h3>Follow the Step</h3>
-            <img src="https://i.imgur.com/4Br3fbj.jpg" alt="">
+
+        <div class="custom-img">
+            <!-- Input box for image URL -->
+            <div class="tet">
+            <input type="text" id="imageUrlInput" placeholder="Enter Image URL">
+            <button id="addImageButton" onclick="addImage()">Change Photo</button>
+         </div>
         </div>
-    </div>
-</main>
 
-<script>
-    document.getElementById('message').style.display = 'none';
 
-    function sendData() {
-        // Retrieve input data from the input box
-        var imgUrl = document.getElementById('imgUrl').value;
+    </main>
 
-        // Check if the input box is empty
-        if (!imgUrl.trim()) {
-            document.getElementById('message').innerHTML = 'Image URL cannot be empty.';
-            document.getElementById('message').style.display = 'block'; // Show the error div
-            return; // Exit the function if input is empty
-        }
+ 
 
-        // Show loading modal
-        document.getElementById('loading').style.display = 'flex';
+    <script>
+        document.getElementById('message').style.display = 'none';
 
-        // Check if row index is stored in local storage
-        var rowIndex = localStorage.getItem('rowIndex');
-        if (rowIndex) {
-            // Send data to the Google Apps Script
-            var scriptUrl = 'https://script.google.com/macros/s/AKfycbx8leISZU_vJMUesOVD8AC9E3qXjb7tnv2q3UxHPJZyew6xWQSpEM8mATxUTzlvGSRY/exec';
-            var formData = new FormData();
-            formData.append('rowIndex', rowIndex);
-            formData.append('imgUrl', imgUrl);
-
-            fetch(scriptUrl, {
-                    method: 'POST',
-                    body: formData
-                })
+        function fetchData() {
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'flex';
+        
+            // Fetch CSV data from the provided URL
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374')
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
-                    // Display success or error message in the HTML
-                    document.getElementById('message').innerHTML = "Photo changed Successfully. Be patient img will change soon.";
-                    document.getElementById('message').style.display = 'block'; // Show the message div
+                    // Hide loading spinner
+                    document.getElementById('loading').style.display = 'none';
+        
+                    // Split CSV rows into an array
+                    const rows = data.split('\n');
+                    // Remove the header row if needed
+                    rows.shift();
+        
+                    // Iterate over each row
+                    rows.forEach(row => {
+                        // Split row data into columns
+                        const columns = row.split(',');
+                        // Extract the image URL from the second column (index 1)
+                        const imgUrl = columns[1].trim();
+        
+                        // Create an image element and append it to the container
+                        if (imgUrl) {
+                            const img = document.createElement('img');
+                            img.src = imgUrl;
+                            img.className = 'photo';
+                            img.onclick = function () {
+                                sendData(this);
+                            };
+                            document.getElementById('imageContainer').appendChild(img);
+                        }
+                    });
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('message').innerHTML = 'Error occurred while sending the image URL.';
-                    document.getElementById('message').style.display = 'block'; // Show the error div
-                })
-                .finally(() => {
-                    // Hide loading modal
+                    console.error('Error fetching CSV:', error);
+                    document.getElementById('message').innerHTML = 'Error occurred while fetching data.';
+                    document.getElementById('message').style.display = 'block';
+                    // Hide loading spinner
                     document.getElementById('loading').style.display = 'none';
                 });
-        } else {
-            console.error('Row Index not found in local storage.');
-            document.getElementById('message').innerHTML = 'Unknown User';
-            document.getElementById('message').style.display = 'block'; // Show the error div
-            // Hide loading modal
-            document.getElementById('loading').style.display = 'none';
         }
-    }
-</script>
+        
+        // Function to show the confirmation popup
+        function showConfirmationPopup() {
+            document.getElementById('confirmationPopup').style.display = 'flex';
+        }
+
+        // Function to hide the confirmation popup
+        function hideConfirmationPopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+
+        // Call the fetchData function when the page loads
+        window.onload = fetchData;
+
+        // Function to handle clicking on an image
+        function sendData(element) {
+            // Retrieve image source from clicked image
+            var imgUrl = element.src;
+
+            // Show confirmation popup
+            showConfirmationPopup();
+
+            // Event listener for confirm button click
+            document.getElementById('confirmChange').onclick = function () {
+                // Hide confirmation popup
+                hideConfirmationPopup();
+                
+                // Show loading modal
+                document.getElementById('loading').style.display = 'flex';
+
+                // Check if row index is stored in local storage
+                var rowIndex = localStorage.getItem('rowIndex');
+                if (rowIndex) {
+                    // Send data to the Google Apps Script
+                    var scriptUrl = 'https://script.google.com/macros/s/AKfycbx8leISZU_vJMUesOVD8AC9E3qXjb7tnv2q3UxHPJZyew6xWQSpEM8mATxUTzlvGSRY/exec';
+                    var formData = new FormData();
+                    formData.append('rowIndex', rowIndex);
+                    formData.append('imgUrl', imgUrl);
+
+                    fetch(scriptUrl, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log(data);
+                            // Display success or error message in the HTML
+                            document.getElementById('message').innerHTML = "Photo changed Successfully. Be patient img will change soon.";
+                            document.getElementById('message').style.display = 'block'; // Show the message div
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById('message').innerHTML = 'Error occurred while sending the image URL.';
+                            document.getElementById('message').style.display = 'block'; // Show the error div
+                        })
+                        .finally(() => {
+                            // Hide loading modal
+                            document.getElementById('loading').style.display = 'none';
+                        });
+                } else {
+                    console.error('Row Index not found in local storage.');
+                    document.getElementById('message').innerHTML = 'Unknown User';
+                    document.getElementById('message').style.display = 'block'; // Show the error div
+                    // Hide loading modal
+                    document.getElementById('loading').style.display = 'none';
+                }
+            };
+
+            // Event listener for cancel button click
+            document.getElementById('cancelChange').onclick = function () {
+                // Hide confirmation popup
+                hideConfirmationPopup();
+            };
+        }
+
+        // Function to handle adding a new image
+        function addImage() {
+            var imageUrl = document.getElementById('imageUrlInput').value.trim();
+            if (imageUrl) {
+                // Create an image element and append it to the container
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.className = 'photo';
+                img.onclick = function () {
+                    sendData(this);
+                };
+                document.getElementById('imageContainer').appendChild(img);
+
+                // Clear the input box
+                document.getElementById('imageUrlInput').value = '';
+
+                // Sending the URL immediately after adding
+                sendData(img);
+            }
+        }
+    </script>
 
 </body>
 </html>
