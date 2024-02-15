@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Card</title>
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="test.css">
     <style>
@@ -303,6 +303,12 @@
 
         // Update currentIndex based on direction
         currentIndex = (currentIndex + direction + imgUrls.length) % imgUrls.length;
+
+        // Check if the current row is empty
+        while (imgUrls[currentIndex].trim() === "") {
+          // If empty, move to the next row
+          currentIndex = (currentIndex + 1) % imgUrls.length;
+        }
 
         // Set the background image
         document.body.style.backgroundImage = `url(${imgUrls[currentIndex]})`;
