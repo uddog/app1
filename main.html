@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>কার্য নির্বাহী সদস্য</title>
+<link rel="stylesheet" href="universal.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+    #profilesContainer{
+        margin-top: 5vh;
+    }
+    .section {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #dddddd;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 10px;
+        justify-content: center;
+        text-align: center; /* Center text horizontally */
+    }
+    
+    .section h2 {
+        width: 100%; /* Take the full width of the section */
+        margin-top: 0; /* Remove default margin */
+        margin-bottom: 10px; /* Add margin at the bottom */
+    }
+    
+    .parent-profile, .child-profile{
+        text-align: center;
+        font-size: 0.9rem;
+        font-family: 'font1';
+        width: 35vw;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        padding: 20px 5px;
+    }
+    .parent-profile:hover, .child-profile:hover{
+        background-color: rgb(243, 243, 243);
+    }
+    .parent-profile {
+    
+    }
+    
+    .child-profile {
+    
+    }
+    .parent-profile img, .child-profile img {
+        object-fit: cover;
+        object-position: center;
+        margin-bottom: 5px;
+        vertical-align: middle;
+        width: 50px; /* Adjust width as needed */
+        height: 50px; /* Adjust height as needed */
+    }
+    .parent-profile p, .child-profile p {
+        margin-top: 3px;
+    }
+        /* CSS for the loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+    
+        /* CSS for the spinner */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3); /* Light semi-transparent border */
+            border-top: 4px solid #ffffff; /* White */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+    
+        /* Spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+</div>
+
+<div id="profilesContainer"></div> <!-- Empty div to hold the fetched data -->
+
+<script>
+    // Define CSV URL as a constant
+    const csvURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=1000375812';
+
+    // Function to fetch CSV data and populate the profiles
+    async function fetchCSV() {
+        try {
+            // Show the loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            const response = await fetch(csvURL);
+            const data = await response.text();
+            const rows = data.trim().split('\n').map(row => row.split(','));
+            rows.shift(); // Skip first row
+
+            let profileHTML = '';
+            let currentSection = '';
+
+            rows.forEach(rowData => {
+                const section = rowData[6]; // Assuming column G is index 6 (0-indexed)
+                const profileName = rowData[7]; // Assuming column H is index 7 (0-indexed)
+                const rol = rowData[6]; // Assuming column G is index 6 (0-indexed) - rol
+                const donationDate = rowData[28]; // Assuming column Y is index 24 (0-indexed) - Donation date
+                const point = rowData[21]; 
+                const imgSrc = rowData[22]; // Assuming column W is index 22 (0-indexed)
+
+                // Function to check if donation date is more than one month ago
+                function isMoreThanOneMonthAgo(dateString) {
+                    const donationDateObj = new Date(dateString);
+                    const oneMonthAgo = new Date();
+                    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+                    return donationDateObj < oneMonthAgo;
+                }
+
+                // Check if donation date is more than one month ago
+                const isOldDonation = isMoreThanOneMonthAgo(donationDate);
+
+                // Determine background color based on donation date
+                const backgroundColor = isOldDonation ? 'rgba(237, 110, 110, 0.721)' : '';
+
+                if (section.startsWith('সহ-')) {
+                    // Add child profile to current section
+                    profileHTML += `
+                    <div class="child-profile" style="background-color: ${backgroundColor};">
+                        <img src="${imgSrc}">
+                        <p>${profileName}</p>
+                        <p>${rol}</p>
+                        <p>Total Point : ${point}</p>
+                    </div>`;
+                } else {
+                    // Check if the section has changed
+                    if (section !== currentSection) {
+                        // Close previous section if it's not the first one
+                        if (currentSection !== '') {
+                            profileHTML += '</div>';
+                        }
+                        // Start a new section
+                        profileHTML += `<div class="section"><h2>${section}</h2>`;
+                        currentSection = section;
+                    }
+                    // Add parent profile to current section
+                    profileHTML += `
+                    <div class="parent-profile" style="background-color: ${backgroundColor};">
+                         <img src="${imgSrc}">
+                         <p>${profileName}</p>
+                         <p>${rol}</p>
+                         <p>Total Point : ${point}</p>
+                    </div>`;
+                }
+            });
+
+            // Close the last section div
+            profileHTML += '</div>';
+
+            // Inject the HTML into the profiles container
+            document.getElementById('profilesContainer').innerHTML = profileHTML;
+
+            // Hide the loading overlay after data is fetched
+            document.getElementById('loadingOverlay').style.display = 'none';
+        } catch (error) {
+            console.error('Error fetching CSV:', error);
+            // Hide the loading overlay in case of error
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    }
+
+    // Call the fetchCSV function when the page loads
+    window.onload = fetchCSV;
+</script>
+
+</body>
+</html>
