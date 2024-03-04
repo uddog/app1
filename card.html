@@ -4,14 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Card</title>
-    <link rel="stylesheet" href="universal.css">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="universal.css" />
     <style>
       * {
         margin: 0;
         padding: 0;
       }
-      body{
+      #roll{
+        font-family: 'font1';
+        font-size: 0.9rem;
+      }
+      body {
         transition: background-image 0.5s ease-in-out;
         background-size: cover;
         background-position: center;
@@ -52,12 +55,7 @@
         border-radius: 24px;
         backdrop-filter: blur(6px);
         border: solid 2px rgba(255, 255, 255, 0.3);
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.4) 8%,
-          rgba(255, 255, 255, 0.1) 60%,
-          rgba(255, 255, 255, 0.2) 92%
-        );
+        background-color: rgba(255, 255, 255, 0.144);
         transition: all ease 0.7s;
         color: #fff;
         box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.2) inset;
@@ -73,29 +71,27 @@
         place-items: center;
         transition: all ease 1s;
       }
-      img{
+      img {
         width: 35vw;
         height: 35vw;
         object-fit: cover;
         object-position: center;
       }
-      .tails>p{
+      .tails > p {
         border-bottom: 1px solid;
         padding-bottom: 3px;
       }
-      .adblod{
+      .adblod {
         margin: 10px;
         width: 60vw;
         display: flex;
         justify-content: center;
       }
-      .adblod p{
+      .adblod p {
         width: 50%;
         margin: 2px;
         text-align: center;
       }
-
-
 
       /*end*/
       .touch {
@@ -190,20 +186,17 @@
         box-shadow: -20px -20px 24px rgba(0, 0, 0, 0.2);
       }
 
-
-
-      
-    #bottomArea {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 10vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+      #bottomArea {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -221,25 +214,15 @@
       </a>
     </div>
 
-
     <div id="bottomArea"></div>
 
-
     <script>
-
-
-      const img = localStorage.getItem('userImg');
-      const name = localStorage.getItem('userName');
-      const address = localStorage.getItem('userAddress');
-      const blood = localStorage.getItem('userBloodGroup');
-      const point = localStorage.getItem('userPoint');
-      const role = localStorage.getItem('userPower');
-
-
-
-
-
-
+      const img = localStorage.getItem("userImg");
+      const name = localStorage.getItem("userName");
+      const address = localStorage.getItem("userAddress");
+      const blood = localStorage.getItem("userBloodGroup");
+      const point = localStorage.getItem("userPoint");
+      const role = localStorage.getItem("userRole");
 
       document.addEventListener("DOMContentLoaded", function () {
         const mainHTML = `
@@ -250,7 +233,7 @@
         <div class="tails">
           <div class="adblod">
             <p>${name}</p>
-            <p>${role}</p>
+            <p id="roll">${role}</p>
           </div>
           <div class="adblod">
               <p>Uddog Point</p>
@@ -273,73 +256,71 @@
         cardLink.innerHTML += mainHTML;
       });
 
-
-
       //background img
 
-
       let currentIndex = 0;
-  let touchStartX = 0;
-  let touchEndX = 0;
+      let touchStartX = 0;
+      let touchEndX = 0;
 
-  function nextBackground() {
-    changeBackground(1); // Passing 1 as argument to indicate next image
-  }
+      function nextBackground() {
+        changeBackground(1); // Passing 1 as argument to indicate next image
+      }
 
-  function prevBackground() {
-    changeBackground(-1); // Passing -1 as argument to indicate previous image
-  }
+      function prevBackground() {
+        changeBackground(-1); // Passing -1 as argument to indicate previous image
+      }
 
-  function changeBackground(direction) {
-    // CSV link to your spreadsheet (replace with your own link)
-    const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374';
+      function changeBackground(direction) {
+        // CSV link to your spreadsheet (replace with your own link)
+        const csvLink =
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=366259374";
 
-    // Fetch the CSV data
-    fetch(csvLink)
-      .then(response => response.text())
-      .then(csvData => {
-        // Convert CSV data to an array of image URLs
-        const rows = csvData.split('\n');
-        const imgUrls = rows.slice(1).map(row => row.split(',')[0]); // Skip the first row
+        // Fetch the CSV data
+        fetch(csvLink)
+          .then((response) => response.text())
+          .then((csvData) => {
+            // Convert CSV data to an array of image URLs
+            const rows = csvData.split("\n");
+            const imgUrls = rows.slice(1).map((row) => row.split(",")[0]); // Skip the first row
 
-        // Update currentIndex based on direction
-        currentIndex = (currentIndex + direction + imgUrls.length) % imgUrls.length;
+            // Update currentIndex based on direction
+            currentIndex =
+              (currentIndex + direction + imgUrls.length) % imgUrls.length;
 
-        // Check if the current row is empty
-        while (imgUrls[currentIndex].trim() === "") {
-          // If empty, move to the next row
-          currentIndex = (currentIndex + 1) % imgUrls.length;
+            // Check if the current row is empty
+            while (imgUrls[currentIndex].trim() === "") {
+              // If empty, move to the next row
+              currentIndex = (currentIndex + 1) % imgUrls.length;
+            }
+
+            // Set the background image
+            document.body.style.backgroundImage = `url(${imgUrls[currentIndex]})`;
+          })
+          .catch((error) => console.error("Error fetching CSV data:", error));
+      }
+
+      // Swipe functionality for touch devices
+      document.addEventListener("touchstart", function (event) {
+        touchStartX = event.touches[0].clientX;
+      });
+
+      document.addEventListener("touchend", function (event) {
+        touchEndX = event.changedTouches[0].clientX;
+        handleSwipe();
+      });
+
+      function handleSwipe() {
+        const swipeThreshold = 50; // Adjust the threshold as needed
+        const swipeLength = touchEndX - touchStartX;
+
+        if (swipeLength > swipeThreshold) {
+          // Swipe right
+          prevBackground();
+        } else if (swipeLength < -swipeThreshold) {
+          // Swipe left
+          nextBackground();
         }
-
-        // Set the background image
-        document.body.style.backgroundImage = `url(${imgUrls[currentIndex]})`;
-      })
-      .catch(error => console.error('Error fetching CSV data:', error));
-  }
-
-  // Swipe functionality for touch devices
-  document.addEventListener('touchstart', function(event) {
-    touchStartX = event.touches[0].clientX;
-  });
-
-  document.addEventListener('touchend', function(event) {
-    touchEndX = event.changedTouches[0].clientX;
-    handleSwipe();
-  });
-
-  function handleSwipe() {
-    const swipeThreshold = 50; // Adjust the threshold as needed
-    const swipeLength = touchEndX - touchStartX;
-
-    if (swipeLength > swipeThreshold) {
-      // Swipe right
-      prevBackground();
-    } else if (swipeLength < -swipeThreshold) {
-      // Swipe left
-      nextBackground();
-    }
-  }
-      
+      }
     </script>
   </body>
 </html>

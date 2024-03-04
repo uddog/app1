@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four Containers with Skeleton Loading</title>
+<style>
+  .container {
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    margin: 20px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
 
-    #editableContent {
-      border: 2px solid #ccc;
-      padding: 10px;
-      margin-bottom: 20px;
+  .skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
     }
-  </style>
+    50% {
+      transform: translateX(150%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+</style>
 </head>
 <body>
-  <div id="editableContent" contenteditable="true"></div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const editableContent = document.getElementById('editableContent');
 
-      // Load content from local storage if available
-      const savedContent = localStorage.getItem('editableContent');
-      if (savedContent) {
-        editableContent.innerHTML = savedContent;
-      }
+<div class="container">
+  <div class="skeleton"></div>
+</div>
+<div class="container">
+  <div class="skeleton"></div>
+</div>
+<div class="container">
+  <div class="skeleton"></div>
+</div>
+<div class="container">
+  <div class="skeleton"></div>
+</div>
 
-      // Auto-save content
-      editableContent.addEventListener('input', function() {
-        // Get the edited content
-        const editedContent = editableContent.innerHTML;
-
-        // Save the content to local storage
-        localStorage.setItem('editableContent', editedContent);
-      });
+<!-- Simulate loading delay (for demonstration purposes) -->
+<script>
+  setTimeout(function() {
+    document.querySelectorAll('.skeleton').forEach(function(skeleton) {
+      skeleton.style.display = 'none';
     });
-  </script>
+  }, 3000);
+</script>
+
 </body>
 </html>

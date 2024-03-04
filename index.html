@@ -65,20 +65,71 @@
             <li><a onclick="storeOptionCategory('উদ্যোগ')">উদ্যোগ</a></li>
         </ul>
     </div>
-    
+    <script>
+      
+//animation
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  // Function to handle scroll animation
+  function handleScrollAnimation(elements) {
+    elements.forEach(element => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top <= window.innerHeight) {
+        element.classList.add('animate');
+      } else {
+        element.classList.remove('animate');
+      }
+    });
+  }
+
+  // Select elements to animate (you can pass any CSS selector to this function)
+  function animateOnScroll(selector) {
+    const elements = document.querySelectorAll(selector);
+    handleScrollAnimation(elements);
+
+    // Add scroll event listener
+    window.addEventListener('scroll', function() {
+      handleScrollAnimation(elements);
+    });
+  }
+
+  // Example usage: animate list items inside .udop class
+  animateOnScroll('.udop li');
+
+});
+
+
+
+    </script>
 
 <div class="instart">
 
      <div class="udnam">
         <h2>উদ্যোগ<br><span class="typing" style="color: rgb(248, 83, 12);"></span></h2>
+        <script>
+              
+    const text = "একটি সামাজিক উন্নয়নমূলক সংগঠন ";
+    const delay = 100; // Typing delay in milliseconds
+
+    function typeEffect(element, text, speed) {
+      let i = 0;
+      const typingInterval = setInterval(() => {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(typingInterval);
+        }
+      }, speed);
+    }
+
+    const typingElement = document.querySelector('.typing');
+    typeEffect(typingElement, text, delay);
+
+
+    //TYPING EFFECT END
+        </script>
      </div>
-
-
-
-      <script>
-        
-      </script>
-
 
 
      <div class="udop">
@@ -96,6 +147,99 @@
     <!--Image Slider-->
     <div class="slider-container" id="imageSliderContainer">
         <div class="slider" id="imageSlider"></div>
+
+        <script>
+          
+
+
+       function handleImgClick() {
+            const href = this.getAttribute("data-href");
+            if (href) {
+                window.location.href = href;
+            }
+        }
+        
+
+
+let touchStartX = 0;
+let touchEndX = 0;
+let isTouching = false;
+
+function handleTouchStart(event) {
+    isTouching = true;
+    touchStartX = event.touches[0].clientX;
+}
+
+function handleTouchEnd(event) {
+    isTouching = false;
+    touchEndX = event.changedTouches[0].clientX;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const sensitivity = 50; // Adjust this value as needed
+
+    if (deltaX > sensitivity) {
+        // Swipe right, move to the previous slide
+        pauseSlider();
+        slide(-1);
+        resumeSlider();
+    } else if (deltaX < -sensitivity) {
+        // Swipe left, move to the next slide
+        pauseSlider();
+        slide(1);
+        resumeSlider();
+    }
+}
+
+let sliderInterval;
+let counter = 0;
+
+function initImageSlider() {
+    const sliderContainer = document.getElementById("imageSliderContainer");
+    const slider = document.getElementById("imageSlider");
+
+    sliderContainer.addEventListener("touchstart", handleTouchStart);
+    sliderContainer.addEventListener("touchend", handleTouchEnd);
+
+    sliderInterval = setInterval(() => {
+        if (!isTouching) {
+            slide(1);
+        }
+    }, 4000);  //time
+}
+
+function slide(direction) {
+    if (direction === 1 && counter >= imageSlider.children.length - 1) {
+        counter = 0;
+    } else if (direction === -1 && counter <= 0) {
+        counter = imageSlider.children.length - 1;
+    } else {
+        counter += direction;
+    }
+
+    imageSlider.style.transition = "transform 0.5s ease-in-out";
+    imageSlider.style.transform = `translateX(${-counter * 100}%)`;
+}
+
+function pauseSlider() {
+    clearInterval(sliderInterval);
+}
+
+function resumeSlider() {
+    sliderInterval = setInterval(() => {
+        if (!isTouching) {
+            slide(1);
+        }
+    }, 4000);
+}
+
+
+
+
+        </script>
+
     </div>
     <p style="color: rgb(68, 65, 65); font-size: 0.8rem;">Control the slide by touch</p>
 

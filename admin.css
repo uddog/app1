@@ -1,44 +1,57 @@
- 
-   /*for main content */
-       body{
-        background-color: var(--back-color);
-       }
-        .ad2 {
-        width: 95vw;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-wrap: wrap;
-        padding: 7px;
-        justify-content: center;
-        border-radius: 10px; 
-    }
-   
-    .ad2 a {
-        font-family: 'font1';
-        width: 30vw;
-        margin: 5px;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        text-align: center;
-        padding: 20px;
-        text-decoration: none;
-        color: var(--text-color1);
-        border-radius: 5px; /* Rounded corners for buttons */
-        transition: background-color 0.3s; /* Smooth transition for hover effect */
-    }
+/*for main content */
+body {
+  background-image: url(https://i.pinimg.com/736x/a8/64/59/a86459326cbe2ddba1706d286f6897e9.jpg);
+  background-size: cover;
+}
+header {
+  backdrop-filter: blur(10px);
+  background-color: transparent;
+}
+.sidebar {
+  backdrop-filter: blur(10px);
+  background-color: transparent;
+}
+.bio-section {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+.ad2 {
+  width: 95vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 7px;
+  justify-content: center;
+  border-radius: 10px;
+}
 
-    .ad2 a ion-icon {
-        font-size: 4rem;
-        margin-bottom: 10px;
-        color: var(--text-color1);
-    }
+.ad2 a {
+  font-family: "font1";
+  width: 30vw;
+  margin: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.345);
+  padding: 20px;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  color: rgb(74, 68, 68);
+  border-radius: 5px; /* Rounded corners for buttons */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
 
-    .ad2 a:hover {
-        background-color: rgb(44, 37, 37);
-        color: white;
-    }
-    .ad2 a:hover ion-icon {
-        color: white;
-    }
+.ad2 a ion-icon {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.ad2 a:hover {
+  color: white;
+  background-color: rgba(240, 130, 57, 0.982);
+}
+.ad2 a:hover ion-icon {
+  color: white;
+}

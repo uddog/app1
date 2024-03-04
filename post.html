@@ -8,19 +8,48 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="universal.css">
     <style>
-       
         body{
-            background-color: #f0f0f0; /* Light gray */
+            background-color: #e8e4e4;
         }
-        /* Styles for the container of all profiles */
+        /* Define styles for the skeleton loading effect */
+        .skeleton-container {
+            margin-top: 10vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .skeleton {
+            background: linear-gradient(to right, #f0f0f0 4%, #e0e0e0 25%, #f0f0f0 36%);
+            background-size: 200% auto;
+            animation: shimmer 1.5s infinite linear;
+            border-radius: 10px;
+            height: 200px;
+            width: 30%;
+            margin-bottom: 20px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+
+
+
+        /* Define styles for the container of all profiles */
         #csvData {
             margin-top: 10vh;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
         }
-        
-        /* Styles for each individual profile (post) */
+
+        /* Define styles for each individual profile (post) */
         .profile {
             box-sizing: border-box;
             width: 95vw;
@@ -28,18 +57,20 @@
             padding: 15px;
             border: 1px solid #ccc;
             border-radius: 10px;
+            min-height: 50vh;
+            overflow: hidden;
             text-align: center;
             background-color: #f8f8f8;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        
+
         /* Hover effect for each profile */
         .profile:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-        
+
         /* Styles for the profile image */
         .profile img {
             width: 100%;
@@ -47,7 +78,7 @@
             margin-bottom: 15px;
             border-radius: 10px;
         }
-        
+
         /* Styles for the profile name */
         .profile h3 {
             margin-bottom: 10px;
@@ -55,6 +86,7 @@
             font-family: 'font2';
             color: #333;
         }
+
         /* Styles for the additional content (paragraphs and button) */
         .profile p,
         .profile button {
@@ -62,7 +94,7 @@
             color: #555;
             font-family: 'font1';
         }
-        
+
         /* Styles for the button */
         .profile button {
             margin-top: 10px;
@@ -73,18 +105,19 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        
+
         /* Hover effect for the button */
         .profile button:hover {
             background-color: #c0392b;
         }
-        
+
+        /* Styles for the navigation buttons */
         .navigation-buttons {
             margin-bottom: 5px;
             text-align: center;
             margin-top: 5px;
         }
-        
+
         .navigation-button {
             background-color: black;
             color: #fff;
@@ -95,11 +128,11 @@
             font-size: 0.9rem;
             outline: none;
         }
-        
+
         .navigation-button:hover {
             background-color: #151515b4;
         }
-        
+
         .page-button {
             padding: 7px 10px;
             margin: 5px 4px;
@@ -110,58 +143,11 @@
             outline: none;
             border-radius: 4px;
         }
-        
-        /* Styles for the loading scene */
-        #loadingScene {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999; /* Ensure the loading scene is on top of other elements */
-            padding: 20px;
-            border-radius: 10px;
-        }
-        
-        /* Styles for the loading spinner */
-        .spinner {
-            margin: 0 auto;
-            width: 50px;
-            height: 50px;
-            position: relative;
-            text-align: center;
-        }
-        
-        .spinner div {
-            width: 10px;
-            height: 10px;
-            background-color: black; /* Dark gray */
-            border-radius: 50%;
-            display: inline-block;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        
-        .spinner div:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-        
-        .spinner div:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-        
-        @keyframes bounce {
-            0%, 80%, 100% {
-                transform: scale(0);
-            }
-            40% {
-                transform: scale(1);
-            }
-        }
     </style>
 </head>
 
 <body>
-    <!--NavBar Start-->
+      <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-top" id="sidebarTop"></div>
@@ -193,20 +179,14 @@
         <button onclick="closeLogoutPopup()">No</button>
     </div>
     <!--NavBar End-->
-
-    <div id="csvData"></div>
-
-    <!-- Loading Scene -->
-    <div id="loadingScene">
-        <div class="spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+    <!-- Profile containers -->
+    <div id="csvData">
+        <!-- Skeletons for profiles -->
+        <div class="profile skeleton"></div>
+        <div class="profile skeleton"></div>
+        <div class="profile skeleton"></div>
+        <!-- Add more skeleton elements as needed -->
     </div>
-
 
     <!-- Page Buttons -->
     <div class="navigation-buttons" id="pageButtons"></div>
@@ -245,8 +225,6 @@
 
         async function fetchAndDisplayData() {
             try {
-                const loadingScene = document.getElementById('loadingScene');
-                loadingScene.style.display = 'block'; // Show loading scene
                 const response = await fetch(csvDataURL);
                 const csvData = await response.text();
 
@@ -256,7 +234,6 @@
                         totalRows = results.data.length - 1;
                         updateNavigationButtons();
                         displayData(results.data);
-                        loadingScene.style.display = 'none'; // Hide loading scene after data is fetched
                     },
                     error: function (error) {
                         console.error('Error parsing CSV data:', error);
@@ -344,6 +321,7 @@
             }
         }
 
+        // Initially load data
         fetchAndDisplayData();
     </script>
 

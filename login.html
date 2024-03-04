@@ -10,135 +10,140 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100dvh;
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
             display: flex;
-            flex-wrap: wrap;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             justify-content: center;
-            background-color: #f0f0f0; /* Light gray */
-        }
-
-        .login-container {
-            z-index: 1;
-            margin-top: 15vh;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            background-image: url(https://i.pinimg.com/564x/fe/8a/e3/fe8ae3caf988dbd43410284b299a12e3.jpg);
+          }
+          
+          .login-container {
+            margin-top: 5vh;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
             text-align: center;
             overflow: hidden;
             width: 90vw;
             max-width: 400px;
             padding: 20px;
-            border-radius: 30px;
-            background-color: #ffffff; /* White */
-            animation: u 1.5s linear;
-        }
-        @keyframes up {
-            from{
-                  margin-top: 100vh;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2); /* Glassy effect */
+            backdrop-filter: blur(10px); /* Glassy effect */
+            animation: fadeInDown 1s ease; /* Fade in animation */
+          }
+          
+          @keyframes fadeInDown {
+            0% {
+              opacity: 0;
+              transform: translateY(-50px);
             }
-        }
-        
-        h2 {
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          h2 {
             margin-bottom: 20px;
             margin-top: 20px;
-            font-size: 32px;
-            color: #333333; /* Dark gray */
-        }
-        
-        .login-input {
+            font-size: 28px;
+            color: #ffffff; /* White text */
+            animation: fadeInUp 1s ease; /* Fade in animation */
+          }
+          
+          .login-input {
             width: calc(100% - 20px);
             padding: 12px 10px;
             margin: 14px 0;
             box-sizing: border-box;
             border: none;
-            border-bottom: 1px solid #555555; /* Dark gray */
+            border-bottom: 1px solid #ffffff; /* White border */
             outline: none;
-        }
-        
-        .login-input:focus {
-            background-color: #ffffff; /* White */
-        }
-        
-        .login-input::placeholder {
-            color: #555555; /* Dark gray */
-        }
-        
-        .login-label {
+            background: transparent; /* Transparent background */
+            color: #ffffff; /* White text */
+            transition: border-color 0.3s; /* Smooth transition */
+          }
+          
+          .login-input:focus {
+            border-bottom: 1px solid #3498db; /* Light blue border on focus */
+          }
+          
+          .login-input::placeholder {
+            color: #ffffff; /* White placeholder text */
+          }
+          
+          .login-label {
             position: absolute;
             left: 10px;
             top: 12px;
             font-size: 16px;
             transform: translateY(-50%);
             pointer-events: none;
-            color: #555555; /* Dark gray */
-        }
-        
-        .login-input:focus + .login-label,
-        .login-input:not(:placeholder-shown) + .login-label {
-            transform: translateY(-80%);
-            font-size: 12px;
-            color: #333333; /* Dark gray */
-        }
-        
-        .login-button {
+            color: #ffffff; /* White text */
+            transition: all 0.3s ease;
+          }
+          
+          .login-input:focus + .login-label,
+          .login-input:not(:placeholder-shown) + .login-label {
+            transform: translateY(-80%) scale(0.8); /* Slightly smaller and moved up */
+          }
+          
+          .login-button {
             padding: 12px;
-            background-color: transparent;
-            border: 1px solid; /* Coral */
+            border: none;
             border-radius: 4px;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.212);
             cursor: pointer;
             width: 50%;
             margin-top: 20px;
-            transition: 0.1s;
+            transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
             font-size: 16px;
-            background-color: black;
-            color: white;
-        }
-        
-        .login-button:hover {
-            background: rgb(102, 99, 99); /* Light coral */
-            color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ffaa80; /* Light coral */
-        }
-        
-
-
-
-        
-        #errorMessage {
+            color: #ffffff; /* White text */
+          }
+          
+          .login-button:hover {
+            background: #5dade2; /* Slightly darker blue on hover */
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3); /* Light blue shadow on hover */
+          }
+          
+          #errorMessage {
             font-size: 14px;
             margin-top: 10px;
             font-weight: lighter;
-        }
-
-        
-        .loading-overlay {
+            color: #cdc6c5; /* Red error message */
+          }
+          
+          .loading-overlay {
             display: none;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.9);
             z-index: 999;
             align-items: center;
             justify-content: center;
-        }
-        
-        .loading-spinner {
-            border: 8px solid gray;
-            border-top: 8px solid;
+          }
+          
+          .loading-spinner {
+            border: 4px solid #ffffff71; /* White spinner */
+            border-top: 4px solid #000000; /* Light blue spinner */
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-
+          }
+          
+          @keyframes spin {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+          
         
     </style>
 </head>

@@ -226,123 +226,92 @@
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="navbar.js"></script>
 <script>
-    async function fetchUserProfile() {
-        const storedRowIndex = parseInt(localStorage.getItem('rowIndex'), 10);
+    // Function to fetch user profile from local storage
+    function fetchUserProfileFromLocalStorage() {
+        // Retrieve data from local storage
+        const imgSrc = localStorage.getItem('userImg');
+        const name = localStorage.getItem('userBName');
+        const role = localStorage.getItem('userRole');
+        const fatherName = localStorage.getItem('userFName');
+        const address = localStorage.getItem('userAddress');
+        const gender = localStorage.getItem('userGender');
+        const profession = localStorage.getItem('userProfession');
+        const joiningDate = localStorage.getItem('userJDate');
+        const totalDonation = localStorage.getItem('userDonate');
+        const dateOfBirth = localStorage.getItem('userBirthDay');
+        const bloodGroup = localStorage.getItem('userBloodGroup');
+        const message = localStorage.getItem('userReference');
+        const attendedEvents = localStorage.getItem('userEvents');
+        const bloodDonationTimes = localStorage.getItem('userPoint');
+        const school = localStorage.getItem('userSchool');
+        const college = localStorage.getItem('userCollege');
+        const varsity = localStorage.getItem('userVarsity');
+        const lastDonate = localStorage.getItem('userMDate');
+        const lastBloodDonate = localStorage.getItem('userBDate');
 
-        if (!storedRowIndex) {
-            alert("No stored row index found. Please enter your credentials.");
-            return;
-        }
-
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
-
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            const rows = data.split('\n').map(row => row.split(','));
-
-            const storedRow = rows[storedRowIndex];
-
-            if (storedRow) {
-                const imgSrc = storedRow[18].trim();
-                const name = storedRow[3].trim();
-                const role = storedRow[2].trim();
-                const fatherName = storedRow[5].trim();
-                const address = storedRow[11].trim();
-                const gender = storedRow[10].trim();
-                const profession = storedRow[15].trim();
-                const joiningDate = storedRow[19].trim();
-                const totalDonation = storedRow[20].trim();
-                const dateOfBirth = storedRow[8].trim();
-                const bloodGroup = storedRow[9].trim();
-                const message = storedRow[21].trim();
-                const attendedEvents = storedRow[22].trim();
-                const bloodDonationTimes = storedRow[17].trim();
-                const school = storedRow[12].trim();
-                const college = storedRow[13].trim();
-                const varsity = storedRow[14].trim();
-                const columnY = storedRow[24].trim(); // Add this line for column Y
-                const columnZ = storedRow[25].trim(); // Add this line for column Z
-
-                localStorage.setItem('useBloodDonate',columnZ);
-                localStorage.setItem('userPoint',bloodDonationTimes);
-                localStorage.setItem('userPower',role);
-
-
-
-                document.getElementById("content").style.display = "block";
-
-                document.getElementById("profile").innerHTML = `
-                 <div class="forstic">
-                    <div class="s1">
-                        <img src="${imgSrc}" alt="Profile Image">
-                        <p>${name}</p>
-                        <p>${role}</p>
-                    </div>
-                    <div class="s2">
-                        <p>${attendedEvents}<br>Events</p>
-                        <p>${totalDonation}<br>Donation</p>
-                        <p>${bloodDonationTimes}<br>Point</p>
-                    </div>
-                </div>
-                  <div class="two">
-                    <div class="s3">
-                        <p>Joining Date</p>
-                        <p>${joiningDate}</p>
-                        <p>Blood Group</p>
-                        <p>${bloodGroup}</p>
-                        <p>Gender</p>
-                        <p>${gender}</p>
-                        <p>Date of Birth</p>
-                        <p>${dateOfBirth}</p>
-                        <p>Father's Name</p>
-                        <p>${fatherName}</p>
-                        <p>Address</p>
-                        <p>${address}</p>
-                        <p>School Name</p>
-                        <p>${school}</p>
-                        <p>College Name</p>
-                        <p>${college}</p>
-                        <p>Varsity Name</p>
-                        <p>${varsity}</p>
-                        <p>Profession</p>
-                        <p>${profession}</p>
-                        <p>Last Donate</p>
-                        <p>${columnY}</p>
-                        <p>Last Blood Donate</p>
-                        <p>${columnZ}</p>
-                    </div>
-                    <div id="hello">
-                        <h3>More</h3>
-                        <div class="button-container">
-                            <a href="history.html"><button class="button"><ion-icon name="stats-chart-outline"></ion-icon><br>History</button></a>
-                            <a href="card.html"><button class="button"><ion-icon name="id-card-outline"></ion-icon><br>Card</button></a>
-                            <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
-                            <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
-                          </div>
-                    </div>
-                  </div>
-
-
-                `;
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+        // Update the profile section with retrieved data
+        document.getElementById("content").style.display = "block";
+        document.getElementById("profile").innerHTML = `
+            <div class="forstic">
+               <div class="s1">
+                   <img src="${imgSrc}" alt="Profile Image">
+                   <p>${name}</p>
+                   <p>${role}</p>
+               </div>
+               <div class="s2">
+                   <p>${attendedEvents}<br>Events</p>
+                   <p>${totalDonation}<br>Donation</p>
+                   <p>${bloodDonationTimes}<br>Point</p>
+               </div>
+           </div>
+             <div class="two">
+               <div class="s3">
+                   <p>Joining Date</p>
+                   <p>${joiningDate}</p>
+                   <p>Blood Group</p>
+                   <p>${bloodGroup}</p>
+                   <p>Gender</p>
+                   <p>${gender}</p>
+                   <p>Date of Birth</p>
+                   <p>${dateOfBirth}</p>
+                   <p>Father's Name</p>
+                   <p>${fatherName}</p>
+                   <p>Address</p>
+                   <p>${address}</p>
+                   <p>School Name</p>
+                   <p>${school}</p>
+                   <p>College Name</p>
+                   <p>${college}</p>
+                   <p>Varsity Name</p>
+                   <p>${varsity}</p>
+                   <p>Profession</p>
+                   <p>${profession}</p>
+                   <p>Last Donate</p>
+                   <p>${lastDonate}</p>
+                   <p>Last Blood Donate</p>
+                   <p>${lastBloodDonate}</p>
+               </div>
+               <div id="hello">
+                   <h3>More</h3>
+                   <div class="button-container">
+                       <a href="history.html"><button class="button"><ion-icon name="stats-chart-outline"></ion-icon><br>History</button></a>
+                       <a href="card.html"><button class="button"><ion-icon name="id-card-outline"></ion-icon><br>Card</button></a>
+                       <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
+                       <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
+                     </div>
+               </div>
+             </div>
+           `;
     }
 
-
-    
+    // Check if user profile data exists in local storage
     const storedRowIndex = localStorage.getItem('rowIndex');
     if (storedRowIndex) {
-        fetchUserProfile();
+        // Fetch user profile from local storage
+        fetchUserProfileFromLocalStorage();
     }
-
-    
-
-    
-        
 </script>
+
 </body>
 
 </html>

@@ -15,8 +15,8 @@ header {
     width: 90vw;
     top: 1vh;
     z-index: 5;
-    background-color: white;
     left: 50%;
+    background-color: white;
     transform: translateX(-50%);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
@@ -81,7 +81,7 @@ nav img {
 
 .sidebar a:hover {
     background-color: #FFDD95; /* Lighter shade of orange */
-    color: black;
+    color: rgb(18, 16, 16);
 }
 
 .sidebar .close-btn {
