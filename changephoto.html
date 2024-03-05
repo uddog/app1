@@ -15,10 +15,9 @@
             overflow: scroll;
             scroll-snap-type: x mandatory;
             box-sizing: border-box;
-            background-color: #f0f0f0;
+            background-image: url(https://i.pinimg.com/564x/fc/33/55/fc3355c66a18c121c80942bfcf510aed.jpg);
         }
         .custom-img{
-            background-color: white;
             margin-top: 5vh;
             padding-top: 20px;
             scroll-snap-align: start;
@@ -26,6 +25,8 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
             min-width: 100vw;
             display: flex;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.237);
             justify-content: center;
             align-items: center;
         }
@@ -53,9 +54,10 @@
         .container {
             margin-top: 5vh;
             padding-top: 20px;
-            background-color: white;
             padding-bottom: 20px;
             scroll-snap-align: start;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.237);
             border-radius: 30px 30px 0px 0px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -96,7 +98,6 @@
             height: 100%;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.5);
         }
         
         .spinner {
@@ -328,6 +329,7 @@
             }
         }
     </script>
+    <script src="universal.js"></script>
 
 </body>
 </html>
