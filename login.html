@@ -1,238 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Page</title>
-    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="universal.css" />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100dvh;
-            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: url(https://i.pinimg.com/564x/fe/8a/e3/fe8ae3caf988dbd43410284b299a12e3.jpg);
-          }
-          
-          .login-container {
-            margin-top: 5vh;
-            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            overflow: hidden;
-            width: 90vw;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2); /* Glassy effect */
-            backdrop-filter: blur(10px); /* Glassy effect */
-            animation: fadeInDown 1s ease; /* Fade in animation */
-          }
-          
-          @keyframes fadeInDown {
-            0% {
-              opacity: 0;
-              transform: translateY(-50px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          
-          h2 {
-            margin-bottom: 20px;
-            margin-top: 20px;
-            font-size: 28px;
-            color: #ffffff; /* White text */
-            animation: fadeInUp 1s ease; /* Fade in animation */
-          }
-          
-          .login-input {
-            width: calc(100% - 20px);
-            padding: 12px 10px;
-            margin: 14px 0;
-            box-sizing: border-box;
-            border: none;
-            border-bottom: 1px solid #ffffff; /* White border */
-            outline: none;
-            background: transparent; /* Transparent background */
-            color: #ffffff; /* White text */
-            transition: border-color 0.3s; /* Smooth transition */
-          }
-          
-          .login-input:focus {
-            border-bottom: 1px solid #3498db; /* Light blue border on focus */
-          }
-          
-          .login-input::placeholder {
-            color: #ffffff; /* White placeholder text */
-          }
-          
-          .login-label {
-            position: absolute;
-            left: 10px;
-            top: 12px;
-            font-size: 16px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: #ffffff; /* White text */
-            transition: all 0.3s ease;
-          }
-          
-          .login-input:focus + .login-label,
-          .login-input:not(:placeholder-shown) + .login-label {
-            transform: translateY(-80%) scale(0.8); /* Slightly smaller and moved up */
-          }
-          
-          .login-button {
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.212);
-            cursor: pointer;
-            width: 50%;
-            margin-top: 20px;
-            transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
-            font-size: 16px;
-            color: #ffffff; /* White text */
-          }
-          
-          .login-button:hover {
-            background: #5dade2; /* Slightly darker blue on hover */
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3); /* Light blue shadow on hover */
-          }
-          
-          #errorMessage {
-            font-size: 14px;
-            margin-top: 10px;
-            font-weight: lighter;
-            color: #cdc6c5; /* Red error message */
-          }
-          
-          .loading-overlay {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
-          }
-          
-          .loading-spinner {
-            border: 4px solid #ffffff71; /* White spinner */
-            border-top: 4px solid #000000; /* Light blue spinner */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-          }
-          
-          @keyframes spin {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(360deg);
-            }
-          }
-          
-        
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100dvh;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url(https://i.pinimg.com/474x/de/b4/eb/deb4ebc989322fc85762d6f0e245fa44.jpg);
+        background-size: cover;
+      }
+
+      .login-container {
+        margin-top: 5vh;
+        text-align: center;
+        overflow: hidden;
+        width: 90vw;
+        padding: 50px 20px;
+        border-radius: 10px;
+        animation: fadeInDown 1s ease; /* Fade in animation */
+      }
+
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        margin-top: 20px;
+        font-size: 28px;
+        color: #ffffff; /* White text */
+        animation: fadeInUp 1s ease; /* Fade in animation */
+      }
+
+      .login-input {
+        width: calc(100% - 20px);
+        padding: 12px 10px;
+        margin: 14px 0;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid #ffffff; /* White border */
+        outline: none;
+        background: transparent; /* Transparent background */
+        color: #ffffff; /* White text */
+        transition: border-color 0.3s; /* Smooth transition */
+      }
+
+      .login-input:focus {
+        border-bottom: 1px solid #0e0f0f; /* Light blue border on focus */
+
+      }
+
+      .login-input::placeholder {
+        color: #ffffff; /* White placeholder text */
+      }
+
+      .login-label {
+        position: absolute;
+        left: 10px;
+        top: 12px;
+        font-size: 16px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ffffff; /* White text */
+        transition: all 0.3s ease;
+      }
+
+      .login-input:focus + .login-label,
+      .login-input:not(:placeholder-shown) + .login-label {
+        transform: translateY(-80%) scale(0.8); /* Slightly smaller and moved up */
+      }
+
+      .login-button {
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(31, 31, 29, 0.991);
+        cursor: pointer;
+        width: 50%;
+        margin-top: 20px;
+        transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+        font-size: 16px;
+        color: #ffffff; /* White text */
+      }
+
+      .login-button:hover {
+        background: #838687; /* Slightly darker blue on hover */
+      }
+
+      #errorMessage {
+        font-size: 14px;
+        margin-top: 10px;
+        font-weight: lighter;
+        color: #cdc6c5; /* Red error message */
+      }
+
+      .loading-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loading-spinner {
+        border: 4px solid #ffffff71; /* White spinner */
+        border-top: 4px solid #000000; /* Light blue spinner */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="login-container">
-        <h2>UDDOG ID</h2>
-        <p id="errorMessage"></p>
-        <form id="loginForm">
-            <input autocomplete="off" placeholder="Enter Username" type="text" id="username" class="login-input" name="username" required><br>
-            <input autocomplete="off" placeholder="Enter Password" type="password" id="password" class="login-input" name="password" required><br>
-            <button type="button" onclick="attemptLogin()" class="login-button">Login</button>
-        </form>
+      <h2>UDDOG ID</h2>
+      <p id="errorMessage"></p>
+      <form id="loginForm">
+        <input
+          autocomplete="off"
+          placeholder="Enter Username"
+          type="text"
+          id="username"
+          class="login-input"
+          name="username"
+          required
+        /><br />
+        <input
+          autocomplete="off"
+          placeholder="Enter Password"
+          type="password"
+          id="password"
+          class="login-input"
+          name="password"
+          required
+        /><br />
+        <button type="button" onclick="attemptLogin()" class="login-button">
+          Login
+        </button>
+      </form>
     </div>
 
     <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-spinner"></div>
+      <div class="loading-spinner"></div>
     </div>
 
     <script>
-        async function attemptLogin() {
-            const usernameInput = document.getElementById('username');
-            const passwordInput = document.getElementById('password');
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-            const errorMessageElement = document.getElementById('errorMessage');
-        
-            // Check if the username and password inputs are not empty
-            if (username === '' || password === '') {
-                errorMessageElement.textContent = 'Please enter both username and password.';
-                return; // Stop the function if any input is empty
-            }
-        
-            errorMessageElement.textContent = ''; // Clear previous error message
-        
-            // Show loading overlay
-            document.getElementById('loading-overlay').style.display = 'flex';
-        
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
-        
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
-        
-                // Loop through the rows to check for matching credentials, starting from index 1 (skipping the first row)
-                let isValid = false;
-                let rowIndex;
-        
-                for (let i = 1; i < rows.length; i += 2) { // Increment by 2 to check every other row
-                    const row = rows[i];
-                    if (row[1].trim().toLowerCase() === username && row[26].trim() === password) {
-                        isValid = true;
-                        rowIndex = i;
-                        break;
-                    }
-                }
-        
-                if (isValid) {
-                    localStorage.setItem('rowIndex', rowIndex);
-                    localStorage.setItem('userPassword', password);
-        
-                    // Redirect to index.html
-                    window.location.href = 'index.html';
-        
-                    // Note: The code below won't be executed after the redirection,
-                    // as the page will be unloaded and the script will be terminated.
-                } else {
-                    errorMessageElement.textContent = 'Wrong username or password. Please try again.';
-                }
-        
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                errorMessageElement.textContent = 'An error occurred. Please try again later.';
-            } finally {
-                // Hide loading overlay regardless of success or failure
-                document.getElementById('loading-overlay').style.display = 'none';
-            }
-        
-            // Check if there is a saved row index in localStorage
-            const savedRowIndex = localStorage.getItem('rowIndex');
-            if (savedRowIndex) {
-                // If a row index is saved, you might want to handle it accordingly (e.g., redirect or perform some action)
-                console.log('Log in Successfull!');
-            }
+      async function attemptLogin() {
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const errorMessageElement = document.getElementById("errorMessage");
+    
+        // Check if the username and password inputs are not empty
+        if (username === "" || password === "") {
+            errorMessageElement.textContent = "Please enter both username and password.";
+            return; // Stop the function if any input is empty
         }
-        
+    
+        errorMessageElement.textContent = ""; // Clear previous error message
+    
+        // Show loading overlay
+        document.getElementById("loading-overlay").style.display = "flex";
+    
+        const csvUrl =
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0";
+    
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const rows = data.split("\n").map((row) => row.split(","));
+    
+            // Find the row index for the given username
+            let rowIndex = -1;
+    
+            for (let i = 1; i < rows.length; i++) {
+                // Skip the first row (headers)
+                const row = rows[i];
+                if (row[1].trim().toLowerCase() === username) {
+                    rowIndex = i;
+                    break;
+                }
+            }
+    
+            if (rowIndex !== -1) {
+                // Username found, now check the password in the same row
+                const row = rows[rowIndex];
+                if (row[26].trim() === password) {
+                    // Password matched, perform login
+                    localStorage.setItem("rowIndex", rowIndex);
+                    localStorage.setItem("userPassword", password);
+    
+                    // Redirect to index.html
+                    window.location.href = "index.html";
+                    return; // Stop further execution
+                }
+            }
+    
+            // If username or password is incorrect
+            errorMessageElement.textContent = "Wrong username or password. Please try again.";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            errorMessageElement.textContent = "An error occurred. Please try again later.";
+        } finally {
+            // Hide loading overlay regardless of success or failure
+            document.getElementById("loading-overlay").style.display = "none";
+        }
+    
+        // Check if there is a saved row index in localStorage
+        const savedRowIndex = localStorage.getItem("rowIndex");
+        if (savedRowIndex) {
+            // If a row index is saved, you might want to handle it accordingly (e.g., redirect or perform some action)
+            console.log("Log in Successful!");
+        }
+    }
+    
     </script>
-</body>
-
+  </body>
 </html>

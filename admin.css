@@ -1,8 +1,5 @@
 /*for main content */
-body {
-  background-image: url(https://i.pinimg.com/564x/24/cb/46/24cb46a74431aa31b0467929debaa082.jpg);
-  background-size: cover;
-}
+
 header {
   backdrop-filter: blur(10px);
   background-color: transparent;
@@ -37,12 +34,15 @@ header {
   background-color: rgba(255, 255, 255, 0.345);
   padding: 20px;
   text-decoration: none;
+  color: black;
   backdrop-filter: blur(10px);
-  color: rgb(74, 68, 68);
   border-radius: 5px; /* Rounded corners for buttons */
   transition: background-color 0.1s; /* Smooth transition for hover effect */
 }
-
+.ad2 img{
+  width: 25vw;
+  height: 25vw;
+}
 .ad2 a ion-icon {
   font-size: 4rem;
   margin-bottom: 10px;
@@ -50,6 +50,4 @@ header {
 
 .ad2 a:hover {
   background-color: white;
-}
-.ad2 a:hover ion-icon {
 }
