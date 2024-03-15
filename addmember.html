@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <link rel="stylesheet" href="universal.css">
-
+<link rel="stylesheet" href="test.css">
     <style>
+
 /* Universal Styles */
 body {
     margin: 0;
@@ -17,7 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(https://i.pinimg.com/564x/bf/78/0c/bf780c391369dd66ddffcac42d8bf714.jpg);
+    background-color: #f0f0f0; /* Light gray background */
 }
 
 .container {
@@ -27,12 +28,14 @@ body {
     text-align: center;
     padding: 40px 20px;
     border-radius: 10px;
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
 h1 {
     font-size: 32px;
     margin-bottom: 20px;
-    color: #ffffff; /* White text */
+    color: #333333; /* Dark text */
 }
 
 form {
@@ -43,30 +46,32 @@ form {
 }
 
 input {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 12px 10px;
-    margin: 20px 0;
+    margin: 10px 0;
     box-sizing: border-box;
     border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* White border */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1); /* Light gray border */
     outline: none;
-    background-color: transparent; /* Transparent background */
-    color: #ffffff; /* White text */
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333333; /* Dark text */
     transition: border-color 0.3s; /* Smooth transition */
 }
-input::placeholder{
-    color: white;
+
+input::placeholder {
+    color: #999999; /* Light gray placeholder */
 }
+
 input:focus {
-    border-bottom: 2px solid #ffffff; /* White border on focus */
+    border-bottom: 2px solid #333333; /* Dark border on focus */
 }
 
 button {
     padding: 12px;
     border: none;
     border-radius: 5px;
-    margin: 20px;
-    background-color: rgba(5, 5, 5, 0.82); /* Semi-transparent white */
+    margin: 15px;
+    background-color: #333333; /* Dark button */
     cursor: pointer;
     width: 50%;
     transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
@@ -74,27 +79,21 @@ button {
 }
 
 button:hover {
-    background-color: rgba(16, 14, 14, 0.977); /* Slightly darker semi-transparent white on hover */
+    background-color: #555555; /* Slightly darker button on hover */
 }
 
 .error-message {
-    display: none;
     font-size: 0.8rem;
-    color: #e5e5e5; /* Red color for error messages */
+    color: #ff6347; /* Tomato red for error messages */
+    margin-top: 5px;
 }
 
 /* Success Message */
 .success-message {
     display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-    color: #ffffff; /* White text */
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #3cb371; /* Medium sea green for success messages */
 }
 
 /* Popup */
@@ -106,11 +105,11 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.404);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
     padding: 20px;
     border-radius: 5px;
     color: white;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); /* Light shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Dark shadow */
 }
 
 /* Loading Modal */
@@ -121,6 +120,7 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
     justify-content: center;
     align-items: center;
 }
@@ -129,11 +129,12 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     text-align: center;
+    background-color: #ffffff; /* White background */
 }
 
 .loader {
-    border: 4px solid rgba(255, 255, 255, 0.5); /* Semi-transparent white */
-    border-top: 4px solid #ffffff; /* White spinner */
+    border: 4px solid rgba(0, 0, 0, 0.1); /* Light gray spinner */
+    border-top: 4px solid #333333; /* Dark spinner */
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -144,7 +145,6 @@ button:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 
     </style>
 </head>
