@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculate Age</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+    background-color: #373737;
+}
+
+#result {
+  text-align: center;
+  font-size: 2rem; /* Increased font size */
+}
+span{
+  font-size: 3rem;
+}
+.year {
+    font-size: 10rem;
+    color: #ff9f43; /* Year color */
+}
+
+.month {
+    color: #ff6b6b; /* Month color */
+}
+
+.day {
+    color: #48dbfb; /* Day color */
+}
+
+.hour {
+    color: #1dd1a1; /* Hour color */
+}
+
+.minute {
+    color: #feca57; /* Minute color */
+}
+
+.second {
+    color: #ff6b6b; /* Second color */
+}
+</style>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script>
+// Check if birthdate exists in local storage
+var storedBirthdate = localStorage.getItem("userBirthDay");
+
+// Function to calculate age
+function calculateAge() {
+    var birthdate = new Date(storedBirthdate);
+    var today = new Date();
+    
+    var age = today.getFullYear() - birthdate.getFullYear();
+    var monthDiff = today.getMonth() - birthdate.getMonth();
+    var dayDiff = today.getDate() - birthdate.getDate();
+    var hourDiff = today.getHours() - birthdate.getHours();
+    var minuteDiff = today.getMinutes() - birthdate.getMinutes();
+    var secondDiff = today.getSeconds() - birthdate.getSeconds();
+
+    if (secondDiff < 0) {
+        secondDiff += 60;
+        minuteDiff--;
+    }
+    if (minuteDiff < 0) {
+        minuteDiff += 60;
+        hourDiff--;
+    }
+    if (hourDiff < 0) {
+        hourDiff += 24;
+        dayDiff--;
+    }
+    if (dayDiff < 0) {
+        var daysInLastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        dayDiff += daysInLastMonth;
+        monthDiff--;
+    }
+    if (monthDiff < 0) {
+        monthDiff += 12;
+        age--;
+    }
+    
+    document.getElementById('result').innerHTML = "<span class='year'>" + age + "</span> years<br><span class='month'>" + monthDiff + "</span> months <span class='day'>" + dayDiff + "</span> days<br><span class='hour'>" + hourDiff + "</span> hours <span class='minute'>" + minuteDiff + "</span> minutes<br><span class='second'>" + secondDiff + "</span> seconds";
+}
+
+// Initially calculate age
+calculateAge();
+
+// Set interval to update age every second
+setInterval(calculateAge, 1000);
+</script>
+
+</body>
+</html>
