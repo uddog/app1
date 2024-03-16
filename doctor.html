@@ -13,13 +13,15 @@
   display: flex;
   width: 100vw;
   margin-top: 12vh;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 /* Style for the select dropdown */
 #doctorSelect {
   padding: 8px; /* Adjust padding as needed */
   border-radius: 5px; /* Adjust border radius as needed */
+  background-color: transparent; 
+  margin-right: 10px;
 }
 
 /* Style for the search input */
@@ -29,89 +31,96 @@
   border-radius: 5px; /* Adjust border radius as needed */
 }
 .group {
-margin-top: 10px;
-margin-bottom: 20px;
-border: 2px solid #ccc;
-border-radius: 5px;
-padding: 10px;
-text-align: center;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  font-family: "font2";
 }
 
 .group h2 {
-margin-top: 0;
-font-size: 24px;
-color: #333;
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
 }
 
 .profile {
-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-padding-top: 10px;
-margin-top: 10px;
-padding: 10px;
-display: grid;
-gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding-top: 10px;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
 }
-.profile:hover {
-background-color: #9a9a9aac;
-transition: 0.5s;
+.profile:hover img{
+  scale: 1.07;
+  transition: 0.5s;
+}
+.two {
+  padding: 5px;
+  min-height: 100px;
+  display: flex;
+  justify-content: space-around;
+}
+.one {
+  align-items: center;
+  display: grid;
+  padding-left: 10px;
 }
 .profile img {
-float: left;
-grid-column: 1;
-grid-row: 1 / span 3;
-width: 100px; /* Adjust according to your preference */
-height: 100px; /* Maintain aspect ratio */
+  width: 100px; /* Adjust according to your preference */
+  height: 100px; /* Maintain aspect ratio */
 }
 
 .profile p {
-font-family: "font4";
-display: grid;
-place-items: center;
-}
-.nam {
-grid-column: 2 / span 3;
-grid-row: 2 / span 1;
-}
-.inst {
-grid-column: 2 / span 3;
-grid-row: 3;
-}
-.det {
-grid-row: 4;
-grid-column: 1 / span 4;
-}
-.tim {
-grid-row: 5;
-grid-column: 1 / span 4;
+  text-align: left;
+  position: relative;
+  font-size: 0.9rem;
+  margin: 5px;
 }
 
-    .spinner {
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-left-color: #0a0a0a;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: none; /* Hide initially */
-      }
-  
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
+.nam {
+}
+.inst {
+}
+.det {
+}
+.tim {
+}
+
+
+/* Style for the skeleton loading scene */
+.skeleton:first-child{
+  margin-top: 70px;
+}
+.skeleton {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin: 10px;
+  height: 200px; /* Adjust height as needed */
+}
+.skeleton-line {
+  margin-top: 20px;
+  background-color: #e0e0e0;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  animation: skeleton-animation 1.5s infinite;
+  width: 50%;
+
+}
+@keyframes skeleton-animation {
+  0% {
+    transform: translateX(0)
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
   </style>
 </head>
 <body>
 
-    <div class="spinner" id="spinner"></div>
 
     
     <!--NavBar Start-->
@@ -165,24 +174,38 @@ grid-column: 1 / span 4;
 <script src="navbar.js"></script>
 <script>
 
-        // Function to show loading spinner
-        function showSpinner() {
-            document.getElementById('spinner').style.display = 'block';
-          }
-      
-          // Function to hide loading spinner
-          function hideSpinner() {
-            document.getElementById('spinner').style.display = 'none';
-          }
-      
+// Function to show skeleton loading scenes
+function showSkeleton() {
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = ''; // Clear existing content
+
+  for (let i = 0; i < 5; i++) { // Adjust the number of skeleton scenes as needed
+    const skeletonDiv = document.createElement('div');
+    skeletonDiv.classList.add('skeleton');
+
+    for (let j = 0; j < 3; j++) { // Adjust the number of lines in each skeleton scene as needed
+      const skeletonLine = document.createElement('div');
+      skeletonLine.classList.add('skeleton-line');
+      skeletonDiv.appendChild(skeletonLine);
+    }
+
+    resultDiv.appendChild(skeletonDiv);
+  }
+}
+function hideSkeleton() {
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = ''; // Clear skeleton scenes
+}
+
+
   // Function to fetch CSV file and organize data into div groups
   function csvToDivGroups(url) {
-    showSpinner(); // Show loading spinner before fetching data
+    showSkeleton(); // Show skeleton loading scenes before fetching data
     fetch(url)
       .then((response) => response.text())
       .then((data) => {
-        hideSpinner(); // Hide loading spinner once data is fetched
-        Papa.parse(data, {
+       hideSkeleton(); // Hide skeleton loading scenes once data is fetched
+       Papa.parse(data, {
           complete: function (results) {
             const rowData = results.data;
 
@@ -243,18 +266,23 @@ grid-column: 1 / span 4;
             
                 // Add profiles under the doctor
                 groups[doctor].forEach((profileData) => {
-                    const profileDiv = `
-                    <div class="profile">
-                        <img src="${profileData.imgSrc}" alt="Profile Image">
-                        <p class="nam">নাম: ${profileData.name}</p>
-                        <p class="inst">স্থান : ${profileData.institute}</p>
-                        <p class="det">তথ্য: ${profileData.details}</p>
-                        <p class="tim">সময়: ${profileData.time}</p>
-                    </div>
-                    `;
-            
-                    groupDiv.innerHTML += profileDiv;
-                });
+                  const profileDiv = `
+                      <div class="profile">
+                        <div class="two">
+                          <img src="${profileData.imgSrc}" alt="Profile Image">
+                          <div class="one">
+                          ${profileData.name ? `<p class="nam">নাম: ${profileData.name}</p>` : ''}
+                          ${profileData.institute ? `<p class="inst">স্থান : ${profileData.institute}</p>` : ''}
+                          ${profileData.time ? `<p class="tim">সময়: ${profileData.time}</p>` : ''}
+                         </div>
+                        </div>
+                          ${profileData.details ? `<p class="det">তথ্য: ${profileData.details}</p>` : ''}
+                      </div>
+                  `;
+              
+                  groupDiv.innerHTML += profileDiv;
+              });
+                           
             
                 document.getElementById("result").appendChild(groupDiv);
                 }
@@ -262,13 +290,13 @@ grid-column: 1 / span 4;
             
           },
           error: function (error) {
-            hideSpinner(); // Hide loading spinner in case of error
+            hideSkeleton();
             console.error("Error parsing CSV:", error);
           },
         });
       })
       .catch((error) => {
-        hideSpinner(); // Hide loading spinner in case of error
+        hideSkeleton(); // Hide loading spinner in case of error
         console.error("Error fetching CSV:", error);
       });
   }
