@@ -222,6 +222,8 @@ function hideSkeleton() {
               const time = profileData[12]; // Column M for time
               const imgSrc = profileData[13]; // Column N for image source
               const medicalField = profileData[4]; // Column E for medical field
+              const number = profileData[7]; // Column E for medical field
+
 
               // Check if the profile belongs to "Medical" field
               if (medicalField === "Medical") {
@@ -234,6 +236,7 @@ function hideSkeleton() {
                 groups[doctor].push({
                   name: name,
                   institute: institute,
+                  number: number,
                   details: details,
                   time: time,
                   imgSrc: imgSrc, // Include image source in the profile data
@@ -277,6 +280,7 @@ function hideSkeleton() {
                          </div>
                         </div>
                           ${profileData.details ? `<p class="det">তথ্য: ${profileData.details}</p>` : ''}
+                          ${profileData.number ? `<p class="num"> নম্বর: ${profileData.number}</p>` : ''}
                       </div>
                   `;
               
