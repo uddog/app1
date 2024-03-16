@@ -334,6 +334,53 @@
   setInterval(() => {
     csvToDivGroups(csvLink);
   }, 300000); // 300000 milliseconds = 5 minutes
+
+
+
+
+  // Add event listener for select box change
+document.getElementById('doctorSelect').addEventListener('change', function() {
+  const selectedDoctor = this.value.toLowerCase(); // Get the selected doctor from the select box
+
+  const groupDivs = document.querySelectorAll('.group');
+  groupDivs.forEach(groupDiv => {
+      const doctorName = groupDiv.getAttribute('data-doctor').toLowerCase(); // Get the doctor name associated with the group
+      if (selectedDoctor === '' || doctorName === selectedDoctor) {
+          groupDiv.style.display = 'block'; // Show the group if it matches the selected doctor or if "All Doctors" is selected
+      } else {
+          groupDiv.style.display = 'none'; // Hide the group if it doesn't match the selected doctor
+      }
+  });
+});
+
+// Function to filter results based on selected doctor and search input
+function filterResults() {
+  const searchKeyword = document.getElementById('searchBox').value.toLowerCase();
+
+  const profileDivs = document.querySelectorAll('.profile');
+  profileDivs.forEach(profileDiv => {
+      const profileText = profileDiv.textContent.toLowerCase(); // Get all text content of the profile div
+      const matchesSearch = profileText.includes(searchKeyword); // Check if the search keyword is found in the profile text
+
+      if (matchesSearch) {
+          profileDiv.style.display = 'grid'; // Show the profile if it matches the search keyword
+          profileDiv.closest('.group').style.display = 'block'; // Show the group containing this profile
+      } else {
+          profileDiv.style.display = 'none'; // Hide the profile if it doesn't match the search keyword
+      }
+  });
+
+  const groupDivs = document.querySelectorAll('.group');
+  groupDivs.forEach(groupDiv => {
+      const profilesInGroup = groupDiv.querySelectorAll('.profile');
+      const visibleProfiles = Array.from(profilesInGroup).filter(profile => profile.style.display !== 'none');
+      if (visibleProfiles.length === 0) {
+          groupDiv.style.display = 'none'; // Hide the group if none of its profiles match the search keyword
+      } else {
+          groupDiv.style.display = 'grid'; // Show the group if at least one profile matches the search keyword
+      }
+  });
+}
 </script>
 
 </body>
