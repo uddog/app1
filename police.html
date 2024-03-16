@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV to HTML Div Groups</title>
+  <link rel="stylesheet" href="universal.css">
+  <link rel="stylesheet" href="navbar.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <style>
+    /* Style for the container */
+.srch {
+  display: flex;
+  width: 100vw;
+  margin-top: 12vh;
+  justify-content: center;
+}
+
+/* Style for the select dropdown */
+#doctorSelect {
+  padding: 8px; /* Adjust padding as needed */
+  border-radius: 5px; /* Adjust border radius as needed */
+  background-color: transparent; 
+  margin-right: 10px;
+}
+
+/* Style for the search input */
+#searchBox {
+  padding: 8px; /* Adjust padding as needed */
+  border: 1px solid #ccc; /* Adjust border as needed */
+  border-radius: 5px; /* Adjust border radius as needed */
+}
+.group {
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  font-family: "font2";
+}
+
+.group h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.profile {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding-top: 10px;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.profile:hover img{
+  scale: 1.07;
+  transition: 0.5s;
+}
+.two {
+  padding: 5px;
+  min-height: 100px;
+  display: flex;
+  justify-content: space-around;
+}
+.one {
+  align-items: center;
+  display: grid;
+  padding-left: 10px;
+}
+.profile img {
+  width: 100px; /* Adjust according to your preference */
+  height: 100px; /* Maintain aspect ratio */
+}
+
+.profile p {
+  text-align: left;
+  position: relative;
+  font-size: 0.9rem;
+  margin: 5px;
+}
+
+.nam {
+}
+.inst {
+}
+.det {
+}
+.tim {
+}
+
+
+/* Style for the skeleton loading scene */
+.skeleton:first-child{
+  margin-top: 70px;
+}
+.skeleton {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin: 10px;
+  height: 200px; /* Adjust height as needed */
+}
+.skeleton-line {
+  margin-top: 20px;
+  background-color: #e0e0e0;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  animation: skeleton-animation 1.5s infinite;
+  width: 50%;
+
+}
+@keyframes skeleton-animation {
+  0% {
+    transform: translateX(0)
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+  </style>
+</head>
+<body>
+
+
+    
+    <!--NavBar Start-->
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-top" id="sidebarTop"></div>
+        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a href="index.html" id="homeLink">Home</a>
+        <a href="inbox.html">Inbox</a>
+        <a href="profiles.html" id="profileBtn">Profile</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+    </div>
+    <!-- Main content -->
+    <header>
+        <div>
+            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        </div>
+        <nav id="navbar">
+        </nav>
+    </header>
+
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none;">
+    </div>
+
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+        <button onclick="closeLogoutPopup()">No</button>
+    </div>    
+    <!--NavBar End-->
+
+
+<div class="srch">
+<div>
+  <select id="doctorSelect">
+    <option value="">All Doctors</option>
+  </select>
+</div>
+<div>
+  <input type="text" id="searchBox">
+</div>
+</div>
+
+<div id="result"></div>
+
+<script src="universal.js"></script>
+<script src="navbar.js"></script>
+<script>
+  // Function to show skeleton loading scenes
+  function showSkeleton() {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ''; // Clear existing content
+
+    for (let i = 0; i < 5; i++) { // Adjust the number of skeleton scenes as needed
+      const skeletonDiv = document.createElement('div');
+      skeletonDiv.classList.add('skeleton');
+
+      for (let j = 0; j < 3; j++) { // Adjust the number of lines in each skeleton scene as needed
+        const skeletonLine = document.createElement('div');
+        skeletonLine.classList.add('skeleton-line');
+        skeletonDiv.appendChild(skeletonLine);
+      }
+
+      resultDiv.appendChild(skeletonDiv);
+    }
+  }
+
+  // Function to hide skeleton loading scenes
+  function hideSkeleton() {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ''; // Clear skeleton scenes
+  }
+
+  // Function to process fetched data and populate div groups
+  function processData(rowData) {
+    // Clear existing content
+    document.getElementById('result').innerHTML = '';
+
+    // Create an object to hold grouped rows
+    const groups = {};
+
+    // Starting from index 1 to skip the header row
+    for (let i = 1; i < rowData.length; i++) {
+      const profileData = rowData[i];
+      const name = profileData[3]; // Column D for name
+      const doctor = profileData[5]; // Column F for doctor
+      const institute = profileData[6]; // Column G for institute
+      const details = profileData[11]; // Column L for details
+      const time = profileData[12]; // Column M for time
+      const imgSrc = profileData[13]; // Column N for image source
+      const medicalField = profileData[4]; // Column E for medical field
+      const number = profileData[7]; // Column E for medical field
+
+      // Check if the profile belongs to "Medical" field
+      if (medicalField === "Police") {
+        // Create a new group if it doesn't exist
+        if (!groups[doctor]) {
+          groups[doctor] = [];
+        }
+
+        // Add the row to the respective group
+        groups[doctor].push({
+          name: name,
+          institute: institute,
+          number: number,
+          details: details,
+          time: time,
+          imgSrc: imgSrc, // Include image source in the profile data
+        });
+      }
+    }
+
+    // Populate select box with doctor names
+    const selectBox = document.getElementById('doctorSelect');
+    for (const doctor in groups) {
+      if (groups.hasOwnProperty(doctor)) {
+        const option = document.createElement('option');
+        option.textContent = doctor;
+        option.value = doctor;
+        selectBox.appendChild(option);
+      }
+    }
+
+    // Create divs for each group
+    for (const doctor in groups) {
+      if (groups.hasOwnProperty(doctor)) {
+        const groupDiv = document.createElement("div");
+        groupDiv.classList.add("group");
+        groupDiv.setAttribute('data-doctor', doctor); // Add doctor name as data attribute
+
+        // Add doctor's name as heading
+        const heading = document.createElement("h2");
+        heading.textContent = doctor;
+        groupDiv.appendChild(heading);
+
+        // Add profiles under the doctor
+        groups[doctor].forEach((profileData) => {
+          const profileDiv = `
+            <div class="profile">
+              <div class="two">
+                <img src="${profileData.imgSrc}" alt="Profile Image">
+                <div class="one">
+                  ${profileData.name ? `<p class="nam">নাম: ${profileData.name}</p>` : ''}
+                  ${profileData.institute ? `<p class="inst">স্থান : ${profileData.institute}</p>` : ''}
+                  ${profileData.time ? `<p class="tim">সময়: ${profileData.time}</p>` : ''}
+                </div>
+              </div>
+              ${profileData.details ? `<p class="det">তথ্য: ${profileData.details}</p>` : ''}
+              ${profileData.number ? `<p class="num"> নম্বর: ${profileData.number}</p>` : ''}
+            </div>
+          `;
+
+          groupDiv.innerHTML += profileDiv;
+        });
+
+        document.getElementById("result").appendChild(groupDiv);
+      }
+    }
+  }
+
+  // Function to fetch CSV file and organize data into div groups
+  function csvToDivGroups(url) {
+    showSkeleton(); // Show skeleton loading scenes before fetching data
+
+    const lastFetchTime = localStorage.getItem('lastFetchTime');
+    const currentTime = new Date().getTime();
+
+    // Check if data exists in local storage and if it's been less than 5 minutes since last fetch
+    if (lastFetchTime && (currentTime - lastFetchTime < 300000)) { // 300000 milliseconds = 5 minutes
+      // If data exists and it's been less than 5 minutes, load data from local storage
+      const storedData = JSON.parse(localStorage.getItem('csvData'));
+      hideSkeleton(); // Hide skeleton loading scenes once data is fetched
+      processData(storedData);
+    } else {
+      // Fetch data from URL
+      fetch(url)
+        .then((response) => response.text())
+        .then((data) => {
+          hideSkeleton(); // Hide skeleton loading scenes once data is fetched
+          Papa.parse(data, {
+            complete: function (results) {
+              const rowData = results.data;
+              localStorage.setItem('csvData', JSON.stringify(rowData)); // Store fetched data in local storage
+              localStorage.setItem('lastFetchTime', currentTime); // Update last fetch time in local storage
+              processData(rowData);
+            },
+            error: function (error) {
+              hideSkeleton();
+              console.error("Error parsing CSV:", error);
+            },
+          });
+        })
+        .catch((error) => {
+          hideSkeleton(); // Hide loading spinner in case of error
+          console.error("Error fetching CSV:", error);
+        });
+    }
+  }
+
+  // Call the function with the URL of your CSV file
+  const csvLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv";
+  window.onload = function () {
+    csvToDivGroups(csvLink);
+  };
+
+  // Periodically check if 5 minutes have passed since last fetch and fetch data if necessary
+  setInterval(() => {
+    csvToDivGroups(csvLink);
+  }, 300000); // 300000 milliseconds = 5 minutes
+
+
+
+
+  // Add event listener for select box change
+document.getElementById('doctorSelect').addEventListener('change', function() {
+  const selectedDoctor = this.value.toLowerCase(); // Get the selected doctor from the select box
+
+  const groupDivs = document.querySelectorAll('.group');
+  groupDivs.forEach(groupDiv => {
+      const doctorName = groupDiv.getAttribute('data-doctor').toLowerCase(); // Get the doctor name associated with the group
+      if (selectedDoctor === '' || doctorName === selectedDoctor) {
+          groupDiv.style.display = 'block'; // Show the group if it matches the selected doctor or if "All Doctors" is selected
+      } else {
+          groupDiv.style.display = 'none'; // Hide the group if it doesn't match the selected doctor
+      }
+  });
+});
+
+// Function to filter results based on selected doctor and search input
+function filterResults() {
+  const searchKeyword = document.getElementById('searchBox').value.toLowerCase();
+
+  const profileDivs = document.querySelectorAll('.profile');
+  profileDivs.forEach(profileDiv => {
+      const profileText = profileDiv.textContent.toLowerCase(); // Get all text content of the profile div
+      const matchesSearch = profileText.includes(searchKeyword); // Check if the search keyword is found in the profile text
+
+      if (matchesSearch) {
+          profileDiv.style.display = 'grid'; // Show the profile if it matches the search keyword
+          profileDiv.closest('.group').style.display = 'block'; // Show the group containing this profile
+      } else {
+          profileDiv.style.display = 'none'; // Hide the profile if it doesn't match the search keyword
+      }
+  });
+
+  const groupDivs = document.querySelectorAll('.group');
+  groupDivs.forEach(groupDiv => {
+      const profilesInGroup = groupDiv.querySelectorAll('.profile');
+      const visibleProfiles = Array.from(profilesInGroup).filter(profile => profile.style.display !== 'none');
+      if (visibleProfiles.length === 0) {
+          groupDiv.style.display = 'none'; // Hide the group if none of its profiles match the search keyword
+      } else {
+          groupDiv.style.display = 'grid'; // Show the group if at least one profile matches the search keyword
+      }
+  });
+}
+</script>
+
+</body>
+</html>
