@@ -9,7 +9,73 @@
     <link rel="stylesheet" href="test.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
-       
+        .srch{
+            margin-top: 11vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        
+        /* Style for the select elements */
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin: 0 10px;
+            background-color: transparent;
+        }
+        
+        /* Style for the profile container */
+        #profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        
+        /* Style for individual profiles */
+        #profile-container div {
+            width: 90vw;
+            margin: 5px;
+            padding: 15px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: grid;
+            align-items: center;
+            font-family: 'font4';
+        }
+        #profile-container div:hover img {
+            scale: 1.07;
+            transition: 0.3s;
+        }
+        /* Style for profile images */
+        #profile-container img {
+            grid-row: 1/span 2;
+            width: 100px;
+            grid-column: 1;
+            border-radius: 5px;
+        }
+        
+        /* Style for profile headings */
+        #profile-container h2 {
+            margin-top: 0;
+            grid-row: 1/span 2;
+            grid-column: 2/span 2;
+            font-size: 0.9rem;
+        }
+        /* Style for profile paragraphs */
+        #profile-container p {
+            margin: 10px 0px 0px 0px;
+            font-size: 0.8rem;
+            grid-column: 1/span 3;
+        }
+        
+        /* Style for hidden profiles */
+        #profile-container div[style="display: none;"] {
+            display: none;
+        }
+        
         
     </style>
 </head>
