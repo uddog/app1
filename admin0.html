@@ -318,6 +318,18 @@ function searchProfiles() {
 const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
 fetchAndDisplayCSVData(csvLink);
 
+
+
+document.getElementById('profilesContainer').addEventListener('click', function(event) {
+    console.log("Clicked profile");
+    const clickedProfile = event.target.closest('.profile');
+    if (clickedProfile) {
+        const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
+        localStorage.setItem('CatName', catName);
+    }
+});
+
+
     </script>
 
 </body>
