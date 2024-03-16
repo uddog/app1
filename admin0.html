@@ -169,7 +169,7 @@
     <script src="navbar.js"></script>
     <script>
        // Check if data needs to be updated based on a predefined interval (e.g., 1 minute)
-const updateInterval = 60000; // 1 minute in milliseconds
+const updateInterval = 600000; // 1 minute in milliseconds
 
 function shouldUpdateData(lastUpdated) {
     return !lastUpdated || Date.now() - lastUpdated > updateInterval;
@@ -265,7 +265,7 @@ async function fetchAndDisplayCSVData(csvLink) {
             // Add class to show profile with fade-in effect
             setTimeout(() => {
                 profileDiv.classList.add('show');
-            }, 50 * i); // Adjust timing as per your preference
+            }, 10 * i); // Adjust timing as per your preference
         }
 
         // Initially hide sections without matching profiles

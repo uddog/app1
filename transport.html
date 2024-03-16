@@ -6,6 +6,7 @@
     <title>CSV to Profiles</title>
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="test.css">
     <style>
         .srch{
             margin-top: 11vh;
@@ -34,7 +35,7 @@
         
         /* Style for individual profiles */
         #profile-container div {
-            width: 300px;
+            width: 90vw;
             margin: 5px;
             padding: 10px;
             border: 1px solid #ccc;
@@ -64,7 +65,7 @@
         /* Style for profile paragraphs */
         #profile-container p {
             margin: 10px 0px 0px 0px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             grid-column: 1/span 3;
         }
         
@@ -72,6 +73,7 @@
         #profile-container div[style="display: none;"] {
             display: none;
         }
+        
         
     </style>
 </head>
@@ -149,6 +151,7 @@
                                 const profileName = profileData[2]; // Assuming the profile name is in column C
                                 const time = profileData[3]; // Assuming the time is in column D
                                 const roadMap = profileData[4]; // Assuming road map is in column E
+                                const contact = profileData[6]; // Assuming contact is in column G
                                 const imgSrc = profileData[5]; // Assuming image source URL is in column F
                                 const locationsArray = roadMap.split(" > ");
                                 locations = new Set([...locations, ...locationsArray]);
@@ -156,6 +159,7 @@
                                     profileName,
                                     time,
                                     roadMap,
+                                    contact, // Adding contact information
                                     imgSrc
                                 });
                             }
@@ -173,7 +177,7 @@
             profileContainer.innerHTML = '';
             const locations = new Set();
             busData.forEach(profileData => {
-                const { profileName, time, roadMap, imgSrc } = profileData;
+                const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
                 const locationsArray = roadMap.split(" > ");
                 locationsArray.forEach(location => locations.add(location));
                 const profileElement = document.createElement('div');
@@ -182,8 +186,8 @@
                 <h2>${profileName}</h2>
                 <p>Time: ${time}</p>
                 <p>Roadmap: ${roadMap}</p>
+                <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
             `;
-            
                 profileContainer.appendChild(profileElement);
             });
 
