@@ -78,29 +78,19 @@
                 opacity: 1;
             }
         }
-
-
-
-
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .loading-spinner {
-            border: 6px solid kisuNaBhai;
-            border-top: 6px solid ;
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #333;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Ensure it's above other content */
+            display: none; /* Initially hidden */
         }
 
         @keyframes spin {
@@ -111,6 +101,9 @@
 </head>
 
 <body>
+
+    <div class="spinner" id="loadingSpinner"></div>
+
 
     <!--NavBar Start-->
     <!-- Sidebar -->
@@ -145,11 +138,6 @@
     </div>
     <!--NavBar End-->
 
-
-    <div id="loading-screen">
-        <div class="loading-spinner"></div>
-    </div>
-
     <div id="profilesContainer">
         <!-- Profile content will be dynamically generated here -->
     </div>
@@ -157,91 +145,134 @@
     <script src="universal.js"></script>
     <script src="navbar.js"></script>
     <script>
-        // Replace 'your_csv_link_here' with the actual link to your CSV file
         const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
-
-        // Show loading screen
-        document.getElementById('loading-screen').style.display = 'flex';
-
-        fetch(csvLink)
-            .then(response => response.text())
-            .then(csvData => {
-                // Hide loading screen
-                document.getElementById('loading-screen').style.display = 'none';
-
-                const profilesContainer = document.getElementById('profilesContainer');
-                const rows = csvData.split('\n');
-
-                let sections = {};
-
-                for (let i = 1; i < rows.length; i++) {
-                    const profileData = rows[i].split(',');
-
-                    const sectionName = profileData[1];
-                    const profileDiv = document.createElement('div');
-                    profileDiv.classList.add('profile');
-
-                    const imgElement = document.createElement('img');
-                    imgElement.src = profileData[2]; // Assuming column B contains the image source
-                    profileDiv.appendChild(imgElement);
-
-                    const columnCContent = document.createElement('div');
-                    columnCContent.textContent = profileData[3]; // Assuming column C contains content
-                    profileDiv.appendChild(columnCContent);
-
-                    const anchorElement = document.createElement('a');
-                    anchorElement.href = profileData[4]; // Assuming column D contains the link
-                    anchorElement.appendChild(profileDiv);
-
-                    // Add anchor tag to the corresponding section
-                    if (!sections[sectionName]) {
-                        sections[sectionName] = {
-                            sectionElement: document.createElement('div'),
-                            hasMatchingProfile: false
-                        };
-                        sections[sectionName].sectionElement.classList.add('section');
-                        profilesContainer.appendChild(sections[sectionName].sectionElement);
-
-                        const sectionTitle = document.createElement('div');
-                        sectionTitle.classList.add('section-title');
-                        sectionTitle.textContent = sectionName;
-                        sections[sectionName].sectionElement.appendChild(sectionTitle);
-                    }
-
-                    sections[sectionName].sectionElement.appendChild(anchorElement);
-
-                    const storedOptionCategory = localStorage.getItem('optionCategory');
-                    if (sectionName.toLowerCase() === storedOptionCategory.toLowerCase()) {
-                        sections[sectionName].hasMatchingProfile = true;
-                    }
-                }
-
-                // Initially hide sections without matching profiles
-                Object.values(sections).forEach(section => {
-                    if (!section.hasMatchingProfile) {
-                        section.sectionElement.style.display = 'none';
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching CSV:', error);
-                // Hide loading screen in case of an error
-                document.getElementById('loading-screen').style.display = 'none';
-            });
-
-
+        const refreshInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
+    
+        // Function to show the loading spinner
+        function showLoadingSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+    
+        // Function to hide the loading spinner
+        function hideLoadingSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+    
+        function fetchAndProcessData() {
+            // Show loading spinner before fetching data
+            showLoadingSpinner();
             
-document.getElementById('profilesContainer').addEventListener('click', function(event) {
-    console.log("Clicked profile");
-    const clickedProfile = event.target.closest('.profile');
-    if (clickedProfile) {
-        const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
-        localStorage.setItem('CatName', catName);
-    }
-});
-
+            fetchCSVData()
+                .then(csvData => {
+                    processData(csvData);
+                    // Cache the fetched data
+                    localStorage.setItem('cachedCSVData', csvData);
+                    // Store the timestamp of the last update
+                    localStorage.setItem('lastUpdateTimestamp', Date.now());
+                })
+                .catch(error => {
+                    console.error('Error fetching and processing CSV data:', error);
+                })
+                .finally(() => {
+                    // Hide loading spinner after processing data or in case of error
+                    hideLoadingSpinner();
+                });
+        }
+        
+        function fetchCSVData() {
+            return fetch(csvLink)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                });
+        }
+    
+        function processData(csvData) {
+            // Process CSV data and update the UI
+            const profilesContainer = document.getElementById('profilesContainer');
+            // Clear previous data
+            profilesContainer.innerHTML = '';
+            const rows = csvData.split('\n');
+            let sections = {};
+    
+            for (let i = 1; i < rows.length; i++) {
+                const profileData = rows[i].split(',');
+    
+                const sectionName = profileData[1];
+                const profileDiv = document.createElement('div');
+                profileDiv.classList.add('profile');
+    
+                const imgElement = document.createElement('img');
+                imgElement.src = profileData[2]; // Assuming column B contains the image source
+                profileDiv.appendChild(imgElement);
+    
+                const columnCContent = document.createElement('div');
+                columnCContent.textContent = profileData[3]; // Assuming column C contains content
+                profileDiv.appendChild(columnCContent);
+    
+                const anchorElement = document.createElement('a');
+                anchorElement.href = profileData[4]; // Assuming column D contains the link
+                anchorElement.appendChild(profileDiv);
+    
+                // Add anchor tag to the corresponding section
+                if (!sections[sectionName]) {
+                    sections[sectionName] = {
+                        sectionElement: document.createElement('div'),
+                        hasMatchingProfile: false
+                    };
+                    sections[sectionName].sectionElement.classList.add('section');
+                    profilesContainer.appendChild(sections[sectionName].sectionElement);
+    
+                    const sectionTitle = document.createElement('div');
+                    sectionTitle.classList.add('section-title');
+                    sectionTitle.textContent = sectionName;
+                    sections[sectionName].sectionElement.appendChild(sectionTitle);
+                }
+    
+                sections[sectionName].sectionElement.appendChild(anchorElement);
+    
+                const storedOptionCategory = localStorage.getItem('optionCategory');
+                if (sectionName.toLowerCase() === storedOptionCategory.toLowerCase()) {
+                    sections[sectionName].hasMatchingProfile = true;
+                }
+            }
+    
+            // Initially hide sections without matching profiles
+            Object.values(sections).forEach(section => {
+                if (!section.hasMatchingProfile) {
+                    section.sectionElement.style.display = 'none';
+                }
+            });
+        }
+    
+        // Check if data needs to be refreshed on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const lastUpdateTimestamp = localStorage.getItem('lastUpdateTimestamp');
+            if (!lastUpdateTimestamp || (Date.now() - lastUpdateTimestamp > refreshInterval)) {
+                // Fetch data if it's not in local storage or if it's been more than 10 minutes since last update
+                fetchAndProcessData();
+            } else {
+                // Use cached data
+                const cachedData = localStorage.getItem('cachedCSVData');
+                if (cachedData) {
+                    processData(cachedData);
+                }
+            }
+        });
+    
+        // Add event listener for profiles click
+        document.getElementById('profilesContainer').addEventListener('click', function(event) {
+            console.log("Clicked profile");
+            const clickedProfile = event.target.closest('.profile');
+            if (clickedProfile) {
+                const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
+                localStorage.setItem('CatName', catName);
+            }
+        });
     </script>
-
+    
 </body>
 
 </html>

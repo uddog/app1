@@ -11,6 +11,10 @@
     font-family: 'font3';
     src: url(font3.ttf);
  }
+ @font-face {
+    font-family: 'font4';
+    src: url(font4.ttf);
+ }
 @media only screen and (min-width: 600px) {
     body{
         display: none;

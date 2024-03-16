@@ -1,299 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
-    <style>
-        /* Define styles for the skeleton loading effect */
-        .skeleton-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .skeleton {
-            background: linear-gradient(to right, #f0f0f0 4%, #e0e0e0 25%, #f0f0f0 36%);
-            background-size: 200% auto;
-            animation: shimmer 1.5s infinite linear;
-            border-radius: 10px;
-            height: 200px;
-            width: 30%;
-            margin-bottom: 20px;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-
-
-
-
-        /* Define styles for the container of all profiles */
-        #csvData {
-            margin-top: 10vh;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        /* Define styles for each individual profile (post) */
-        .profile {
-            box-sizing: border-box;
-            width: 95vw;
-            margin: 5px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            min-height: 5vh;
-            overflow: hidden;
-            text-align: center;
-            background-color: #f8f8f8;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        /* Hover effect for each profile */
-        .profile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Styles for the profile image */
-        .profile img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-        }
-
-        /* Styles for the profile name */
-        .profile h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            font-family: 'font2';
-            color: #333;
-        }
-
-        /* Styles for the additional content (paragraphs and button) */
-        .profile p,
-        .profile button {
-            text-align: justify;
-            color: #555;
-            font-family: 'font1';
-        }
-
-        /* Styles for the button */
-        .profile button {
-            margin-top: 10px;
-            background-color: black;
-            color: #fff;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* Hover effect for the button */
-        .profile button:hover {
-            background-color: #c0392b;
-        }
-
-        /* Styles for the navigation buttons */
-        .navigation-buttons {
-            margin-bottom: 5px;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .navigation-button {
-            background-color: black;
-            color: #fff;
-            padding: 7px 15px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .navigation-button:hover {
-            background-color: #151515b4;
-        }
-
-        .page-button {
-            padding: 7px 10px;
-            margin: 5px 4px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.7rem;
-            outline: none;
-            border-radius: 4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Scroll Parallax</title>
+<link rel="stylesheet" href="universal.css">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  .section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1;
+  }
+  .content {
+    font-family: 'font1';
+    text-align: center;
+    color: white;
+    z-index: 1;
+  }
+</style>
 </head>
-
 <body>
-    <!-- Include your navbar and other elements here -->
-    <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
 
-    <!-- Profile containers -->
-    <div id="csvData">
-        <!-- Skeletons for profiles -->
-        <div class="profile skeleton"></div>
-        <div class="profile skeleton"></div>
-        <div class="profile skeleton"></div>
-        <!-- Add more skeleton elements as needed -->
-    </div>
+<div class="section">
+  <div class="parallax" style="background-image: url('https://i.pinimg.com/474x/32/44/37/324437fd4d4de973df5e751a7491553d.jpg');"></div>
+  <div class="content">
+    <h1>উদ্যোগ -একটি সামাজিক উন্নয়নমূলক সংগঠন </h1>
+  </div>
+</div>
 
-    <!-- Page Buttons -->
-    <div class="navigation-buttons" id="pageButtons"></div>
+<div class="section">
+  <div class="parallax" style="background-image: url('https://i.pinimg.com/474x/a1/5f/c3/a15fc370ae1528ab8d8ecfce9694010f.jpg');"></div>
+  <div class="content">
+    <h1>Parallax Effect</h1>
+    <p>This is some sample text for demonstration purposes.</p>
+  </div>
+</div>
 
-    <div class="navigation-buttons">
-        <button class="navigation-button" id="prevButton" style="display: none;">Previous</button>
-        <button class="navigation-button" id="nextButton" style="display: none;">Next</button>
-    </div>
+<div class="section">
+  <div class="parallax" style="background-image: url('https://i.pinimg.com/474x/c1/08/59/c10859f691f0bfd7bbe3746e79b0b005.jpg');"></div>
+  <div class="content">
+    <h1>End of Parallax</h1>
+    <p>Thank you for scrolling!</p>
+  </div>
+</div>
 
-    <script src="navbar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script>
-        const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
 
-        let currentPage = 1;
-        const rowsPerPage = 10;
-        let totalRows = 0;
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let parallaxSections = document.querySelectorAll(".section");
 
-        const nextButton = document.getElementById('nextButton');
-        const prevButton = document.getElementById('prevButton');
-        const pageButtonsContainer = document.getElementById('pageButtons');
+    window.addEventListener("scroll", function() {
+      parallaxSections.forEach(function(section) {
+        let yOffset = window.pageYOffset;
+        let parallax = section.querySelector(".parallax");
+        let parallaxOffset = parallax.offsetTop;
+        let sectionHeight = section.offsetHeight;
 
-        nextButton.addEventListener('click', function () {
-            if (currentPage * rowsPerPage < totalRows) {
-                currentPage++;
-                fetchAndDisplayData();
-            }
-        });
-
-        prevButton.addEventListener('click', function () {
-            if (currentPage > 1) {
-                currentPage--;
-                fetchAndDisplayData();
-            }
-        });
-
-        async function fetchAndDisplayData() {
-            try {
-                const response = await fetch(csvDataURL);
-                const csvData = await response.text();
-
-                Papa.parse(csvData, {
-                    header: false,
-                    complete: function (results) {
-                        totalRows = results.data.length - 1;
-                        updateNavigationButtons();
-                        displayData(results.data);
-                    },
-                    error: function (error) {
-                        console.error('Error parsing CSV data:', error);
-                    }
-                });
-            } catch (error) {
-                console.error('Error fetching CSV data:', error);
-            }
+        if (yOffset > parallaxOffset - window.innerHeight && yOffset <= (parallaxOffset + sectionHeight)) {
+          parallax.style.backgroundPositionY = (yOffset - parallaxOffset) * 0.7 + "px"; // Adjust the parallax speed here
         }
-
-        function updateNavigationButtons() {
-            nextButton.style.display = currentPage * rowsPerPage < totalRows ? 'inline-block' : 'none';
-            prevButton.style.display = currentPage > 1 ? 'inline-block' : 'none';
-        }
-
-        function displayData(rows) {
-            const profilesContainer = document.getElementById('csvData');
-            profilesContainer.innerHTML = '';
-
-            let nonEmptyRows = 0;
-            for (let i = rows.length - 1; i > 0; i--) {
-                const columns = rows[i];
-
-                const profileImageSrc = columns[0].trim();
-                if (profileImageSrc) {
-                    nonEmptyRows++;
-                    if (nonEmptyRows >= (currentPage - 1) * rowsPerPage + 1 && nonEmptyRows <= (currentPage * rowsPerPage)) {
-                        const profileDiv = document.createElement('div');
-                        profileDiv.classList.add('profile');
-
-                        const profileImage = document.createElement('img');
-                        profileImage.src = profileImageSrc;
-                        profileImage.alt = 'Profile Image';
-                        profileDiv.appendChild(profileImage);
-
-                        const nameElement = document.createElement('h3');
-                        nameElement.textContent = columns[1].trim();
-                        profileDiv.appendChild(nameElement);
-
-                        for (let j = 2; j < columns.length; j++) {
-                            const columnContent = columns[j].trim();
-                            if (columnContent && j !== 4) {  // Skip column E (index 4)
-                                const element = document.createElement('p');
-
-                                if (j === 3) {
-                                    const buttonElement = document.createElement('button');
-                                    buttonElement.textContent = 'Details';
-                                    buttonElement.addEventListener('click', function () {
-                                        localStorage.setItem('PostNo', i);
-                                        window.location.href = columnContent;
-                                    });
-                                    element.appendChild(buttonElement);
-                                } else {
-                                    element.textContent = columnContent;
-                                }
-
-                                profileDiv.appendChild(element);
-                            }
-                        }
-
-                        profilesContainer.appendChild(profileDiv);
-                        // Apply scroll animation to profile
-                        profileDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            }
-
-            updatePageButtons(); // Update page buttons
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function updatePageButtons() {
-            const totalPages = Math.ceil(totalRows / rowsPerPage);
-            pageButtonsContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.classList.add('page-button');
-                pageButton.textContent = i;
-                pageButton.style.backgroundColor = currentPage === i ? 'white' : '';
-                pageButton.addEventListener('click', function () {
-                    currentPage = i;
-                    fetchAndDisplayData();
-                });
-                pageButtonsContainer.appendChild(pageButton);
-            }
-        }
-
-        // Initially load data
-        fetchAndDisplayData();
-    </script>
+      });
+    });
+  });
+</script>
 
 </body>
-
 </html>

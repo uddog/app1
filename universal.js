@@ -22,7 +22,6 @@ async function fetchUserProfileData(rowIndex, userPassword) {
       }
 
       // The rest of your code for storing user profile data in localStorage
-      const photoUrl = userRow[18];
       const userUsername = userRow[1].trim();
       const role = userRow[2].trim();
       const userBName = userRow[3].trim();
@@ -40,6 +39,7 @@ async function fetchUserProfileData(rowIndex, userPassword) {
       const profession = userRow[15].trim();
       const hobby = userRow[16].trim(); 
       const point = userRow[17].trim();
+      const photoUrl = userRow[18];
       const userJDate = userRow[19].trim();
       const balance = userRow[20].trim();
       const reference = userRow[21].trim();
