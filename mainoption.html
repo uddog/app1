@@ -228,6 +228,18 @@
                 // Hide loading screen in case of an error
                 document.getElementById('loading-screen').style.display = 'none';
             });
+
+
+            
+document.getElementById('profilesContainer').addEventListener('click', function(event) {
+    console.log("Clicked profile");
+    const clickedProfile = event.target.closest('.profile');
+    if (clickedProfile) {
+        const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
+        localStorage.setItem('CatName', catName);
+    }
+});
+
     </script>
 
 </body>
