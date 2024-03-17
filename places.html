@@ -8,6 +8,83 @@
 <link rel="stylesheet" href="universal.css">
 <link rel="stylesheet" href="navbar.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<style>
+    #searchContainer {
+        display: flex;
+        justify-content: center;
+      }
+      
+      #searchInput {
+        margin-top: 11vh;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 90vw;
+      }
+      
+      #searchInput:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+       #profilesContainer{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+       }
+      /* Profile styles */
+      .profile {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: 'font1';
+        width: 90vw;
+      }
+      .profile:hover img {
+        scale: 1.05;
+        transition: 0.3s;
+      }
+      .profile img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+      }
+      .two{
+        display: flex;
+        justify-content: space-around;
+      }
+      .one{
+        padding: 5px;
+        width: 100%;
+        display: grid;
+        place-items: center;
+      }
+      .one h2{
+        font-size: 1.2rem;
+      }
+      .one p{
+        font-size: 0.8rem;
+      }
+      .see-more {
+        width: 90vw;
+        display: block;
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Material-like shadow */
+    }
+    
+    .see-more:hover {
+        background-color: #0056b3;
+    }
+    
+</style>
 </head>
 <body>
     
