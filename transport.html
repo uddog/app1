@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="navbar.css">
     <style>
-
         .srch{
             margin-top: 11vh;
             display: flex;
@@ -148,8 +147,8 @@
     <script src="universal.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-
 const catName = localStorage.getItem('CatName');
+
 function csvToProfiles(url) {
     // Show skeleton loading effect before fetching data
     document.getElementById('profile-container').innerHTML = `
@@ -162,6 +161,10 @@ function csvToProfiles(url) {
         download: true,
         complete: function(results) {
             const rows = results.data;
+            // Store the CSV data in local storage
+            localStorage.setItem('Transport', JSON.stringify(rows));
+            // Store the time of last fetch
+            localStorage.setItem('lastime2', Date.now());
             renderProfilesFromCSVData(rows);
         },
         error: function(error) {
@@ -244,12 +247,25 @@ function filterBuses() {
     });
 }
 
-// Call the function with the CSV file URL every time
-csvToProfiles('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876');
+// Function to fetch CSV data if required
+function fetchIfRequired() {
+    const lastFetchTime = localStorage.getItem('lastime2');
+    const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
+    if (!lastFetchTime || Date.now() - lastFetchTime > fetchInterval) {
+        csvToProfiles('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876');
+    } else {
+        // Fetch from local storage and render profiles
+        const csvData = JSON.parse(localStorage.getItem('Transport'));
+        renderProfilesFromCSVData(csvData);
+    }
+}
 
-// Add event listener to the 'To' select element to filter buses when an option is selected
-document.getElementById('toSelect').addEventListener('change', filterBuses);
-
+// Call fetchIfRequired() when the page loads
+window.onload = function() {
+    fetchIfRequired();
+    // Add event listener to the 'To' select element to filter buses when an option is selected
+    document.getElementById('toSelect').addEventListener('change', filterBuses);
+};
     </script>
 </body>
 </html>
