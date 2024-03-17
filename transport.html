@@ -75,7 +75,25 @@
         #profile-container div[style="display: none;"] {
             display: none;
         }
-        
+        .profile-skeleton {
+            width: 90vw;
+            height: 200px; /* Adjust height as needed */
+            margin: 5px;
+            padding: 15px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            animation: skeleton-loading 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes skeleton-loading {
+            from {
+                background-color: #f0f0f0;
+            }
+            to {
+                background-color: #e0e0e0;
+            }
+        }
+
         
     </style>
 </head>
@@ -122,18 +140,33 @@
         <label for="toSelect">To:</label>
         <select id="toSelect"></select>
     </div>
-
+    <div id="profile-container">
+        <!-- Skeleton profiles -->
+        <div class="profile-skeleton"></div>
+        <div class="profile-skeleton"></div>
+        <div class="profile-skeleton"></div>
+        <!-- End of skeleton profiles -->
+    </div>
     <div id="profile-container"></div>
 
     <script src="navbar.js"></script>
     <script src="universal.js"></script>
     <script>
+
+        
         const catName = localStorage.getItem('CatName');
         const lastFetchTime = localStorage.getItem('LastFetchTime');
         const tenMinutesInMillis = 10 * 60 * 1000; // 10 minutes in milliseconds
     
         // Function to fetch CSV file and create profiles
         function csvToProfiles(url) {
+            // Show skeleton loading effect before fetching data
+            document.getElementById('profile-container').innerHTML = `
+                <div class="profile-skeleton"></div>
+                <div class="profile-skeleton"></div>
+                <div class="profile-skeleton"></div>
+            `;
+
             Papa.parse(url, {
                 download: true,
                 complete: function(results) {
@@ -147,6 +180,7 @@
                 }
             });
         }
+
     
         function renderProfilesFromCSVData(rows) {
             let locations = new Set();
