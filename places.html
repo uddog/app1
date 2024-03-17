@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CSV Profiles</title>
-<link rel="stylesheet" href="test.css">
 <link rel="stylesheet" href="universal.css">
 <link rel="stylesheet" href="navbar.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -83,6 +82,23 @@
     .see-more:hover {
         background-color: #0056b3;
     }
+    .skeleton-profile {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 90vw;
+        animation: skeleton-loading 1s infinite alternate;
+      }
+    
+      @keyframes skeleton-loading {
+        0% {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+        100% {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+      }
     
 </style>
 </head>
@@ -129,6 +145,33 @@
 <script src="universal.js"></script>
 <script src="navbar.js"></script>
 <script>
+    function showSkeleton() {
+        const profilesContainer = document.getElementById('profilesContainer');
+        profilesContainer.innerHTML = ''; // Clear previous content
+        for (let i = 0; i < 5; i++) { // You can adjust the number of skeleton profiles shown
+          profilesContainer.innerHTML += `
+            <div class="skeleton-profile">
+              <div class="two">
+                <div style="width: 100px; height: 100px; background-color: #ddd; border-radius: 50%;"></div>
+                <div class="one" style="width: 60%;">
+                  <h2 style="height: 20px; background-color: #ddd; margin-bottom: 10px;"></h2>
+                  <p style="height: 15px; background-color: #ddd;"></p>
+                  <p style="height: 15px; background-color: #ddd;"></p>
+                </div>
+              </div>
+            </div>`;
+        }
+      }
+
+      function hideSkeletonAndRenderProfiles() {
+        renderProfiles();
+        const profilesContainer = document.getElementById('profilesContainer');
+        profilesContainer.querySelectorAll('.skeleton-profile').forEach(profile => profile.remove());
+      }
+      window.onload = function () {
+        showSkeleton();
+        fetchIfRequired(); // Start fetching data
+      };
     
     const catName = localStorage.getItem('CatName');
     const storedData = localStorage.getItem('CSVData');
@@ -202,10 +245,12 @@
   
     // Function to fetch and parse CSV data
     function fetchAndParseCSV() {
+        showSkeleton(); // Show skeleton loading while fetching
         Papa.parse(csvURL, {
             download: true,
             complete: function(results) {
                 handleCSVData(results);
+                hideSkeletonAndRenderProfiles(); // Hide skeleton and render profiles after fetching
             }
         });
     }
