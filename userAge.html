@@ -3,55 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculate Age</title>
+<title>Age</title>
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    place-items: center;
-    background-color: #373737;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #2c3e50; /* Dark Blue */
+    }
+    h2{
+        color: #c0c0c092;
+    }
+    main {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        font-size: 1.5rem;
+        text-align: center;
+        color: #ffffff; /* White */
+    }
+    
+    .one, .two {
+        scroll-snap-align: start;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+    }
+    
+    span {
+        font-size: 4rem;
+    }
+    
+    .year {
+        color: #e74c3c; /* Red */
+    }
+    
+    .month {
+        color: #3498db; /* Blue */
+    }
+    
+    .day {
+        color: #2ecc71; /* Green */
+    }
+    
+    .hour {
+        color: #f39c12; /* Orange */
+    }
+    
+    .minute {
+        color: #9b59b6; /* Purple */
+    }
+    
+    .second {
+        color: #f1c40f; /* Yellow */
+    }
+    
 
-#result {
-  text-align: center;
-  font-size: 2rem; /* Increased font size */
-}
-span{
-  font-size: 3rem;
-}
-.year {
-    font-size: 10rem;
-    color: #ff9f43; /* Year color */
-}
-
-.month {
-    color: #ff6b6b; /* Month color */
-}
-
-.day {
-    color: #48dbfb; /* Day color */
-}
-
-.hour {
-    color: #1dd1a1; /* Hour color */
-}
-
-.minute {
-    color: #feca57; /* Minute color */
-}
-
-.second {
-    color: #ff6b6b; /* Second color */
-}
 </style>
 </head>
 <body>
+<main>
+    <div class="one">
+        <div id="result"></div>
+    </div>
 
-<div id="result"></div>
-
+    <div class="two">
+        <div id="result2"></div>
+    </div>
+</main>
 <script>
 // Check if birthdate exists in local storage
 var storedBirthdate = localStorage.getItem("userBirthDay");
@@ -90,7 +108,7 @@ function calculateAge() {
         age--;
     }
     
-    document.getElementById('result').innerHTML = "<span class='year'>" + age + "</span> years<br><span class='month'>" + monthDiff + "</span> months <span class='day'>" + dayDiff + "</span> days<br><span class='hour'>" + hourDiff + "</span> hours <span class='minute'>" + minuteDiff + "</span> minutes<br><span class='second'>" + secondDiff + "</span> seconds";
+    document.getElementById('result').innerHTML = "<h2>Age</h2><span class='year'>" + age + "</span> years<br><span class='month'>" + monthDiff + "</span> months <span class='day'>" + dayDiff + "</span> days<br><span class='hour'>" + hourDiff + "</span> hours <span class='minute'>" + minuteDiff + "</span> minutes<br><span class='second'>" + secondDiff + "</span> seconds";
 }
 
 // Initially calculate age
@@ -98,7 +116,41 @@ calculateAge();
 
 // Set interval to update age every second
 setInterval(calculateAge, 1000);
-</script>
 
+
+
+
+// Function to calculate time remaining until next birthday
+function calculateTimeUntilNextBirthday() {
+    var birthdate = new Date(storedBirthdate);
+    var today = new Date();
+
+    // Adjust current year for next birthday
+    var nextBirthday = new Date(today.getFullYear(), birthdate.getMonth(), birthdate.getDate());
+
+    // If birthday has passed this year, set next birthday to next year
+    if (today > nextBirthday) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+    }
+
+    // Calculate time difference between today and next birthday
+    var timeDiff = nextBirthday - today;
+
+    var months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30)); // Calculate months
+    var days = Math.floor((timeDiff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24)); // Calculate days
+    var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+    document.getElementById('result2').innerHTML = "<h2>Next Birthday</h2><span class='month'>" + months + "</span> months <br><span class='day'>" + days + "</span> days <span class='hour'>" + hours + "</span> hours <br><span class='minute'>" + minutes + "</span> minutes <span class='second'>" + seconds + "</span> seconds";
+}
+
+// Initially calculate time remaining until next birthday
+calculateTimeUntilNextBirthday();
+
+// Set interval to update time remaining until next birthday every second
+setInterval(calculateTimeUntilNextBirthday, 1000);
+
+</script>
 </body>
 </html>
