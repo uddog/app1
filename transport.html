@@ -167,7 +167,7 @@
                 download: true,
                 complete: function(results) {
                     const rows = results.data;
-                    localStorage.setItem('CSVData', JSON.stringify(rows));
+                    localStorage.setItem('CSVData2', JSON.stringify(rows));
                     localStorage.setItem('LastFetchTime', Date.now());
                     renderProfilesFromCSVData(rows);
                 },
@@ -261,7 +261,7 @@
         }
 
         // Call the function with the CSV file URL only if 10 minutes have passed since the last fetch or there's no data in local storage
-        if (shouldFetchData() || !localStorage.getItem('CSVData')) {
+        if (shouldFetchData() || !localStorage.getItem('CSVData2')) {
             csvToProfiles('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876');
         } else {
             const storedData = JSON.parse(localStorage.getItem('CSVData'));
