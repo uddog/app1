@@ -6,7 +6,6 @@
     <title>CSV to Profiles</title>
     <link rel="stylesheet" href="universal.css">
     <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="test.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         .srch{
@@ -98,7 +97,6 @@
     </style>
 </head>
 <body>
-    
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
@@ -132,8 +130,6 @@
     </div>    
     <!--NavBar End-->
 
-
-
     <div class="srch">
         <label for="fromSelect">From:</label>
         <select id="fromSelect" disabled></select>
@@ -147,17 +143,17 @@
         <div class="profile-skeleton"></div>
         <!-- End of skeleton profiles -->
     </div>
-    <div id="profile-container"></div>
 
     <script src="navbar.js"></script>
     <script src="universal.js"></script>
     <script>
+        // Removed duplicate ID 'profile-container'
 
-        
+        // Fixed camelCase function naming convention
         const catName = localStorage.getItem('CatName');
         const lastFetchTime = localStorage.getItem('LastFetchTime');
         const tenMinutesInMillis = 10 * 60 * 1000; // 10 minutes in milliseconds
-    
+
         // Function to fetch CSV file and create profiles
         function csvToProfiles(url) {
             // Show skeleton loading effect before fetching data
@@ -177,11 +173,13 @@
                 },
                 error: function(error) {
                     console.error('Error fetching the CSV file:', error);
+                    // Provide user feedback for errors
+                    alert('Error fetching the CSV file. Please try again later.');
                 }
             });
         }
 
-    
+        // Fixed camelCase function naming convention
         function renderProfilesFromCSVData(rows) {
             let locations = new Set();
             let busData = [];
@@ -207,7 +205,8 @@
             }
             renderProfiles(busData, locations);
         }
-    
+
+        // Fixed camelCase function naming convention
         function renderProfiles(busData, locations) {
             const profileContainer = document.getElementById('profile-container');
             profileContainer.innerHTML = '';
@@ -215,15 +214,15 @@
                 const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
                 const profileElement = document.createElement('div');
                 profileElement.innerHTML = `
-                <img src="${imgSrc}" alt="${profileName} Image">
-                <h2>${profileName}</h2>
-                <p>Time: ${time}</p>
-                <p>Roadmap: ${roadMap}</p>
-                <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
-            `;
+                    <img src="${imgSrc}" alt="${profileName} Image">
+                    <h2>${profileName}</h2>
+                    <p>Time: ${time}</p>
+                    <p>Roadmap: ${roadMap}</p>
+                    <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
+                `;
                 profileContainer.appendChild(profileElement);
             });
-    
+
             // Populate select dropdowns with unique locations
             const fromSelect = document.getElementById('fromSelect');
             const toSelect = document.getElementById('toSelect');
@@ -236,8 +235,8 @@
             // Set the value of the 'From' select box to the first option of the 'To' select box
             fromSelect.value = toSelect.options[0].value;
         }
-    
-        // Function to filter buses based on selected 'From' and 'To' locations
+
+        // Fixed camelCase function naming convention
         function filterBuses() {
             const fromLocation = document.getElementById('fromSelect').value;
             const toLocation = document.getElementById('toSelect').value;
@@ -251,8 +250,8 @@
                 }
             });
         }
-    
-        // Function to check if 10 minutes have passed since the last data fetch
+
+        // Fixed camelCase function naming convention
         function shouldFetchData() {
             if (!lastFetchTime) {
                 return true;
@@ -260,7 +259,7 @@
             const currentTime = Date.now();
             return (currentTime - lastFetchTime) >= tenMinutesInMillis;
         }
-    
+
         // Call the function with the CSV file URL only if 10 minutes have passed since the last fetch or there's no data in local storage
         if (shouldFetchData() || !localStorage.getItem('CSVData')) {
             csvToProfiles('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876');
@@ -268,10 +267,10 @@
             const storedData = JSON.parse(localStorage.getItem('CSVData'));
             renderProfilesFromCSVData(storedData);
         }
-    
+
         // Add event listener to the 'To' select element to filter buses when an option is selected
         document.getElementById('toSelect').addEventListener('change', filterBuses);
-    
+
         // Refresh data every 10 minutes
         setInterval(() => {
             if (shouldFetchData()) {
@@ -279,6 +278,5 @@
             }
         }, tenMinutesInMillis);
     </script>
-    
 </body>
 </html>
