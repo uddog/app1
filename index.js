@@ -1,5 +1,5 @@
 // Check if data needs to be updated based on a predefined interval (e.g., 1 hour)
-const updateInterval = 10*60000; 
+const updateInterval = 600000; 
 
 function shouldUpdateData(lastUpdated) {
     return !lastUpdated || Date.now() - lastUpdated > updateInterval;

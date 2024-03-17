@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Storage Example</title>
+<script>
+    // Function to save catName to local storage
+    function saveCatName() {
+        var catName = document.getElementById("catNameInput").value;
+        localStorage.setItem("catName", catName);
+        alert("Cat name saved!");
     }
-    body {
-      display: grid;
-      place-items: center;
-      height: 100vh;
-      background-color: #f5f5f5; /* Light gray */
+
+    // Function to retrieve catName from local storage and display it
+    function displayCatName() {
+        var storedCatName = localStorage.getItem("catName");
+        if (storedCatName) {
+            document.getElementById("catNameDisplay").textContent = "Stored Cat Name: " + storedCatName;
+        } else {
+            document.getElementById("catNameDisplay").textContent = "No cat name stored.";
+        }
     }
-    
-  </style>
+</script>
 </head>
 <body>
-  <div class="button-container">
-    <a href="history.html"><button class="button"><ion-icon name="stats-chart-outline"></ion-icon><br>History</button></a>
-    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
-    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
-    <a href=""><button class="button"><ion-icon name="help-outline"></ion-icon><br>Soon</button></a>
-  </div>
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<h2>Save and Retrieve Cat Name</h2>
+
+<input type="text" id="catNameInput" placeholder="Enter Cat Name">
+<button onclick="saveCatName()">Save Cat Name</button>
+
+<div id="catNameDisplay"></div>
+
+<script>
+    // Call the displayCatName function when the page loads
+    displayCatName();
+</script>
+
 </body>
 </html>
