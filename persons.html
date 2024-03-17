@@ -100,6 +100,9 @@
           border-radius: 5px;
           margin: 10px;
           height: 200px; /* Adjust height as needed */
+          overflow: hidden;
+          display: grid;
+          place-items: center;
         }
         .skeleton-line {
           margin-top: 20px;
@@ -108,12 +111,12 @@
           margin-bottom: 10px;
           border-radius: 5px;
           animation: skeleton-animation 1.5s infinite;
-          width: 50%;
+          width: 80vw;
         
         }
         @keyframes skeleton-animation {
           0% {
-            transform: translateX(0)
+            transform: translateX(-100%)
           }
           100% {
             transform: translateX(100%);
@@ -302,7 +305,7 @@
     const currentTime = new Date().getTime();
 
     // Check if data exists in local storage and if it's been less than 5 minutes since last fetch
-    if (lastFetchTime && (currentTime - lastFetchTime < 300000)) { // 300000 milliseconds = 5 minutes
+    if (lastFetchTime && (currentTime - lastFetchTime < 10 * 60 * 1000)) { // 300000 milliseconds = 5 minutes
       // If data exists and it's been less than 5 minutes, load data from local storage
       const storedData = JSON.parse(localStorage.getItem('csvData'));
       hideSkeleton(); // Hide skeleton loading scenes once data is fetched
