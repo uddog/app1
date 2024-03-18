@@ -180,9 +180,9 @@
       };
 
       const catName = localStorage.getItem("CatName");
-      const storedData = localStorage.getItem("CSVData");
+      const storedData = localStorage.getItem("CSVData112");
       let csvData = storedData ? JSON.parse(storedData) : null;
-      let lastFetchTime = localStorage.getItem("LastFetchTime") || 0;
+      let lastFetchTime = localStorage.getItem("LastFetchTime12") || 0;
       const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
       const csvURL =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=622627727";
@@ -190,8 +190,8 @@
       // Function to handle the CSV data
       function handleCSVData(results) {
         csvData = results.data;
-        localStorage.setItem("CSVData", JSON.stringify(csvData));
-        localStorage.setItem("LastFetchTime", Date.now());
+        localStorage.setItem("CSVData112", JSON.stringify(csvData));
+        localStorage.setItem("LastFetchTime12", Date.now());
         renderProfiles();
       }
 
