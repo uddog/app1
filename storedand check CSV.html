@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSV Data Display</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<table id="csvData">
+    <thead>
+        <tr></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    // URL of the CSV file
+    var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSGA2LCR9epb--Kqdl1U0VXO-4ehjdwFtJeuYWdhspBE7Zl-WGdUA7DG2MaIDKcABGcHThL9fnmnHhx/pub?output=csv';
+
+    // Function to fetch CSV data and display as a table
+    function fetchAndDisplayCSVData() {
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            complete: function(results) {
+                var data = results.data;
+                var table = document.getElementById('csvData');
+                
+                // Add table header
+                var headerRow = table.getElementsByTagName('thead')[0].getElementsByTagName('tr')[0];
+                headerRow.innerHTML = '';
+                for (var key in data[0]) {
+                    headerRow.innerHTML += '<th>' + key + '</th>';
+                }
+                
+                // Add table body
+                var tbody = table.getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
+                data.forEach(function(rowData) {
+                    var row = document.createElement('tr');
+                    for (var key in rowData) {
+                        var cell = document.createElement('td');
+                        cell.appendChild(document.createTextNode(rowData[key]));
+                        row.appendChild(cell);
+                    }
+                    tbody.appendChild(row);
+                });
+
+                // Update local storage
+                localStorage.setItem('csvData', JSON.stringify(data));
+            }
+        });
+    }
+
+    // Check if there is data in local storage
+    var storedData = localStorage.getItem('csvData');
+
+    if (storedData) {
+        storedData = JSON.parse(storedData);
+        displayStoredData(storedData); // Display stored data
+    } else {
+        fetchAndDisplayCSVData(); // Fetch and display fresh data
+    }
+
+    // Function to display stored data
+    function displayStoredData(data) {
+        var table = document.getElementById('csvData');
+                
+        // Add table header
+        var headerRow = table.getElementsByTagName('thead')[0].getElementsByTagName('tr')[0];
+        headerRow.innerHTML = '';
+        for (var key in data[0]) {
+            headerRow.innerHTML += '<th>' + key + '</th>';
+        }
+        
+        // Add table body
+        var tbody = table.getElementsByTagName('tbody')[0];
+        tbody.innerHTML = '';
+        data.forEach(function(rowData) {
+            var row = document.createElement('tr');
+            for (var key in rowData) {
+                var cell = document.createElement('td');
+                cell.appendChild(document.createTextNode(rowData[key]));
+                row.appendChild(cell);
+            }
+            tbody.appendChild(row);
+        });
+    }
+
+    // Check if data has changed on the server
+    function checkForDataUpdate() {
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            complete: function(results) {
+                var newData = results.data;
+                var storedData = JSON.parse(localStorage.getItem('csvData'));
+                if (JSON.stringify(newData) !== JSON.stringify(storedData)) {
+                    fetchAndDisplayCSVData();
+                } else {
+                    displayStoredData(storedData);
+                }
+            }
+        });
+    }
+
+    // Check for data update every time the page is loaded
+    checkForDataUpdate();
+</script>
+
+</body>
+</html>

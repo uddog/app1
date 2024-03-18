@@ -151,94 +151,84 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script>
     $(document).ready(function () {
-      const placeName = localStorage.getItem('PlaceName');
-      const lastFetchTime = localStorage.getItem('lastFetchTime');
-      const fetchInterval = 1000*60*30; 
-  
-      // Check if data is already in local storage and it's not expired
-      if (lastFetchTime && Date.now() - lastFetchTime < fetchInterval) {
-        const storedData = JSON.parse(localStorage.getItem('PlaceDetails'));
-        renderProfilesFromCSVData(storedData);
-      } else {
-        fetchDataAndRenderProfiles();
-      }
+        const placeName = localStorage.getItem('PlaceName');
+        const storedData = localStorage.getItem('PublicDataPlaces'); // Use the correct local storage key
     
-      function fetchDataAndRenderProfiles() {
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=622627727";
-  
-        Papa.parse(csvUrl, {
-          download: true,
-          complete: function (results) {
-            const rows = results.data;
-            localStorage.setItem('PlaceDetails', JSON.stringify(rows));
-            localStorage.setItem('lastFetchTime', Date.now());
-  
-            renderProfilesFromCSVData(rows);
-          },
-        });
-      }
-  
-      function renderProfilesFromCSVData(data) {
-        $("#profiles").empty(); // Clear existing content
-        for (let j = 1; j < data.length; j++) {
-          const rowData = data[j];
-    
-          if (rowData[1].trim() === placeName.trim()) {
-            const profileDiv = `
-              <div class="profile" data-one="${rowData[1]}" data-two="${rowData[2]}" data-three="${rowData[3]}" data-four="${rowData[18]}">
-              <div class="sticky">
-                <div class="two">
-                  <img src="${rowData[7]}" alt="${rowData[1]}">
-                  <div class="one">
-                    <h2>${rowData[1]}</h2>
-                    ${rowData[9] ? `<p>Owner : ${rowData[9]}</p>` : ""}
-                    ${rowData[8] ? `<p>Type : ${rowData[8]}</p>` : ""}
-                    ${rowData[4] ? `<p>Contact: ${rowData[4]}</p>` : ""}
-                    ${rowData[5] ? `<p>Email: <a href="mailto:${rowData[5]}">${rowData[5]}</a></p>` : ""}
-                    ${rowData[6] ? `<p>Address: ${rowData[6]}</p>` : ""}
-                  </div>
-                </div>
-                <div class="slide">
-                  ${rowData[13] ? `<img src="${rowData[13]}" alt="Image 1">` : ""}
-                  ${rowData[14] ? `<img src="${rowData[14]}" alt="Image 2">` : ""}
-                  ${rowData[15] ? `<img src="${rowData[15]}" alt="Image 3">` : ""}
-                </div>
-                <p class="pa">Change Image by Scroll Right<p>
-             </div>
-                <div class="deta">
-                <h2>${rowData[1]}</h2>
-                ${rowData[10] ? `<p>${rowData[10]}</p>` : ""}
-                ${rowData[11] ? `<p>${rowData[11]}</p>` : ""}
-                <h2>আরো জানুন</h2>
-                <div class="more">
-                  ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                  ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                  ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                </div>
-              </div>
-              </div>`;
-            $("#profiles").append(profileDiv);
-          }
+        if (!storedData) {
+            console.error('No CSV data found in local storage.');
+            return;
         }
-      }
+    
+        Papa.parse(storedData, {
+          complete: function(results) {
+            const rows = results.data;
+            rows.shift(); // Skip first row
+            renderProfilesFromLocalStorage(rows, placeName);
+          },
+          header: false
+        });
   
-      // Event listener for click on a tag
-      $("#profiles").on("click", ".profile a", function () {
-        const profileDiv = $(this).closest(".profile");
-        const one = profileDiv.data("one");
-        const two = profileDiv.data("two");
-        const three = profileDiv.data("three");
-        const four = profileDiv.data("four");
-  
-        // Store data in local storage
-        localStorage.setItem("one", one);
-        localStorage.setItem("two", two);
-        localStorage.setItem("three", three);
-        localStorage.setItem("four", four);
-
-      });
+        function renderProfilesFromLocalStorage(data, placeName) {
+            $("#profiles").empty(); // Clear existing content
+            for (let j = 0; j < data.length; j++) {
+                const rowData = data[j];
+    
+                if (rowData[1].trim() === placeName.trim()) {
+                    const profileDiv = `
+                        <div class="profile" data-one="${rowData[1]}" data-two="${rowData[2]}" data-three="${rowData[3]}" data-four="${rowData[18]}">
+                            <div class="sticky">
+                                <div class="two">
+                                    <img src="${rowData[7]}" alt="${rowData[1]}">
+                                    <div class="one">
+                                        <h2>${rowData[1]}</h2>
+                                        ${rowData[9] ? `<p>Owner : ${rowData[9]}</p>` : ""}
+                                        ${rowData[8] ? `<p>Type : ${rowData[8]}</p>` : ""}
+                                        ${rowData[4] ? `<p>Contact: ${rowData[4]}</p>` : ""}
+                                        ${rowData[5] ? `<p>Email: <a href="mailto:${rowData[5]}">${rowData[5]}</a></p>` : ""}
+                                        ${rowData[6] ? `<p>Address: ${rowData[6]}</p>` : ""}
+                                    </div>
+                                </div>
+                                <div class="slide">
+                                    ${rowData[13] ? `<img src="${rowData[13]}" alt="Image 1">` : ""}
+                                    ${rowData[14] ? `<img src="${rowData[14]}" alt="Image 2">` : ""}
+                                    ${rowData[15] ? `<img src="${rowData[15]}" alt="Image 3">` : ""}
+                                </div>
+                                <p class="pa">Change Image by Scroll Right<p>
+                            </div>
+                            <div class="deta">
+                                <h2>${rowData[1]}</h2>
+                                ${rowData[10] ? `<p>${rowData[10]}</p>` : ""}
+                                ${rowData[11] ? `<p>${rowData[11]}</p>` : ""}
+                                <h2>আরো জানুন</h2>
+                                <div class="more">
+                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
+                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
+                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
+                                </div>
+                            </div>
+                        </div>`;
+                    $("#profiles").append(profileDiv);
+                }
+            }
+        }
+    
+        // Event listener for click on a tag
+        $("#profiles").on("click", ".profile a", function () {
+            const profileDiv = $(this).closest(".profile");
+            const one = profileDiv.data("one");
+            const two = profileDiv.data("two");
+            const three = profileDiv.data("three");
+            const four = profileDiv.data("four");
+    
+            // Store data in local storage
+            localStorage.setItem("one", one);
+            localStorage.setItem("two", two);
+            localStorage.setItem("three", three);
+            localStorage.setItem("four", four);
+        });
     });
   </script>
+  
   
 </body>
 

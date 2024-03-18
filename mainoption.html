@@ -1,277 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="universal.css" />
     <style>
-        #profilesContainer {
-            padding: 20px;
-            margin-top: 10vh;
-            border-radius: 10px;
-            overflow: hidden; /* Added to prevent container from collapsing */
-        }
+      #profilesContainer {
+        padding: 20px;
+        margin-top: 10vh;
+        border-radius: 10px;
+        overflow: hidden; /* Added to prevent container from collapsing */
+      }
 
-        .section {
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            position: relative;
-            border-radius: 8px;
-            padding: 5px;
-        }
+      .section {
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        position: relative;
+        border-radius: 8px;
+        padding: 5px;
+      }
 
-        .section a {
-            text-decoration: none;
-        }
+      .section a {
+        text-decoration: none;
+      }
 
-        .section-title {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-            width: 100%;
-            color: #333;
-        }
+      .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+        width: 100%;
+        color: #333;
+      }
 
-        .profile {
-            flex-wrap: wrap;
-            width: 25vw;
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin: 10px;
-            cursor: pointer;
-            justify-content: center;
-            display: flex;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, opacity 0.5s ease; /* Added opacity transition */
-            text-align: center;
-            opacity: 0; /* Initially hide the profile */
-            animation: fadeIn 0.5s forwards; /* Added fade-in animation */
-        }
+      .profile {
+        flex-wrap: wrap;
+        width: 25vw;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 10px;
+        cursor: pointer;
+        justify-content: center;
+        display: flex;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, opacity 0.5s ease; /* Added opacity transition */
+        text-align: center;
+        opacity: 0; /* Initially hide the profile */
+        animation: fadeIn 0.5s forwards; /* Added fade-in animation */
+      }
 
-        .profile:hover {
-            background-color: #f9f8f8;
-        }
+      .profile:hover {
+        background-color: #f9f8f8;
+      }
 
-        .profile img {
-            height: 70px;
-            width: 70px;
-            margin-right: 0 auto;
-        }
+      .profile img {
+        height: 70px;
+        width: 70px;
+        margin-right: 0 auto;
+      }
 
-        .profile div {
-            font-size: 1.1rem;
-            margin-top: 5px;
-            color: black;
-        }
+      .profile div {
+        font-size: 1.1rem;
+        margin-top: 5px;
+        color: black;
+      }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #333;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            position: fixed;
-            top: 50%;
-            left: 47%;
-            z-index: 1000; /* Ensure it's above other content */
-            display: none; /* Initially hidden */
+        to {
+          opacity: 1;
         }
+      }
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #333;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 47%;
+        z-index: 1000; /* Ensure it's above other content */
+        display: none; /* Initially hidden */
+      }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="spinner" id="loadingSpinner"></div>
-
 
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>
-        <button onclick="closeLogoutPopup()">No</button>
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
     </div>
     <!--NavBar End-->
 
     <div id="profilesContainer">
-        <!-- Profile content will be dynamically generated here -->
+      <!-- Profile content will be dynamically generated here -->
     </div>
 
     <script src="universal.js"></script>
     <script src="navbar.js"></script>
     <script>
-        const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
-        const refreshInterval = 600000; // 10 minutes in milliseconds
-    
-        // Function to show the loading spinner
-        function showLoadingSpinner() {
-            document.getElementById('loadingSpinner').style.display = 'block';
-        }
-    
-        // Function to hide the loading spinner
-        function hideLoadingSpinner() {
-            document.getElementById('loadingSpinner').style.display = 'none';
-        }
-    
-        function fetchAndProcessData() {
-            // Show loading spinner before fetching data
-            showLoadingSpinner();
-            
-            fetchCSVData()
-                .then(csvData => {
-                    processData(csvData);
-                    // Cache the fetched data
-                    localStorage.setItem('cachedCSVData', csvData);
-                    // Store the timestamp of the last update
-                    localStorage.setItem('lastUpdateTimestamp', Date.now());
-                })
-                .catch(error => {
-                    console.error('Error fetching and processing CSV data:', error);
-                })
-                .finally(() => {
-                    // Hide loading spinner after processing data or in case of error
-                    hideLoadingSpinner();
-                });
-        }
-        
-        function fetchCSVData() {
-            return fetch(csvLink)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                });
-        }
-    
-        function processData(csvData) {
-            // Process CSV data and update the UI
-            const profilesContainer = document.getElementById('profilesContainer');
-            // Clear previous data
-            profilesContainer.innerHTML = '';
-            const rows = csvData.split('\n');
-            let sections = {};
-    
-            for (let i = 1; i < rows.length; i++) {
-                const profileData = rows[i].split(',');
-    
-                const sectionName = profileData[1];
-                const profileDiv = document.createElement('div');
-                profileDiv.classList.add('profile');
-    
-                const imgElement = document.createElement('img');
-                imgElement.src = profileData[2]; // Assuming column B contains the image source
-                profileDiv.appendChild(imgElement);
-    
-                const columnCContent = document.createElement('div');
-                columnCContent.textContent = profileData[3]; // Assuming column C contains content
-                profileDiv.appendChild(columnCContent);
-    
-                const anchorElement = document.createElement('a');
-                anchorElement.href = profileData[4]; // Assuming column D contains the link
-                anchorElement.appendChild(profileDiv);
-    
-                // Add anchor tag to the corresponding section
-                if (!sections[sectionName]) {
-                    sections[sectionName] = {
-                        sectionElement: document.createElement('div'),
-                        hasMatchingProfile: false
-                    };
-                    sections[sectionName].sectionElement.classList.add('section');
-                    profilesContainer.appendChild(sections[sectionName].sectionElement);
-    
-                    const sectionTitle = document.createElement('div');
-                    sectionTitle.classList.add('section-title');
-                    sectionTitle.textContent = sectionName;
-                    sections[sectionName].sectionElement.appendChild(sectionTitle);
-                }
-    
-                sections[sectionName].sectionElement.appendChild(anchorElement);
-    
-                const storedOptionCategory = localStorage.getItem('optionCategory');
-                if (sectionName.toLowerCase() === storedOptionCategory.toLowerCase()) {
-                    sections[sectionName].hasMatchingProfile = true;
-                }
-            }
-    
-            // Initially hide sections without matching profiles
-            Object.values(sections).forEach(section => {
-                if (!section.hasMatchingProfile) {
-                    section.sectionElement.style.display = 'none';
-                }
-            });
-        }
-    
-        // Check if data needs to be refreshed on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const lastUpdateTimestamp = localStorage.getItem('lastUpdateTimestamp');
-            if (!lastUpdateTimestamp || (Date.now() - lastUpdateTimestamp > refreshInterval)) {
-                // Fetch data if it's not in local storage or if it's been more than 10 minutes since last update
-                fetchAndProcessData();
-            } else {
-                // Use cached data
-                const cachedData = localStorage.getItem('cachedCSVData');
-                if (cachedData) {
-                    processData(cachedData);
-                }
-            }
+      const csvLink =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613";
+      const refreshInterval = 600000; // 10 minutes in milliseconds
+
+      // Function to show the loading spinner
+      function showLoadingSpinner() {
+        document.getElementById("loadingSpinner").style.display = "block";
+      }
+
+      // Function to hide the loading spinner
+      function hideLoadingSpinner() {
+        document.getElementById("loadingSpinner").style.display = "none";
+      }
+
+      function fetchAndProcessData() {
+        // Show loading spinner before fetching data
+        showLoadingSpinner();
+
+        fetchCSVData()
+          .then((csvData) => {
+            processData(csvData);
+            // Cache the fetched data
+            localStorage.setItem("cachedCSVData", csvData);
+            // Store the timestamp of the last update
+            localStorage.setItem("lastUpdateTimestamp", Date.now());
+          })
+          .catch((error) => {
+            console.error("Error fetching and processing CSV data:", error);
+          })
+          .finally(() => {
+            // Hide loading spinner after processing data or in case of error
+            hideLoadingSpinner();
+          });
+      }
+
+      function fetchCSVData() {
+        return fetch(csvLink).then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text();
         });
-    
-        // Add event listener for profiles click
-        document.getElementById('profilesContainer').addEventListener('click', function(event) {
-            console.log("Clicked profile");
-            const clickedProfile = event.target.closest('.profile');
-            if (clickedProfile) {
-                const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
-                localStorage.setItem('CatName', catName);
-            }
+      }
+
+      function processData(csvData) {
+        // Process CSV data and update the UI
+        const profilesContainer = document.getElementById("profilesContainer");
+        // Clear previous data
+        profilesContainer.innerHTML = "";
+        const rows = csvData.split("\n");
+        let sections = {};
+
+        for (let i = 1; i < rows.length; i++) {
+          const profileData = rows[i].split(",");
+
+          const sectionName = profileData[1];
+          const profileDiv = document.createElement("div");
+          profileDiv.classList.add("profile");
+
+          const imgElement = document.createElement("img");
+          imgElement.src = profileData[2]; // Assuming column B contains the image source
+          profileDiv.appendChild(imgElement);
+
+          const columnCContent = document.createElement("div");
+          columnCContent.textContent = profileData[3]; // Assuming column C contains content
+          profileDiv.appendChild(columnCContent);
+
+          const anchorElement = document.createElement("a");
+          anchorElement.href = profileData[4]; // Assuming column D contains the link
+          anchorElement.appendChild(profileDiv);
+
+          // Add anchor tag to the corresponding section
+          if (!sections[sectionName]) {
+            sections[sectionName] = {
+              sectionElement: document.createElement("div"),
+              hasMatchingProfile: false,
+            };
+            sections[sectionName].sectionElement.classList.add("section");
+            profilesContainer.appendChild(sections[sectionName].sectionElement);
+
+            const sectionTitle = document.createElement("div");
+            sectionTitle.classList.add("section-title");
+            sectionTitle.textContent = sectionName;
+            sections[sectionName].sectionElement.appendChild(sectionTitle);
+          }
+
+          sections[sectionName].sectionElement.appendChild(anchorElement);
+
+          const storedOptionCategory = localStorage.getItem("optionCategory");
+          if (
+            sectionName.toLowerCase() === storedOptionCategory.toLowerCase()
+          ) {
+            sections[sectionName].hasMatchingProfile = true;
+          }
+        }
+
+        // Initially hide sections without matching profiles
+        Object.values(sections).forEach((section) => {
+          if (!section.hasMatchingProfile) {
+            section.sectionElement.style.display = "none";
+          }
+        });
+      }
+
+      // Check if data needs to be refreshed on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        const lastUpdateTimestamp = localStorage.getItem("lastUpdateTimestamp");
+        if (
+          !lastUpdateTimestamp ||
+          Date.now() - lastUpdateTimestamp > refreshInterval
+        ) {
+          // Fetch data if it's not in local storage or if it's been more than 10 minutes since last update
+          fetchAndProcessData();
+        } else {
+          // Use cached data
+          const cachedData = localStorage.getItem("cachedCSVData");
+          if (cachedData) {
+            processData(cachedData);
+          }
+        }
+      });
+
+      // Add event listener for profiles click
+      document
+        .getElementById("profilesContainer")
+        .addEventListener("click", function (event) {
+          console.log("Clicked profile");
+          const clickedProfile = event.target.closest(".profile");
+          if (clickedProfile) {
+            const catName =
+              clickedProfile.querySelector("div:nth-child(2)").textContent; // Assuming column C contains the content
+            localStorage.setItem("CatName", catName);
+          }
         });
     </script>
-    
-</body>
-
+  </body>
 </html>

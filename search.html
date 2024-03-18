@@ -184,7 +184,7 @@
             <!-- User information will be displayed here -->
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         let allInfo = [];
         let filterType = "name";
@@ -193,36 +193,39 @@
             try {
                 // Show loading screen
                 document.getElementById('loading-screen').style.display = 'flex';
-
-                // Fetch data
-                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv&gid=0';
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
-
-                // Process data
-                allInfo = rows.slice(1).map(row => ({
-                    name: row[4].trim(),
-                    customFieldU: row[20].trim(),
-                    username: row[1].trim(),
-                    address: row[11].trim(),
-                    phoneNumber: row[6].trim(),
-                    bloodGroup: row[9].trim(),
-                    customField: formatDate(row[24].trim()),
-                    imgSrc: row[18].trim(),
-                    donationDate: new Date(row[25].trim()),
-                    allData: [row[2].trim(), row[5].trim(), row[8].trim(), row[25].trim()]
-                })).filter(entry => entry.name !== '' && entry.address !== '');
-
-                // Hide loading screen and display content
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById("content").style.display = "block";
-                displayInfo();
+        
+                // Retrieve data from local storage
+                const csvData = localStorage.getItem('PrivteDataAll');
+        
+                // Process data if found
+                if (csvData) {
+                    const rows = csvData.split('\n').map(row => row.split(','));
+        
+                    allInfo = rows.slice(1).map(row => ({
+                        name: row[4].trim(),
+                        customFieldU: row[20].trim(),
+                        username: row[1].trim(),
+                        address: row[11].trim(),
+                        phoneNumber: row[6].trim(),
+                        bloodGroup: row[9].trim(),
+                        customField: formatDate(row[24].trim()),
+                        imgSrc: row[18].trim(),
+                        donationDate: new Date(row[25].trim()),
+                        allData: [row[2].trim(), row[5].trim(), row[8].trim(), row[25].trim()]
+                    })).filter(entry => entry.name !== '' && entry.address !== '');
+        
+                    // Hide loading screen and display content
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById("content").style.display = "block";
+                    displayInfo();
+                } else {
+                    console.error('CSV data not found in local storage.');
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
-
+        
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {

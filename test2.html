@@ -1,41 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Local Storage Example</title>
-<script>
-    // Function to save catName to local storage
-    function saveCatName() {
-        var catName = document.getElementById("catNameInput").value;
-        localStorage.setItem("catName", catName);
-        alert("Cat name saved!");
-    }
-
-    // Function to retrieve catName from local storage and display it
-    function displayCatName() {
-        var storedCatName = localStorage.getItem("catName");
-        if (storedCatName) {
-            document.getElementById("catNameDisplay").textContent = "Stored Cat Name: " + storedCatName;
-        } else {
-            document.getElementById("catNameDisplay").textContent = "No cat name stored.";
-        }
-    }
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-
-<h2>Save and Retrieve Cat Name</h2>
-
-<input type="text" id="catNameInput" placeholder="Enter Cat Name">
-<button onclick="saveCatName()">Save Cat Name</button>
-
-<div id="catNameDisplay"></div>
-
-<script>
-    // Call the displayCatName function when the page loads
-    displayCatName();
-</script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+   <script src="test2.js"></script> 
 </body>
 </html>

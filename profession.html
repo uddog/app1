@@ -113,7 +113,7 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
+        <a onclick="toggleSidebar()" class="close-btn">&times;</a>
         <a href="index.html" id="homeLink">Home</a>
         <a href="inbox.html">Inbox</a>
         <a href="profiles.html" id="profileBtn">Profile</a>
@@ -157,58 +157,71 @@
 <script src="navbar.js"></script>
 <script>
   // Get userProfession from Local Storage
-  const userProfession = localStorage.getItem('userProfession');
 
-  if (userProfession) {
-      // Replace 'your_csv_link_here' with the actual link to your CSV file
-      const csvLink = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613';
+  // Get userProfession from Local Storage
+const userProfession = localStorage.getItem('userProfession');
 
-      fetch(csvLink)
-          .then(response => response.text())
-          .then(csvData => {
-              const rows = csvData.split('\n');
-              let sections = {};
+if (userProfession) {
+    // Function to parse CSV data and populate profiles
+    function parseCSVAndPopulateProfiles(csvData) {
+        const rows = csvData.trim().split('\n');
+        let sections = {};
 
-              for (let i = 1; i < rows.length; i++) {
-                  const profileData = rows[i].split(',');
-                  const professionInColumnA = profileData[0].toLowerCase();
-                  const sectionName = profileData[1].trim();
+        for (let i = 1; i < rows.length; i++) {
+            const profileData = rows[i].split(',');
+            const professionInColumnA = profileData[0].toLowerCase();
+            const sectionName = profileData[1].trim();
 
-                  if (userProfession.toLowerCase() === professionInColumnA) {
-                      if (!sections[sectionName]) {
-                          sections[sectionName] = document.createElement('div');
-                          sections[sectionName].classList.add('section');
+            if (userProfession.toLowerCase() === professionInColumnA) {
+                if (!sections[sectionName]) {
+                    sections[sectionName] = document.createElement('div');
+                    sections[sectionName].classList.add('section');
 
-                          const sectionTitle = document.createElement('div');
-                          sectionTitle.classList.add('section-title');
-                          sectionTitle.textContent = sectionName;
-                          sections[sectionName].appendChild(sectionTitle);
+                    const sectionTitle = document.createElement('div');
+                    sectionTitle.classList.add('section-title');
+                    sectionTitle.textContent = sectionName;
+                    sections[sectionName].appendChild(sectionTitle);
 
-                          document.body.appendChild(sections[sectionName]);
-                      }
+                    document.body.appendChild(sections[sectionName]);
+                }
 
-                      const profileDiv = document.createElement('div');
-                      profileDiv.classList.add('profile');
+                const profileDiv = document.createElement('div');
+                profileDiv.classList.add('profile');
 
-                      const imgElement = document.createElement('img');
-                      imgElement.src = profileData[2];
-                      profileDiv.appendChild(imgElement);
+                const imgElement = document.createElement('img');
+                imgElement.src = profileData[2];
+                profileDiv.appendChild(imgElement);
 
-                      const columnCContent = document.createElement('div');
-                      columnCContent.textContent = profileData[3];
-                      profileDiv.appendChild(columnCContent);
+                const columnCContent = document.createElement('div');
+                columnCContent.textContent = profileData[3];
+                profileDiv.appendChild(columnCContent);
 
-                      const anchorElement = document.createElement('a');
-                      anchorElement.href = profileData[4];
-                      anchorElement.appendChild(profileDiv);
+                const anchorElement = document.createElement('a');
+                anchorElement.href = profileData[4];
+                anchorElement.appendChild(profileDiv);
 
-                      sections[sectionName].appendChild(anchorElement);
-                  }
-              }
-          })
-          .catch(error => console.error('Error fetching CSV:', error));
-  }
+                sections[sectionName].appendChild(anchorElement);
+            }
+        }
+    }
 
+    // Function to fetch CSV data from local storage
+    function fetchCSVFromLocalStorage() {
+        try {
+            const csvData = localStorage.getItem('MoreOption'); // Change 'localCSVData' to the key you used to store CSV data
+            if (csvData) {
+                parseCSVAndPopulateProfiles(csvData);
+            } else {
+                console.error('No CSV data found in local storage.');
+            }
+        } catch (error) {
+            console.error('Error fetching CSV data from local storage:', error);
+        }
+    }
+
+    // Call the function to fetch CSV data from local storage
+    fetchCSVFromLocalStorage();
+}
 
 
     //count student 

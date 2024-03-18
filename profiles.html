@@ -1,254 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
-</head>
-<style>
-  
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="universal.css" />
+  </head>
+  <style>
     body {
-        background-color: #f0f0f0; /* Light gray background */
-        color: #2c3e50; /* Text color */
+      background-color: #f0f0f0; /* Light gray background */
+      color: #2c3e50; /* Text color */
     }
-    
+
     #content {
-        min-width: 100vw;
-        min-height: 40vh;
+      min-width: 100vw;
+      min-height: 40vh;
     }
-    
+
     #profile {
-        text-align: center;
+      text-align: center;
     }
-    
+
     .forstic {
-        position: sticky;
-        z-index: 0;
-        width: 80vw;
-        margin: 0 auto;
-        top: 10vh;
+      position: sticky;
+      z-index: 0;
+      width: 80vw;
+      margin: 0 auto;
+      top: 10vh;
     }
-    
+
     .s1 {
-        display: grid;
-        padding: 5px;
-        border-radius: 10px;
-        margin-top: 10vh;
+      display: grid;
+      padding: 5px;
+      border-radius: 10px;
+      margin-top: 10vh;
     }
-    
+
     .s1 img {
-        object-fit: cover;
-        object-position: center;
-        grid-column: 1 / span 2;
-        grid-row: 1 / span 5;
-        margin: 5px;
-        width: 30vw;
-        height: 30vw;
-        padding: 2px;
-        border-radius: 50%;
-        color: white;
-        font-size: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      object-fit: cover;
+      object-position: center;
+      grid-column: 1 / span 2;
+      grid-row: 1 / span 5;
+      margin: 5px;
+      width: 30vw;
+      height: 30vw;
+      padding: 2px;
+      border-radius: 50%;
+      color: white;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    
+
     .s1 p:nth-child(2) {
-        grid-column: 3;
-        grid-row: 3;
-        font-family: 'font1';
-        font-size: 1.6rem;
+      grid-column: 3;
+      grid-row: 3;
+      font-family: "font1";
+      font-size: 1.6rem;
     }
-    
+
     .s1 p:nth-child(3) {
-        grid-column: 3;
-        grid-row: 4;
-        font-family: 'font1';
-        font-size: 1rem;
+      grid-column: 3;
+      grid-row: 4;
+      font-family: "font1";
+      font-size: 1rem;
     }
-    
+
     .s2 {
-        display: flex;
-        justify-content: center;
-        margin: 20px auto;
-        border-radius: 6px;
-        width: 75vw;
-        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Gradient background for statistics section */
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        }
-    
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      border-radius: 6px;
+      width: 75vw;
+      background: linear-gradient(
+        to right,
+        #ffffff,
+        #f0f0f0
+      ); /* Gradient background for statistics section */
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
     .s2 p {
-        padding: 10px;
-        width: 25vw;
-        line-height: 1.5rem;
+      padding: 10px;
+      width: 25vw;
+      line-height: 1.5rem;
     }
-    
+
     .s3::before {
-        content: '';
-        position: absolute;
-        width: 30px;
-        left: 50%;
-        border-radius: 2px;
-        transform: translateX(-50%);
-        height: 5px;
-        background-color: rgb(209, 209, 209);
+      content: "";
+      position: absolute;
+      width: 30px;
+      left: 50%;
+      border-radius: 2px;
+      transform: translateX(-50%);
+      height: 5px;
+      background-color: rgb(209, 209, 209);
     }
-    
-    .s3, #hello {
-        scroll-snap-align: start;
-        min-width: 90vw;
-        padding: 5vw;
-        position: sticky;
-        /*background: linear-gradient(to right, #ffffff, #f0f0f0); /* Gradient background for details section */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        border-radius: 30px 30px 0px 0px;
-        text-align: left;
-        padding-bottom: 20px;
-        background-color: white;
+
+    .s3,
+    #hello {
+      scroll-snap-align: start;
+      min-width: 90vw;
+      padding: 5vw;
+      position: sticky;
+      /*background: linear-gradient(to right, #ffffff, #f0f0f0); /* Gradient background for details section */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 30px 30px 0px 0px;
+      text-align: left;
+      padding-bottom: 20px;
+      background-color: white;
     }
-    
+
     .s3 p {
-        margin: 5px;
+      margin: 5px;
     }
-    
+
     .s3 p:nth-child(odd) {
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin-top: 15px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 15px;
     }
-    
+
     .s3 p:nth-child(even) {
-        border-bottom: 0.5px solid rgb(186, 177, 177);
-        padding-bottom: 5px;
-        font-size: 0.9rem;
+      border-bottom: 0.5px solid rgb(186, 177, 177);
+      padding-bottom: 5px;
+      font-size: 0.9rem;
     }
-    
+
     .s3 p:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
-    
+
     .two {
-        width: 100vw;
-        display: flex;
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
+      width: 100vw;
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
     }
-    
-     
+
     /*hello*/
-    #hello{
-        text-align: center;
+    #hello {
+      text-align: center;
     }
     .button-container {
-        margin-top: 5px;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .button {
-        margin: 5px;
-        padding: 10px;
-        width: 40vw;
-        background-color: #ffffff; /* White */
-        color: #000000; /* Black */
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 1rem;
-        text-align: center;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-      }
-      .button ion-icon {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-      }
-      .button:hover {
-        background-color: #000000; /* Black on hover */
-        color: #ffffff; /* White on hover */
-        transform: translateY(-3px);
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
-      }
-    
-    
-</style>
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .button {
+      margin: 5px;
+      padding: 10px;
+      width: 40vw;
+      background-color: #ffffff; /* White */
+      color: #000000; /* Black */
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .button ion-icon {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .button:hover {
+      background-color: #000000; /* Black on hover */
+      color: #ffffff; /* White on hover */
+      transform: translateY(-3px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+    }
+  </style>
 
-<body>
-
+  <body>
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>   
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
     <!--NavBar End-->
 
-
-
-    <div id="content" style="display: none;">
-        <div id="profile">
-            <!-- Profile information will be displayed here -->
-        </div>
+    <div id="content" style="display: none">
+      <div id="profile">
+        <!-- Profile information will be displayed here -->
+      </div>
     </div>
 
-
-
-    
     <script src="universal.js"></script>
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script src="navbar.js"></script>
-<script>
-    // Function to fetch user profile from local storage
-    function fetchUserProfileFromLocalStorage() {
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="navbar.js"></script>
+    <script>
+      // Function to fetch user profile from local storage
+      function fetchUserProfileFromLocalStorage() {
         // Retrieve data from local storage
-        const imgSrc = localStorage.getItem('userImg');
-        const name = localStorage.getItem('userBName');
-        const role = localStorage.getItem('userRole');
-        const fatherName = localStorage.getItem('userFName');
-        const address = localStorage.getItem('userAddress');
-        const gender = localStorage.getItem('userGender');
-        const profession = localStorage.getItem('userProfession');
-        const joiningDate = localStorage.getItem('userJDate');
-        const totalDonation = localStorage.getItem('userDonate');
-        const dateOfBirth = localStorage.getItem('userBirthDay');
-        const bloodGroup = localStorage.getItem('userBloodGroup');
-        const message = localStorage.getItem('userReference');
-        const attendedEvents = localStorage.getItem('userEvents');
-        const bloodDonationTimes = localStorage.getItem('userPoint');
-        const school = localStorage.getItem('userSchool');
-        const college = localStorage.getItem('userCollege');
-        const varsity = localStorage.getItem('userVarsity');
-        const lastDonate = localStorage.getItem('userMDate');
-        const lastBloodDonate = localStorage.getItem('userBDate');
+        const imgSrc = localStorage.getItem("userImg");
+        const name = localStorage.getItem("userBName");
+        const role = localStorage.getItem("userRole");
+        const fatherName = localStorage.getItem("userFName");
+        const address = localStorage.getItem("userAddress");
+        const gender = localStorage.getItem("userGender");
+        const profession = localStorage.getItem("userProfession");
+        const joiningDate = localStorage.getItem("userJDate");
+        const totalDonation = localStorage.getItem("userDonate");
+        const dateOfBirth = localStorage.getItem("userBirthDay");
+        const bloodGroup = localStorage.getItem("userBloodGroup");
+        const message = localStorage.getItem("userReference");
+        const attendedEvents = localStorage.getItem("userEvents");
+        const bloodDonationTimes = localStorage.getItem("userPoint");
+        const school = localStorage.getItem("userSchool");
+        const college = localStorage.getItem("userCollege");
+        const varsity = localStorage.getItem("userVarsity");
+        const lastDonate = localStorage.getItem("userMDate");
+        const lastBloodDonate = localStorage.getItem("userBDate");
 
         // Update the profile section with retrieved data
         document.getElementById("content").style.display = "block";
@@ -303,16 +305,14 @@
                </div>
              </div>
            `;
-    }
+      }
 
-    // Check if user profile data exists in local storage
-    const storedRowIndex = localStorage.getItem('rowIndex');
-    if (storedRowIndex) {
+      // Check if user profile data exists in local storage
+      const storedRowIndex = localStorage.getItem("rowIndex");
+      if (storedRowIndex) {
         // Fetch user profile from local storage
         fetchUserProfileFromLocalStorage();
-    }
-</script>
-
-</body>
-
+      }
+    </script>
+  </body>
 </html>

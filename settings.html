@@ -1,97 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="universal.css" />
     <style>
-        main{
-            margin-top: 10vh;
-        }
-        .setting-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .option {
-            width: 80vw;
-            padding: 15px;
-            display: flex;
-            margin: 5px 0;
-            justify-content: space-between;
-            text-decoration: none;
-            color: black;
-            background-color: #f0f2f5; 
-            border: 1px solid #d1d8e0; /* Light border color */
-            border-radius: 10px;
-        }
-        
-        .option i {
-            margin-right: 10px;
-        }
-        
-        .option:hover {
-            background-color: #e4e6eb; /* Slightly darker background on hover */
-        }
-        
-    </style>
-</head>
-<body>
+      main {
+        margin-top: 10vh;
+      }
+      .setting-option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .option {
+        width: 80vw;
+        padding: 15px;
+        display: flex;
+        margin: 5px 0;
+        justify-content: space-between;
+        text-decoration: none;
+        color: black;
+        background-color: #f0f2f5;
+        border: 1px solid #d1d8e0; /* Light border color */
+        border-radius: 10px;
+      }
 
+      .option i {
+        margin-right: 10px;
+      }
+
+      .option:hover {
+        background-color: #e4e6eb; /* Slightly darker background on hover */
+      }
+    </style>
+  </head>
+  <body>
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>    
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
     <!--NavBar End-->
 
-
- <main>
-    <div class="setting-option">
+    <main>
+      <div class="setting-option">
         <h4>Information</h4>
-        <a class="option" href="changephoto.html"><i class="fa-solid fa-user"></i><p>Change Profile Photo</p></a>
-        <a class="option" href="editprofiles.html"><i class="fas fa-user-edit"></i><p>Update Profile Information</p></a>
-    </div>
+        <a class="option" href="changephoto.html"
+          ><i class="fa-solid fa-user"></i>
+          <p>Change Profile Photo</p></a
+        >
+        <a class="option" href="editprofiles.html"
+          ><i class="fas fa-user-edit"></i>
+          <p>Update Profile Information</p></a
+        >
+      </div>
 
-    <div class="setting-option">
+      <div class="setting-option">
         <h4>Security</h4>
-        <a class="option" href="changepassword.html"><i class="fas fa-key"></i><p>Change Password</p></a>
-    </div>
-</main>   
-<script src="universal.js"></script>
+        <a class="option" href="changepassword.html"
+          ><i class="fas fa-key"></i>
+          <p>Change Password</p></a
+        >
+      </div>
+    </main>
+    <script src="universal.js"></script>
 
     <script src="navbar.js"></script>
-</body>
-
+  </body>
 </html>

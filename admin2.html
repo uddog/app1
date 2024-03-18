@@ -1,80 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UDDOG ACCESS Pro</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="admin.css">
-    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="universal.css" />
     <style>
-        .ad2{
-            margin-top: 4vh;
-        }
+      .ad2 {
+        margin-top: 4vh;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div> 
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
     <!-- ... (your existing body content) -->
 
     <div class="ad2">
-            <a href="search.html"><div><img src="https://i.pinimg.com/564x/73/cc/eb/73ccebda620a66cc7e0d57edaaf92418.jpg" alt=""><br>Search</div></a>  
-            <a href="blooddonation.html"><div><img src="https://i.pinimg.com/564x/3c/20/a1/3c20a16bccae26d05a27243f9259b86e.jpg" alt=""><br>Add Blood Donar</div></a>  
-            <a href="donation.html"><div><img src="https://i.pinimg.com/564x/71/35/0d/71350d3cd310ceb17b55b8c071567f7c.jpg" alt=""><br>Add Money Donar</div></a>  
-            <a href="eventsattend.html"><div><img src="https://i.pinimg.com/564x/12/9a/bc/129abcd15691bb60d1bb5f3ff2df717a.jpg" alt=""><br>Add Event Attendace</div></a>  
-            <a href="referenceadd.html"><div><img src="https://i.pinimg.com/564x/c3/17/d9/c317d95baca41ceda6d44869b3769818.jpg" alt=""><br>Add Reference</div></a>  
-            <a href="#"><div><img src="https://i.pinimg.com/564x/2d/22/d0/2d22d01c179c841b94a9060f7043d7dc.jpg" alt=""><br>Coming Soon</div></a>  
+      <a href="search.html"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/73/cc/eb/73ccebda620a66cc7e0d57edaaf92418.jpg"
+            alt=""
+          /><br />Search
+        </div></a
+      >
+      <a href="blooddonation.html"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/3c/20/a1/3c20a16bccae26d05a27243f9259b86e.jpg"
+            alt=""
+          /><br />Add Blood Donar
+        </div></a
+      >
+      <a href="donation.html"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/71/35/0d/71350d3cd310ceb17b55b8c071567f7c.jpg"
+            alt=""
+          /><br />Add Money Donar
+        </div></a
+      >
+      <a href="eventsattend.html"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/12/9a/bc/129abcd15691bb60d1bb5f3ff2df717a.jpg"
+            alt=""
+          /><br />Add Event Attendace
+        </div></a
+      >
+      <a href="referenceadd.html"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/c3/17/d9/c317d95baca41ceda6d44869b3769818.jpg"
+            alt=""
+          /><br />Add Reference
+        </div></a
+      >
+      <a href="#"
+        ><div>
+          <img
+            src="https://i.pinimg.com/564x/2d/22/d0/2d22d01c179c841b94a9060f7043d7dc.jpg"
+            alt=""
+          /><br />Coming Soon
+        </div></a
+      >
     </div>
-    
+
     <script src="universal.js"></script>
 
-     <script src="navbar.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="navbar.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
     <script>
-            //color picker
-                    function changeColor(newColor) {
-                document.documentElement.style.setProperty('--color', newColor);
-                localStorage.setItem('mainColor', newColor);
-            }
+      //color picker
+      function changeColor(newColor) {
+        document.documentElement.style.setProperty("--color", newColor);
+        localStorage.setItem("mainColor", newColor);
+      }
 
-            // Check if there is a saved color in local storage and apply it
-            const savedColor = localStorage.getItem('mainColor');
-            if (savedColor) {
-                changeColor(savedColor);
-            }
+      // Check if there is a saved color in local storage and apply it
+      const savedColor = localStorage.getItem("mainColor");
+      if (savedColor) {
+        changeColor(savedColor);
+      }
     </script>
-</body>
-
+  </body>
 </html>

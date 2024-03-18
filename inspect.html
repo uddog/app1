@@ -156,130 +156,126 @@
 <script src="universal.js"></script>
 
 <script>
-  // Define the CSV URL
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDv7MQUbN2J6k-mj5UI9RsITtNmwhR1LwkxBc3tQ_aUU984nUy1aEIQIWgVUeOJyKTDVkrggQBqn7n/pub?output=csv';
-
-// Show loading screen
+ // Show loading screen
 document.getElementById('loading-screen').style.display = 'flex';
 
-// Fetch the CSV data
-fetch(csvUrl)
-    .then(response => response.text())
-    .then(csvData => {
-        // Hide loading screen
-        document.getElementById('loading-screen').style.display = 'none';
+// Retrieve CSV data from local storage
+const csvData = localStorage.getItem('PrivteDataAll');
 
-        // Split the CSV data into rows
-        const rows = csvData.split('\n');
+if (csvData) {
+    // Hide loading screen
+    document.getElementById('loading-screen').style.display = 'none';
 
-        // Get HTML elements
-        const profilesContainer = document.getElementById('profilesContainer');
-        const filterInput = document.getElementById('filterInput');
-        const columnSelect = document.getElementById('columnSelect');
+    // Split the CSV data into rows
+    const rows = csvData.split('\n');
 
-        // Extract labels from the first row
-        const labels = rows[0].split(',');
+    // Get HTML elements
+    const profilesContainer = document.getElementById('profilesContainer');
+    const filterInput = document.getElementById('filterInput');
+    const columnSelect = document.getElementById('columnSelect');
 
-        // Filter out columns where all data is empty
-        const validColumns = labels.reduce((acc, label, index) => {
-            const isEmptyColumn = rows.slice(1).every(row => row.split(',')[index].trim() === '');
-            if (!isEmptyColumn && index !== 24 && index !== 25 && index !== 26) {
-                acc.push(index);
+    // Extract labels from the first row
+    const labels = rows[0].split(',');
+
+    // Filter out columns where all data is empty
+    const validColumns = labels.reduce((acc, label, index) => {
+        const isEmptyColumn = rows.slice(1).every(row => row.split(',')[index].trim() === '');
+        if (!isEmptyColumn && index !== 24 && index !== 25 && index !== 26) {
+            acc.push(index);
+        }
+        return acc;
+    }, []);
+
+    // Populate the select box with valid options (excluding column S - index 18)
+    validColumns.forEach(index => {
+        // Exclude column S (index 18)
+        if (index !== 18) {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = labels[index];
+            columnSelect.appendChild(option);
+        }
+    });
+
+    // Set the default value to the index of column E (zero-based index)
+    columnSelect.value = 4;
+
+    // Function to create and display profiles
+    function displayProfiles(filterTerm, selectedColumn) {
+        // Clear existing profiles
+        profilesContainer.innerHTML = '';
+
+        // Find the index of the column to exclude (e.g., column AA)
+        const excludedColumnIndex = labels.indexOf('AA');
+
+        // ... your existing code ...
+
+        // Create profiles based on filter term and column E value
+        for (let i = 1; i < rows.length; i++) {
+            const rowData = rows[i].split(',');
+
+            // Check if column E has a value and if selected column contains the filter term
+            if (rowData.length > 4 && rowData[4].trim() !== '' && rowData[selectedColumn].trim().toLowerCase().includes(filterTerm)) {
+                const profileDiv = document.createElement('div');
+                profileDiv.className = 'profile';
+
+                // Add image as before
+                const imageSrc = rowData[18].trim();
+                if (imageSrc && imageSrc !== '') {
+                    const image = document.createElement('img');
+                    image.src = imageSrc;
+                    image.alt = 'Profile Image';
+                    profileDiv.appendChild(image);
+                }
+
+                for (let j = 0; j < labels.length; j++) {
+                    // Exclude column S (index 18), column with index 26, and columns Y (index 24), Z (index 25), and AA (index 26)
+                    if (j !== excludedColumnIndex && validColumns.includes(j) && j !== 18) {
+                        const labelDataDiv = document.createElement('div');
+                        labelDataDiv.className = 'label-data';
+
+                        const label = document.createElement('p');
+                        label.textContent = labels[j];
+                        label.classList.add('label');
+                        labelDataDiv.appendChild(label);
+
+                        const data = document.createElement('p');
+                        data.textContent = rowData[j];
+                        labelDataDiv.appendChild(data);
+
+                        profileDiv.appendChild(labelDataDiv);
+                    }
+                }
+
+                profilesContainer.appendChild(profileDiv);
             }
-            return acc;
-        }, []);
-
-        // Populate the select box with valid options (excluding column S - index 18)
-        validColumns.forEach(index => {
-            // Exclude column S (index 18)
-            if (index !== 18) {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = labels[index];
-                columnSelect.appendChild(option);
-            }
-        });
-
-        // Set the default value to the index of column E (zero-based index)
-        columnSelect.value = 4;
-
-        // Function to create and display profiles
-        function displayProfiles(filterTerm, selectedColumn) {
-            // Clear existing profiles
-            profilesContainer.innerHTML = '';
-
-            // Find the index of the column to exclude (e.g., column AA)
-            const excludedColumnIndex = labels.indexOf('AA');
-
-    // ... your existing code ...
-
-// Create profiles based on filter term and column E value
-for (let i = 1; i < rows.length; i++) {
-    const rowData = rows[i].split(',');
-
-    // Check if column E has a value and if selected column contains the filter term
-    if (rowData.length > 4 && rowData[4].trim() !== '' && rowData[selectedColumn].trim().toLowerCase().includes(filterTerm)) {
-        const profileDiv = document.createElement('div');
-        profileDiv.className = 'profile';
-
-        // Add image as before
-        const imageSrc = rowData[18].trim();
-        if (imageSrc && imageSrc !== '') {
-            const image = document.createElement('img');
-            image.src = imageSrc;
-            image.alt = 'Profile Image';
-            profileDiv.appendChild(image);
         }
 
-        for (let j = 0; j < labels.length; j++) {
-            // Exclude column S (index 18), column with index 26, and columns Y (index 24), Z (index 25), and AA (index 26)
-            if (j !== excludedColumnIndex && validColumns.includes(j) && j !== 18) {
-                const labelDataDiv = document.createElement('div');
-                labelDataDiv.className = 'label-data';
-
-                const label = document.createElement('p');
-                label.textContent = labels[j];
-                label.classList.add('label');
-                labelDataDiv.appendChild(label);
-
-                const data = document.createElement('p');
-                data.textContent = rowData[j];
-                labelDataDiv.appendChild(data);
-
-                profileDiv.appendChild(labelDataDiv);
-            }
-        }
-
-        profilesContainer.appendChild(profileDiv);
+        // ... your existing code ...
     }
+
+    // Initial display of all profiles
+    displayProfiles('', 4); // Pass 4 as the default selected column (column E)
+
+    // Add input event listener for filtering
+    filterInput.addEventListener('input', () => {
+        const filterTerm = filterInput.value.trim().toLowerCase();
+        const selectedColumn = parseInt(columnSelect.value, 10);
+        displayProfiles(filterTerm, selectedColumn);
+    });
+
+    // Add change event listener for column selection
+    columnSelect.addEventListener('change', () => {
+        const filterTerm = filterInput.value.trim().toLowerCase();
+        const selectedColumn = parseInt(columnSelect.value, 10);
+        displayProfiles(filterTerm, selectedColumn);
+    });
+} else {
+    console.error('CSV data not found in local storage.');
+    // Hide loading screen in case of an error
+    document.getElementById('loading-screen').style.display = 'none';
 }
 
-// ... your existing code ...
-
-        }
-
-        // Initial display of all profiles
-        displayProfiles('', 4); // Pass 4 as the default selected column (column E)
-
-        // Add input event listener for filtering
-        filterInput.addEventListener('input', () => {
-            const filterTerm = filterInput.value.trim().toLowerCase();
-            const selectedColumn = parseInt(columnSelect.value, 10);
-            displayProfiles(filterTerm, selectedColumn);
-        });
-
-        // Add change event listener for column selection
-        columnSelect.addEventListener('change', () => {
-            const filterTerm = filterInput.value.trim().toLowerCase();
-            const selectedColumn = parseInt(columnSelect.value, 10);
-            displayProfiles(filterTerm, selectedColumn);
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching CSV:', error);
-        // Hide loading screen in case of an error
-        document.getElementById('loading-screen').style.display = 'none';
-    });
 </script>
 </body>
 </html>

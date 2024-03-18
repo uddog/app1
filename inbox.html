@@ -1,139 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="universal.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inbox</title>
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="universal.css" />
     <style>
-        /* CSS for loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999; /* Ensure it's above other elements */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      /* CSS for loading overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999; /* Ensure it's above other elements */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        /* Spinner styles */
-        .spinner {
-            border-top: 4px solid; /* Blue border on top for spinner effect */
-            border-radius: 50%; /* Circle shape */
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite; /* Spin animation */
-        }
+      /* Spinner styles */
+      .spinner {
+        border-top: 4px solid; /* Blue border on top for spinner effect */
+        border-radius: 50%; /* Circle shape */
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite; /* Spin animation */
+      }
 
-        /* Animation for spinner */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+      /* Animation for spinner */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-
-        /* CSS for SMS Container */
-        #smsContainer {
-            margin-top: 10vh;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+        100% {
+          transform: rotate(360deg);
         }
+      }
 
-        .sms-card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 5px;
-            width: 90vw;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+      /* CSS for SMS Container */
+      #smsContainer {
+        margin-top: 10vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
 
-        .sms-card:hover {
-            background-color: #f5f5f5;
-        }
+      .sms-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 5px;
+        width: 90vw;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-        .al {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .sms-card:hover {
+        background-color: #f5f5f5;
+      }
 
-        .al h3 {
-            font-family: "font2";
-            margin: 0;
-        }
+      .al {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .det {
-            color: #888;
-            font-size: 0.5rem;
-            width: 35%;
-            text-align: right;
-        }
+      .al h3 {
+        font-family: "font2";
+        margin: 0;
+      }
 
-        .sms-details {
-            font-family: 'font1';
-            display: none;
-            margin-top: 10px;
-        }
+      .det {
+        color: #888;
+        font-size: 0.5rem;
+        width: 35%;
+        text-align: right;
+      }
 
-        /* Optional: Add transition effect for smooth details toggle */
-        .sms-details {
-            transition: max-height 0.3s ease-in-out;
-            overflow: hidden;
-        }
+      .sms-details {
+        font-family: "font1";
+        display: none;
+        margin-top: 10px;
+      }
 
-        /* NavBar styling */
-        /* Your existing styles for the navbar can go here */
+      /* Optional: Add transition effect for smooth details toggle */
+      .sms-details {
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+      }
+
+      /* NavBar styling */
+      /* Your existing styles for the navbar can go here */
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
+      <div class="spinner"></div>
     </div>
 
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>    
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
     <!--NavBar End-->
-
-
 
     <!-- SMS Container -->
     <div id="smsContainer"></div>
@@ -142,79 +144,87 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="universal.js"></script>
 
-   <script src="navbar.js"></script>
+    <script src="navbar.js"></script>
     <!-- JavaScript code -->
     <script>
-        // Replace the CSV_URL with the actual link to your CSV file
-        const GID = '1429441367';
-        const CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?gid=${GID}&output=csv`;
-
-        // Function to format the date
-        function formatDate(inputDate) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(inputDate).toLocaleDateString('en-US', options);
-        }
-
-        // Function to fetch and display SMS data with collapsible details
-        async function fetchAndDisplaySMS() {
-            try {
-                const response = await fetch(CSV_URL);
-                const csvText = await response.text();
-
-                // Use Papaparse to parse the CSV data
-                Papa.parse(csvText, {
-                    complete: function (results) {
-                        const rows = results.data;
-
-                        // Create SMS cards with collapsible details
-                        let smsHTML = '';
-
-                        for (let i = rows.length - 1; i > 0; i--) {
-                            const rowData = rows[i];
-                            const date = formatDate(rowData[0]); // Format the date
-                            const smsSender = rowData[1];
-                            const smsDetails = rowData.slice(2).join(','); // Join remaining fields if any
-
-                            smsHTML += `
-                                <div class="sms-card" onclick="toggleDetails(this)">
-                                    <div class="al">
-                                        <h3>${smsSender}</h3>
-                                        <p class="det">${date}</p>
-                                    </div>
-                                    <div class="sms-details">
-                                        <p>${smsDetails}</p>
-                                    </div>
-                                </div>
-                            `;
-                        }
-
-                        // Display the SMS in the specified container
-                        document.getElementById('smsContainer').innerHTML = smsHTML;
-
-                        // Hide loading overlay after displaying the SMS container
-                        document.getElementById('loadingOverlay').style.display = 'none';
-                    },
-                    error: function (error) {
-                        console.error('Error parsing CSV:', error);
-                    }
-                });
-            } catch (error) {
-                console.error('Error fetching CSV data:', error);
-            }
-        }
-
-        // Toggle collapsible details when an SMS card is clicked
-        function toggleDetails(card) {
-            const details = card.querySelector('.sms-details');
-            details.style.display = details.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Fetch and display SMS data with collapsible details when the page loads
-        document.addEventListener('DOMContentLoaded', fetchAndDisplaySMS);
-    </script>
-
-    <!-- Your other JavaScript code can go here -->
-
-</body>
-
+      // Function to format the date
+      function formatDate(inputDate) {
+          const options = { year: "numeric", month: "long", day: "numeric" };
+          return new Date(inputDate).toLocaleDateString("en-US", options);
+      }
+  
+      // Function to retrieve CSV data from local storage
+      function retrieveCSVFromLocalStorage() {
+          return localStorage.getItem('Inbox'); // Assuming csvData is the key used for storing CSV data
+      }
+  
+      // Function to parse CSV data and display SMS
+      function parseCSVAndDisplaySMS(csvText) {
+          // Use Papaparse to parse the CSV data
+          Papa.parse(csvText, {
+              complete: function (results) {
+                  const rows = results.data;
+  
+                  // Create SMS cards with collapsible details
+                  let smsHTML = "";
+  
+                  for (let i = rows.length - 1; i > 0; i--) {
+                      const rowData = rows[i];
+                      const date = formatDate(rowData[0]); // Format the date
+                      const smsSender = rowData[1];
+                      const smsDetails = rowData.slice(2).join(","); // Join remaining fields if any
+  
+                      smsHTML += `
+                          <div class="sms-card" onclick="toggleDetails(this)">
+                              <div class="al">
+                                  <h3>${smsSender}</h3>
+                                  <p class="det">${date}</p>
+                              </div>
+                              <div class="sms-details">
+                                  <p>${smsDetails}</p>
+                              </div>
+                          </div>
+                      `;
+                  }
+  
+                  // Display the SMS in the specified container
+                  document.getElementById("smsContainer").innerHTML = smsHTML;
+  
+                  // Hide loading overlay after displaying the SMS container
+                  document.getElementById("loadingOverlay").style.display = "none";
+              },
+              error: function (error) {
+                  console.error("Error parsing CSV:", error);
+              },
+          });
+      }
+  
+      // Toggle collapsible details when an SMS card is clicked
+      function toggleDetails(card) {
+          const details = card.querySelector(".sms-details");
+          details.style.display = details.style.display === "block" ? "none" : "block";
+      }
+  
+      // Function to fetch and display SMS data with collapsible details
+      function fetchAndDisplaySMS() {
+          try {
+              // Retrieve CSV data from local storage
+              const csvText = retrieveCSVFromLocalStorage();
+              if (!csvText) {
+                  console.error("No CSV data found in local storage.");
+                  return;
+              }
+  
+              // Parse CSV data and display SMS
+              parseCSVAndDisplaySMS(csvText);
+          } catch (error) {
+              console.error("Error fetching CSV data:", error);
+          }
+      }
+  
+      // Fetch and display SMS data with collapsible details when the page loads
+      document.addEventListener("DOMContentLoaded", fetchAndDisplaySMS);
+  </script>
+  
+  </body>
 </html>

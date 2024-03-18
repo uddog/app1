@@ -3,24 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Cat Name</title>
+    <title>Stored Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <!-- This div will contain the displayed cat name -->
-    <div id="catNameDisplay"></div>
+    <h1>Stored Data</h1>
+    <div id="table-container"></div>
 
-    <!-- Your JavaScript code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        // Fetch the value from local storage
-        const catName = localStorage.getItem('CatName');
+        // Function to render table from CSV data
+        function renderTable(csvData) {
+            const tableContainer = document.getElementById('table-container');
+            const table = document.createElement('table');
 
-        // Display the cat name in the designated div
-        const catNameDisplayDiv = document.getElementById('catNameDisplay');
-        if (catName) {
-            catNameDisplayDiv.textContent = `The selected cat name is: ${catName}`;
-        } else {
-            catNameDisplayDiv.textContent = 'No cat name selected.';
+            // Create table header
+            const headerRow = document.createElement('tr');
+            Object.keys(csvData[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            // Create table rows
+            csvData.forEach(rowData => {
+                const row = document.createElement('tr');
+                Object.values(rowData).forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+                table.appendChild(row);
+            });
+
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
         }
+
+        // Function to retrieve and display stored data
+        function displayStoredData(storageKey) {
+            const storedData = localStorage.getItem(storageKey);
+            if (storedData) {
+                const parsedData = Papa.parse(storedData, { header: true }).data;
+                renderTable(parsedData);
+            }
+        }
+
+        // Display stored data for each storage key
+        const storageKeys = [
+            'anik'
+        ];
+        storageKeys.forEach(key => displayStoredData(key));
     </script>
 </body>
 </html>

@@ -6,7 +6,6 @@
     <title>CSV Profiles</title>
     <link rel="stylesheet" href="universal.css" />
     <link rel="stylesheet" href="navbar.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
       #searchContainer {
         display: flex;
@@ -147,152 +146,113 @@
     <div id="profilesContainer"></div>
     <script src="universal.js"></script>
     <script src="navbar.js"></script>
-    <script>
-      function showSkeleton() {
-        const profilesContainer = document.getElementById("profilesContainer");
-        profilesContainer.innerHTML = ""; // Clear previous content
-        for (let i = 0; i < 5; i++) {
-          // You can adjust the number of skeleton profiles shown
-          profilesContainer.innerHTML += `
-            <div class="skeleton-profile">
-              <div class="two">
-                <div style="width: 100px; height: 100px; background-color: #ddd; border-radius: 50%;"></div>
-                <div class="one" style="width: 60%;">
-                  <h2 style="height: 20px; background-color: #ddd; margin-bottom: 10px;"></h2>
-                  <p style="height: 15px; background-color: #ddd;"></p>
-                  <p style="height: 15px; background-color: #ddd;"></p>
-                </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script>
+  const catName = localStorage.getItem('CatName');
+
+  function showSkeleton() {
+    const profilesContainer = document.getElementById("profilesContainer");
+    profilesContainer.innerHTML = ""; // Clear previous content
+    for (let i = 0; i < 5; i++) {
+      profilesContainer.innerHTML += `
+        <div class="skeleton-profile">
+          <div class="two">
+            <div style="width: 100px; height: 100px; background-color: #ddd; border-radius: 50%;"></div>
+            <div class="one" style="width: 60%;">
+              <h2 style="height: 20px; background-color: #ddd; margin-bottom: 10px;"></h2>
+              <p style="height: 15px; background-color: #ddd;"></p>
+              <p style="height: 15px; background-color: #ddd;"></p>
+            </div>
+          </div>
+        </div>`;
+    }
+  }
+
+  function hideSkeletonAndRenderProfiles(data) {
+    renderProfiles(data);
+    const profilesContainer = document.getElementById("profilesContainer");
+    profilesContainer.querySelectorAll(".skeleton-profile").forEach((profile) => profile.remove());
+  }
+
+  function renderProfiles(data) {
+    const profilesContainer = document.getElementById("profilesContainer");
+    profilesContainer.innerHTML = ""; // Clear previous content
+
+    data.forEach(rowData => {
+      const profileType = rowData[3].trim(); // Profile type from column D
+      if (profileType === catName.trim()) {
+        const profileName = rowData[1].trim(); // Profile name from column B
+        const profileImgSrc = rowData[7].trim(); // Image source from column H
+        const profileAddress = rowData[6].trim(); // Address from column G
+        const profilePhone = rowData[4].trim(); // Phone number from column E
+        const profileLink = rowData[12].trim(); // Link from column L
+
+        profilesContainer.innerHTML += `
+          <div class="profile">
+            <div class="two">
+              <img src="${profileImgSrc}" alt="${profileName}">
+              <div class="one">
+                <h2>${profileName}</h2>
+                ${
+                  profileAddress
+                    ? `<p class="address">ঠিকানা : ${profileAddress}</p>`
+                    : ""
+                }
+                ${
+                  profilePhone
+                    ? `<p class="phone">যোগাযোগ : ${profilePhone}</p>`
+                    : ""
+                }
               </div>
-            </div>`;
-        }
-      }
-
-      function hideSkeletonAndRenderProfiles() {
-        renderProfiles();
-        const profilesContainer = document.getElementById("profilesContainer");
-        profilesContainer
-          .querySelectorAll(".skeleton-profile")
-          .forEach((profile) => profile.remove());
-      }
-      window.onload = function () {
-        showSkeleton();
-        fetchIfRequired(); // Start fetching data
-      };
-
-      const catName = localStorage.getItem("CatName");
-      const storedData = localStorage.getItem("CSVData112");
-      let csvData = storedData ? JSON.parse(storedData) : null;
-      let lastFetchTime = localStorage.getItem("LastFetchTime12") || 0;
-      const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
-      const csvURL =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=622627727";
-
-      // Function to handle the CSV data
-      function handleCSVData(results) {
-        csvData = results.data;
-        localStorage.setItem("CSVData112", JSON.stringify(csvData));
-        localStorage.setItem("LastFetchTime12", Date.now());
-        renderProfiles();
-      }
-
-      // Function to render profiles based on stored CSV data
-      function renderProfiles() {
-        if (csvData) {
-          var profilesHTML = "";
-          for (var i = 1; i < csvData.length; i++) {
-            var profileType = csvData[i][3].trim(); // Profile type from column D
-            if (profileType === catName.trim()) {
-              var profileName = csvData[i][1].trim(); // Profile name from column B
-              var profileImgSrc = csvData[i][7].trim(); // Image source from column H
-              var profileAddress = csvData[i][6].trim(); // Address from column G
-              var profilePhone = csvData[i][4].trim(); // Phone number from column E
-              var profileLink = csvData[i][12].trim(); // Link from column L
-
-              profilesHTML += `
-                        <div class="profile">
-                            <div class="two">
-                                <img src="${profileImgSrc}" alt="${profileName}">
-                                <div class="one">
-                                    <h2>${profileName}</h2>
-                                    ${
-                                      profileAddress
-                                        ? `<p class="address">ঠিকানা : ${profileAddress}</p>`
-                                        : ""
-                                    }
-                                    ${
-                                      profilePhone
-                                        ? `<p class="phone">যোগাযোগ : ${profilePhone}</p>`
-                                        : ""
-                                    }
-                                </div>
-                            </div>
-                            ${
-                              profileLink
-                                ? `<button class="see-more" onclick="storePlaceName('${profileName}', '${profileLink}')">See more</button>`
-                                : ""
-                            }
-                        </div>`;
+            </div>
+            ${
+              profileLink
+                ? `<button class="see-more" onclick="storePlaceName('${profileName}', '${profileLink}')">See more</button>`
+                : ""
             }
-          }
-          document.getElementById("profilesContainer").innerHTML = profilesHTML;
-        }
+          </div>`;
       }
+    });
+  }
 
-      // Function to store profile name in localStorage
-      function storePlaceName(placeName, link) {
-        localStorage.setItem("PlaceName", placeName);
-        window.location.href = link;
+  // Function to store profile name in localStorage
+  function storePlaceName(placeName, link) {
+    localStorage.setItem("PlaceName", placeName);
+    window.location.href = link;
+  }
+
+  // Function to search profiles by name
+  function searchProfiles() {
+    var input, filter, profiles, profile, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    profiles = document.getElementsByClassName("profile");
+
+    for (i = 0; i < profiles.length; i++) {
+      profile = profiles[i].getElementsByClassName("one")[0]; // Get the div containing profile details
+      txtValue = profile.textContent || profile.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        profiles[i].style.display = ""; // Show the profile if the search term matches
+      } else {
+        profiles[i].style.display = "none"; // Hide the profile if the search term does not match
       }
+    }
+  }
 
-      // Function to search profiles by name
-      function searchProfiles() {
-        var input, filter, profiles, profile, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        profiles = document.getElementsByClassName("profile");
+  window.onload = function () {
+    showSkeleton();
+    const storedData = localStorage.getItem("PublicDataPlaces");
+    if (storedData) {
+      Papa.parse(storedData, {
+        complete: function (results) {
+          hideSkeletonAndRenderProfiles(results.data);
+        },
+        header: false
+      });
+    }
+    document.getElementById("searchInput").addEventListener("input", searchProfiles);
+  };
+</script>
 
-        for (i = 0; i < profiles.length; i++) {
-          profile = profiles[i].getElementsByClassName("one")[0]; // Get the div containing profile details
-          txtValue = profile.textContent || profile.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            profiles[i].style.display = ""; // Show the profile if the search term matches
-          } else {
-            profiles[i].style.display = "none"; // Hide the profile if the search term does not match
-          }
-        }
-      }
-
-      // Function to fetch and parse CSV data
-      function fetchAndParseCSV() {
-        showSkeleton(); // Show skeleton loading while fetching
-        Papa.parse(csvURL, {
-          download: true,
-          complete: function (results) {
-            handleCSVData(results);
-            hideSkeletonAndRenderProfiles(); // Hide skeleton and render profiles after fetching
-          },
-        });
-      }
-
-      // Call fetchAndParseCSV() when the page loads
-      window.onload = function () {
-        renderProfiles();
-        fetchIfRequired();
-        // Attach event listener to the input field for instant search
-        document
-          .getElementById("searchInput")
-          .addEventListener("input", searchProfiles);
-      };
-
-      // Check if a fetch is required based on the last fetch time
-      function fetchIfRequired() {
-        if (Date.now() - lastFetchTime > fetchInterval) {
-          fetchAndParseCSV();
-        }
-      }
-
-      // Periodically fetch CSV data every 10 minutes
-      setInterval(fetchIfRequired, fetchInterval);
-    </script>
   </body>
-</html>
+</html> 

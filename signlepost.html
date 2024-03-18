@@ -1,128 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Single Post</title>
-    <link rel="stylesheet" href="universal.css">
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css" />
+    <link rel="stylesheet" href="navbar.css" />
     <style>
-        /* Styles for loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999; /* Ensure it's above other elements */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      /* Styles for loading overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999; /* Ensure it's above other elements */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        /* Spinner styles */
-        .spinner {
-            border-top: 4px solid ; /* Blue border on top for spinner effect */
-            border-radius: 50%; /* Circle shape */
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite; /* Spin animation */
-        }
+      /* Spinner styles */
+      .spinner {
+        border-top: 4px solid; /* Blue border on top for spinner effect */
+        border-radius: 50%; /* Circle shape */
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite; /* Spin animation */
+      }
 
-        /* Animation for spinner */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+      /* Animation for spinner */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-        /* Styles for the container of all profiles */
-        #singlePost {
-            margin-top: 10vh;
-        }
+      /* Styles for the container of all profiles */
+      #singlePost {
+        margin-top: 10vh;
+      }
 
-        /* Styles for each individual profile (post) */
-        .profile {
-            box-sizing: border-box;
-            width: 95vw;
-            margin: 5px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            text-align: center;
-            background-color: #f8f8f8;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
+      /* Styles for each individual profile (post) */
+      .profile {
+        box-sizing: border-box;
+        width: 95vw;
+        margin: 5px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #f8f8f8;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
 
-        /* Hover effect for each profile */
-        .profile:hover {
-            transform: translateY(-5px);
-        }
+      /* Hover effect for each profile */
+      .profile:hover {
+        transform: translateY(-5px);
+      }
 
-        /* Styles for the profile image */
-        .profile img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-        }
+      /* Styles for the profile image */
+      .profile img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+        border-radius: 10px;
+      }
 
-        /* Styles for the profile name */
-        .profile h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            font-family: 'font2';
-            color: #333;
-        }
+      /* Styles for the profile name */
+      .profile h3 {
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        font-family: "font2";
+        color: #333;
+      }
 
-        /* Styles for the additional content (paragraphs and button) */
-        .profile p {
-            text-align: justify;
-            margin-bottom: 8px;
-            color: #555;
-            font-family: 'font1';
-        }
+      /* Styles for the additional content (paragraphs and button) */
+      .profile p {
+        text-align: justify;
+        margin-bottom: 8px;
+        color: #555;
+        font-family: "font1";
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
+      <div class="spinner"></div>
     </div>
 
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>
-        <button onclick="closeLogoutPopup()">No</button>
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
     </div>
     <!--NavBar End-->
 
@@ -132,72 +136,75 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="navbar.js"></script>
     <script>
-        const csvDataURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=2089505816';
-
-        async function fetchSinglePost(postNo) {
-            try {
-                const response = await fetch(csvDataURL);
-                const csvData = await response.text();
-                Papa.parse(csvData, {
-                    complete: function(results) {
-                        displaySinglePost(results.data, postNo);
-                        // Hide loading overlay after displaying the post
-                        document.getElementById('loadingOverlay').style.display = 'none';
-                    },
-                    error: function(error) {
-                        console.error('Error parsing CSV data:', error);
-                    }
-                });
-            } catch (error) {
-                console.error('Error fetching CSV data:', error);
+      async function fetchSinglePost(postNo) {
+        try {
+            // Retrieve CSV data from local storage
+            const csvData = localStorage.getItem('Post');
+            if (!csvData) {
+                console.error('No CSV data found in local storage.');
+                return;
+            }
+    
+            Papa.parse(csvData, {
+                complete: function (results) {
+                    displaySinglePost(results.data, postNo);
+                    // Hide loading overlay after displaying the post
+                    document.getElementById("loadingOverlay").style.display = "none";
+                },
+                error: function (error) {
+                    console.error("Error parsing CSV data:", error);
+                },
+            });
+        } catch (error) {
+            console.error("Error fetching CSV data:", error);
+        }
+    }
+    
+    function displaySinglePost(rows, postNo) {
+        const columns = rows[postNo];
+    
+        const singlePostContainer = document.getElementById("singlePost");
+    
+        // Create elements to display the post content
+        const profileDiv = document.createElement("div");
+        profileDiv.classList.add("profile");
+    
+        const profileImage = document.createElement("img");
+        const profileImageSrc = columns[0].trim();
+        profileImage.src = profileImageSrc;
+        profileImage.alt = "Profile Image";
+        profileDiv.appendChild(profileImage);
+    
+        const nameElement = document.createElement("h3");
+        nameElement.textContent = columns[1].trim();
+        profileDiv.appendChild(nameElement);
+    
+        // Skip column C (index 2)
+        for (let j = 3; j < columns.length; j++) {
+            const columnContent = columns[j].trim();
+            if (columnContent && j !== 3) {
+                // Skip displaying column D (index 3)
+                const element = document.createElement("p");
+                element.innerHTML = columnContent.replace(/\n/g, "<br>"); // Replace newlines with <br> tags
+                profileDiv.appendChild(element);
             }
         }
-
-        function displaySinglePost(rows, postNo) {
-            const columns = rows[postNo];
-
-            const singlePostContainer = document.getElementById('singlePost');
-
-            // Create elements to display the post content
-            const profileDiv = document.createElement('div');
-            profileDiv.classList.add('profile');
-
-            const profileImage = document.createElement('img');
-            const profileImageSrc = columns[0].trim();
-            profileImage.src = profileImageSrc;
-            profileImage.alt = 'Profile Image';
-            profileDiv.appendChild(profileImage);
-
-            const nameElement = document.createElement('h3');
-            nameElement.textContent = columns[1].trim();
-            profileDiv.appendChild(nameElement);
-
-            // Skip column C (index 2)
-            for (let j = 3; j < columns.length; j++) {
-                const columnContent = columns[j].trim();
-                if (columnContent && j !== 3) {
-                    // Skip displaying column D (index 3)
-                    const element = document.createElement('p');
-                    element.innerHTML = columnContent.replace(/\n/g, '<br>'); // Replace newlines with <br> tags
-                    profileDiv.appendChild(element);
-                }
-            }
-
-            singlePostContainer.appendChild(profileDiv);
-        }
-
-        // Retrieve the stored PostNo from localStorage
-        const storedPostNo = localStorage.getItem('PostNo');
-
-        // Fetch and display the single post based on PostNo
-        if (storedPostNo !== null) {
-            // Show loading overlay before fetching data
-            document.getElementById('loadingOverlay').style.display = 'flex';
-            fetchSinglePost(storedPostNo);
-        } else {
-            console.error('No PostNo found in localStorage.');
-        }
+    
+        singlePostContainer.appendChild(profileDiv);
+    }
+    
+    // Retrieve the stored PostNo from localStorage
+    const storedPostNo = localStorage.getItem("PostNo");
+    
+    // Fetch and display the single post based on PostNo
+    if (storedPostNo !== null) {
+        // Show loading overlay before fetching data
+        document.getElementById("loadingOverlay").style.display = "flex";
+        fetchSinglePost(storedPostNo);
+    } else {
+        console.error("No PostNo found in localStorage.");
+    }
+    
     </script>
-</body>
-
+  </body>
 </html>

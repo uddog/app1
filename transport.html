@@ -1,188 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CSV to Profiles</title>
-    <link rel="stylesheet" href="universal.css">
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="universal.css" />
+    <link rel="stylesheet" href="navbar.css" />
     <style>
-        .srch{
-            margin-top: 11vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          
-          
-          /* Style for the select elements */
-          select {
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin: 0 10px;
-            background-color: transparent;
-          }
-          
-          /* Style for the profile container */
-          #profile-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 5px;
-          }
-          
-          /* Style for individual profiles */
-          #profile-container div {
-            width: 90vw;
-            margin: 5px;
-            padding: 15px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: grid;
-            align-items: center;
-            font-family: 'font4';
-          }
-          #profile-container div:hover img {
-            scale: 1.07;
-            transition: 0.3s;
-          }
-          /* Style for profile images */
-          #profile-container img {
-            grid-row: 1/span 2;
-            width: 100px;
-            grid-column: 1;
-            border-radius: 5px;
-          }
-          
-          /* Style for profile headings */
-          #profile-container h2 {
-            margin-top: 0;
-            grid-row: 1/span 2;
-            grid-column: 2/span 2;
-            font-size: 0.9rem;
-          }
-          /* Style for profile paragraphs */
-          #profile-container p {
-            margin: 10px 0px 0px 0px;
-            font-size: 0.8rem;
-            grid-column: 1/span 3;
-          }
-          
-          /* Style for hidden profiles */
-          #profile-container div[style="display: none;"] {
-            display: none;
-          }
-          .profile-skeleton {
-            width: 90vw;
-            height: 200px; /* Adjust height as needed */
-            margin: 5px;
-            padding: 15px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            animation: skeleton-loading 1s ease-in-out infinite alternate;
-          }
-          
-          @keyframes skeleton-loading {
-            from {
-                background-color: #f0f0f0;
-            }
-            to {
-                background-color: #e0e0e0;
-            }
-          }
-          
-          
+      .srch {
+        margin-top: 11vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Style for the select elements */
+      select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin: 0 10px;
+        background-color: transparent;
+      }
+
+      /* Style for the profile container */
+      #profile-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 5px;
+      }
+
+      /* Style for individual profiles */
+      #profile-container div {
+        width: 90vw;
+        margin: 5px;
+        padding: 15px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: grid;
+        align-items: center;
+        font-family: "font4";
+      }
+      #profile-container div:hover img {
+        scale: 1.07;
+        transition: 0.3s;
+      }
+      /* Style for profile images */
+      #profile-container img {
+        grid-row: 1 / span 2;
+        width: 100px;
+        grid-column: 1;
+        border-radius: 5px;
+      }
+
+      /* Style for profile headings */
+      #profile-container h2 {
+        margin-top: 0;
+        grid-row: 1 / span 2;
+        grid-column: 2 / span 2;
+        font-size: 0.9rem;
+      }
+      /* Style for profile paragraphs */
+      #profile-container p {
+        margin: 10px 0px 0px 0px;
+        font-size: 0.8rem;
+        grid-column: 1 / span 3;
+      }
+
+      /* Style for hidden profiles */
+      #profile-container div[style="display: none;"] {
+        display: none;
+      }
+      .profile-skeleton {
+        width: 90vw;
+        height: 200px; /* Adjust height as needed */
+        margin: 5px;
+        padding: 15px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        animation: skeleton-loading 1s ease-in-out infinite alternate;
+      }
+
+      @keyframes skeleton-loading {
+        from {
+          background-color: #f0f0f0;
+        }
+        to {
+          background-color: #e0e0e0;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebarTop"></div>
-        <a href="#" onclick="toggleSidebar()" class="close-btn">&times;</a>
-        <a href="index.html" id="homeLink">Home</a>
-        <a href="inbox.html">Inbox</a>
-        <a href="profiles.html" id="profileBtn">Profile</a>
-        <a href="settings.html">Settings</a>
-        <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
+      <div class="sidebar-top" id="sidebarTop"></div>
+      <a onclick="toggleSidebar()" class="close-btn">&times;</a>
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="profiles.html" id="profileBtn">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
     </div>
     <!-- Main content -->
     <header>
-        <div>
-            <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+      <div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
         </div>
-        <nav id="navbar">
-        </nav>
+      </div>
+      <nav id="navbar"></nav>
     </header>
 
     <!-- Bio section -->
-    <div class="bio-section" id="bioSection" style="display: none;">
-    </div>
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
     <!-- Logout Popup -->
     <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
     <div class="popup" id="logoutPopup">
-        <p>Are you sure you want to logout?</p>
-        <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
-        <button onclick="closeLogoutPopup()">No</button>
-    </div>    
+      <p>Are you sure you want to logout?</p>
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
     <!--NavBar End-->
 
     <div class="srch">
-        <label for="fromSelect">From:</label>
-        <select id="fromSelect" disabled></select>
-        <label for="toSelect">To:</label>
-        <select id="toSelect"></select>
+      <label for="fromSelect">From:</label>
+      <select id="fromSelect" disabled></select>
+      <label for="toSelect">To:</label>
+      <select id="toSelect"></select>
     </div>
     <div id="profile-container">
-        <!-- Skeleton profiles -->
-        <div class="profile-skeleton"></div>
-        <div class="profile-skeleton"></div>
-        <div class="profile-skeleton"></div>
-        <!-- End of skeleton profiles -->
+      <!-- Skeleton profiles -->
+      <div class="profile-skeleton"></div>
+      <div class="profile-skeleton"></div>
+      <div class="profile-skeleton"></div>
+      <!-- End of skeleton profiles -->
     </div>
 
     <script src="navbar.js"></script>
     <script src="universal.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-const catName = localStorage.getItem('CatName');
+      const catName = localStorage.getItem("CatName");
 
-function csvToProfiles(url) {
-    // Show skeleton loading effect before fetching data
-    document.getElementById('profile-container').innerHTML = `
+      function csvToProfiles(url) {
+        // Show skeleton loading effect before fetching data
+        document.getElementById("profile-container").innerHTML = `
         <div class="profile-skeleton"></div>
         <div class="profile-skeleton"></div>
         <div class="profile-skeleton"></div>
     `;
 
-    Papa.parse(url, {
-        download: true,
-        complete: function(results) {
+        Papa.parse(url, {
+          download: true,
+          complete: function (results) {
             const rows = results.data;
             // Store the CSV data in local storage
-            localStorage.setItem('Transport', JSON.stringify(rows));
+            localStorage.setItem("Transport", JSON.stringify(rows));
             // Store the time of last fetch
-            localStorage.setItem('lastime2', Date.now());
+            localStorage.setItem("lastime2", Date.now());
             renderProfilesFromCSVData(rows);
-        },
-        error: function(error) {
-            console.error('Error fetching the CSV file:', error);
+          },
+          error: function (error) {
+            console.error("Error fetching the CSV file:", error);
             // Provide user feedback for errors
-            alert('Error fetching the CSV file. Please try again later.');
-        }
-    });
-}
+            alert("Error fetching the CSV file. Please try again later.");
+          },
+        });
+      }
 
-// Function to render profiles from CSV data
-function renderProfilesFromCSVData(rows) {
-    let locations = new Set();
-    let busData = [];
-    for (let i = 1; i < rows.length; i++) { // Start from index 0 to include the first row
-        const profileData = rows[i];
-        const profileType = profileData[1]; // Assuming the profile type is in column B
-        if (profileType.trim() === catName.trim()) { // Check if profile type is "Bus"
+      // Function to render profiles from CSV data
+      function renderProfilesFromCSVData(rows) {
+        let locations = new Set();
+        let busData = [];
+        for (let i = 1; i < rows.length; i++) {
+          // Start from index 0 to include the first row
+          const profileData = rows[i];
+          const profileType = profileData[1]; // Assuming the profile type is in column B
+          if (profileType.trim() === catName.trim()) {
+            // Check if profile type is "Bus"
             const profileName = profileData[2]; // Assuming the profile name is in column C
             const time = profileData[3]; // Assuming the time is in column D
             const roadMap = profileData[4]; // Assuming road map is in column E
@@ -191,81 +192,87 @@ function renderProfilesFromCSVData(rows) {
             const locationsArray = roadMap.split(" > ");
             locations = new Set([...locations, ...locationsArray]);
             busData.push({
-                profileName,
-                time,
-                roadMap,
-                contact, // Adding contact information
-                imgSrc
+              profileName,
+              time,
+              roadMap,
+              contact, // Adding contact information
+              imgSrc,
             });
+          }
         }
-    }
-    renderProfiles(busData, locations);
-}
+        renderProfiles(busData, locations);
+      }
 
-// Function to render profiles
-function renderProfiles(busData, locations) {
-    const profileContainer = document.getElementById('profile-container');
-    profileContainer.innerHTML = '';
-    busData.forEach(profileData => {
-        const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
-        const profileElement = document.createElement('div');
-        profileElement.innerHTML = `
+      // Function to render profiles
+      function renderProfiles(busData, locations) {
+        const profileContainer = document.getElementById("profile-container");
+        profileContainer.innerHTML = "";
+        busData.forEach((profileData) => {
+          const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
+          const profileElement = document.createElement("div");
+          profileElement.innerHTML = `
             <img src="${imgSrc}" alt="${profileName} Image">
             <h2>${profileName}</h2>
             <p>Time: ${time}</p>
             <p>Roadmap: ${roadMap}</p>
             <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
         `;
-        profileContainer.appendChild(profileElement);
-    });
+          profileContainer.appendChild(profileElement);
+        });
 
-    // Populate select dropdowns with unique locations
-    const fromSelect = document.getElementById('fromSelect');
-    const toSelect = document.getElementById('toSelect');
-    locations.forEach(location => {
-        const option = document.createElement('option');
-        option.text = location;
-        fromSelect.add(option.cloneNode(true));
-        toSelect.add(option.cloneNode(true));
-    });
-    // Set the value of the 'From' select box to the first option of the 'To' select box
-    fromSelect.value = toSelect.options[0].value;
-}
+        // Populate select dropdowns with unique locations
+        const fromSelect = document.getElementById("fromSelect");
+        const toSelect = document.getElementById("toSelect");
+        locations.forEach((location) => {
+          const option = document.createElement("option");
+          option.text = location;
+          fromSelect.add(option.cloneNode(true));
+          toSelect.add(option.cloneNode(true));
+        });
+        // Set the value of the 'From' select box to the first option of the 'To' select box
+        fromSelect.value = toSelect.options[0].value;
+      }
 
-// Function to filter buses based on selected locations
-function filterBuses() {
-    const fromLocation = document.getElementById('fromSelect').value;
-    const toLocation = document.getElementById('toSelect').value;
-    const profiles = document.querySelectorAll('#profile-container div');
-    profiles.forEach(profile => {
-        const roadmap = profile.querySelector('p:nth-of-type(2)').textContent.split(': ')[1];
-        if (roadmap.includes(fromLocation) && roadmap.includes(toLocation)) {
-            profile.style.display = 'grid';
+      // Function to filter buses based on selected locations
+      function filterBuses() {
+        const fromLocation = document.getElementById("fromSelect").value;
+        const toLocation = document.getElementById("toSelect").value;
+        const profiles = document.querySelectorAll("#profile-container div");
+        profiles.forEach((profile) => {
+          const roadmap = profile
+            .querySelector("p:nth-of-type(2)")
+            .textContent.split(": ")[1];
+          if (roadmap.includes(fromLocation) && roadmap.includes(toLocation)) {
+            profile.style.display = "grid";
+          } else {
+            profile.style.display = "none";
+          }
+        });
+      }
+
+      // Function to fetch CSV data if required
+      function fetchIfRequired() {
+        const lastFetchTime = localStorage.getItem("lastime2");
+        const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
+        if (!lastFetchTime || Date.now() - lastFetchTime > fetchInterval) {
+          csvToProfiles(
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876"
+          );
         } else {
-            profile.style.display = 'none';
+          // Fetch from local storage and render profiles
+          const csvData = JSON.parse(localStorage.getItem("Transport"));
+          renderProfilesFromCSVData(csvData);
         }
-    });
-}
+      }
 
-// Function to fetch CSV data if required
-function fetchIfRequired() {
-    const lastFetchTime = localStorage.getItem('lastime2');
-    const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
-    if (!lastFetchTime || Date.now() - lastFetchTime > fetchInterval) {
-        csvToProfiles('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876');
-    } else {
-        // Fetch from local storage and render profiles
-        const csvData = JSON.parse(localStorage.getItem('Transport'));
-        renderProfilesFromCSVData(csvData);
-    }
-}
-
-// Call fetchIfRequired() when the page loads
-window.onload = function() {
-    fetchIfRequired();
-    // Add event listener to the 'To' select element to filter buses when an option is selected
-    document.getElementById('toSelect').addEventListener('change', filterBuses);
-};
+      // Call fetchIfRequired() when the page loads
+      window.onload = function () {
+        fetchIfRequired();
+        // Add event listener to the 'To' select element to filter buses when an option is selected
+        document
+          .getElementById("toSelect")
+          .addEventListener("change", filterBuses);
+      };
     </script>
-</body>
+  </body>
 </html>
