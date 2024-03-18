@@ -303,7 +303,15 @@ if (userProfession) {
         handleScroll(); // Check for visible profiles on page load
       });
       
-
+    // Add event listener to the container to capture clicks on profiles
+    document.getElementById('profilesContainer').addEventListener('click', function(event) {
+      console.log("Clicked profile");
+      const clickedProfile = event.target.closest('.profile');
+      if (clickedProfile) {
+          const catName = clickedProfile.querySelector('div:nth-child(2)').textContent; // Assuming column C contains the content
+          localStorage.setItem('CatName', catName);
+      }
+  });
 </script>
 </body>
 
