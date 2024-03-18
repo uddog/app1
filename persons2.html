@@ -6,13 +6,14 @@
     <title>CSV Profiles</title>
     <link rel="stylesheet" href="universal.css" />
     <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="test.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
       #searchContainer {
         display: flex;
         justify-content: center;
       }
-
+      
       #searchInput {
         margin-top: 11vh;
         margin-bottom: 10px;
@@ -21,7 +22,7 @@
         border-radius: 5px;
         width: 90vw;
       }
-
+      
       #searchInput:focus {
         outline: none;
         border-color: #007bff;
@@ -78,7 +79,7 @@
         cursor: pointer;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Material-like shadow */
       }
-
+      
       .see-more:hover {
         background-color: #0056b3;
       }
@@ -90,7 +91,7 @@
         width: 90vw;
         animation: skeleton-loading 1s infinite alternate;
       }
-
+      
       @keyframes skeleton-loading {
         0% {
           background-color: rgba(0, 0, 0, 0.1);
@@ -179,13 +180,17 @@
         fetchIfRequired(); // Start fetching data
       };
 
-      const catName = localStorage.getItem("CatName");
+      const one = localStorage.getItem("one");
+      const two = localStorage.getItem("two");
+      const three = localStorage.getItem("three");
+      const four = localStorage.getItem("four");
+
       const storedData = localStorage.getItem("CSVData");
       let csvData = storedData ? JSON.parse(storedData) : null;
       let lastFetchTime = localStorage.getItem("LastFetchTime") || 0;
       const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
       const csvURL =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=622627727";
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv";
 
       // Function to handle the CSV data
       function handleCSVData(results) {
@@ -195,48 +200,39 @@
         renderProfiles();
       }
 
-      // Function to render profiles based on stored CSV data
       function renderProfiles() {
         if (csvData) {
           var profilesHTML = "";
           for (var i = 1; i < csvData.length; i++) {
-            var profileType = csvData[i][3].trim(); // Profile type from column D
-            if (profileType === catName.trim()) {
-              var profileName = csvData[i][1].trim(); // Profile name from column B
-              var profileImgSrc = csvData[i][7].trim(); // Image source from column H
+            var Institude = csvData[i][6].trim(); // Profile type from column D
+            var cat = csvData[i][2].trim(); 
+            var pro = csvData[i][4].trim(); 
+
+            if (Institude === one.trim() && cat === two.trim() && pro === four.trim()) {
+              var profileName = csvData[i][3].trim(); // Profile name from column B
+              var profileImgSrc = csvData[i][13].trim(); // Image source from column H
               var profileAddress = csvData[i][6].trim(); // Address from column G
               var profilePhone = csvData[i][4].trim(); // Phone number from column E
               var profileLink = csvData[i][1].trim(); // Link from column L
-
-              profilesHTML += `
-                        <div class="profile">
-                            <div class="two">
-                                <img src="${profileImgSrc}" alt="${profileName}">
-                                <div class="one">
+      
+              // Constructing HTML for each profile
+              profilesHTML += `<div class="profile">
+                                <div class="two">
+                                  <img src="${profileImgSrc}" alt="${profileName}">
+                                  <div class="one">
                                     <h2>${profileName}</h2>
-                                    ${
-                                      profileAddress
-                                        ? `<p class="address">ঠিকানা : ${profileAddress}</p>`
-                                        : ""
-                                    }
-                                    ${
-                                      profilePhone
-                                        ? `<p class="phone">যোগাযোগ : ${profilePhone}</p>`
-                                        : ""
-                                    }
+                                    ${profileAddress ? `<p class="address">ঠিকানা : ${profileAddress}</p>` : ""}
+                                    ${profilePhone ? `<p class="phone">যোগাযোগ : ${profilePhone}</p>` : ""}
+                                  </div>
                                 </div>
-                            </div>
-                            ${
-                              profileLink
-                                ? `<button class="see-more" onclick="storePlaceName('${profileName}', '${profileLink}')">See more</button>`
-                                : ""
-                            }
-                        </div>`;
+                                ${profileLink ? `<button class="see-more" onclick="storePlaceName('${profileName}', '${profileLink}')">See more</button>` : ""}
+                              </div>`;
             }
           }
           document.getElementById("profilesContainer").innerHTML = profilesHTML;
         }
       }
+      
 
       // Function to store profile name in localStorage
       function storePlaceName(placeName, link) {
