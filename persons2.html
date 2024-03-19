@@ -29,15 +29,20 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        width: 100vw;
       }
       /* Profile styles */
       .profile {
         margin-bottom: 20px;
-        padding: 10px;
+        margin: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-family: "font1";
-        width: 90vw;
+        width: 35vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10px;
       }
       .profile:hover img {
         scale: 1.05;
@@ -51,19 +56,19 @@
       }
       .two {
         display: flex;
-        justify-content: space-around;
+        flex-wrap: wrap;
+        width: 25vw;
       }
       .one {
         padding: 5px;
-        width: 100%;
         display: grid;
         place-items: center;
-      }
-      .one h2 {
-        font-size: 1.2rem;
+        text-align: center;
+        width: 100%;
       }
       .one p {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
       }
       .see-more {
         width: 90vw;
@@ -188,9 +193,8 @@
       const profileType = rowData[6].trim(); // Profile type from column D
       if (profileType === one.trim()) {
         const profileName = rowData[3].trim(); // Profile name from column B
+        const specialist = rowData[5].trim(); // Profile name from column B
         const profileImgSrc = rowData[13].trim(); // Image source from column H
-        const profileAddress = rowData[6].trim(); // Address from column G
-        const profilePhone = rowData[7].trim(); // Phone number from column E
         const profileLink = rowData[10].trim(); // Link from column L
 
         profilesContainer.innerHTML += `
@@ -198,17 +202,8 @@
             <div class="two">
               <img src="${profileImgSrc}" alt="${profileName}">
               <div class="one">
-                <h2>${profileName}</h2>
-                ${
-                  profileAddress
-                    ? `<p class="address">ঠিকানা : ${profileAddress}</p>`
-                    : ""
-                }
-                ${
-                  profilePhone
-                    ? `<p class="phone">যোগাযোগ : ${profilePhone}</p>`
-                    : ""
-                }
+                <p>${profileName}</p>
+                <p>${specialist}</p>
               </div>
             </div>
             ${
