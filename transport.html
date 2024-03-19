@@ -148,131 +148,110 @@
     <script>
       const catName = localStorage.getItem("CatName");
 
-      function csvToProfiles(url) {
-        // Show skeleton loading effect before fetching data
-        document.getElementById("profile-container").innerHTML = `
-        <div class="profile-skeleton"></div>
-        <div class="profile-skeleton"></div>
-        <div class="profile-skeleton"></div>
-    `;
-
-        Papa.parse(url, {
-          download: true,
-          complete: function (results) {
-            const rows = results.data;
-            // Store the CSV data in local storage
-            localStorage.setItem("Transport", JSON.stringify(rows));
-            // Store the time of last fetch
-            localStorage.setItem("lastime2", Date.now());
-            renderProfilesFromCSVData(rows);
-          },
-          error: function (error) {
-            console.error("Error fetching the CSV file:", error);
-            // Provide user feedback for errors
-            alert("Error fetching the CSV file. Please try again later.");
-          },
-        });
+      function csvToProfiles() {
+          // Show skeleton loading effect before fetching data
+          document.getElementById("profile-container").innerHTML = `
+              <div class="profile-skeleton"></div>
+              <div class="profile-skeleton"></div>
+              <div class="profile-skeleton"></div>
+          `;
+      
+          const csvData = localStorage.getItem("PublicDataTransport");
+          if (csvData) {
+              const rows = Papa.parse(csvData).data;
+              renderProfilesFromCSVData(rows);
+          } else {
+              console.error("CSV data not found in local storage.");
+              // Provide user feedback for errors
+              alert("CSV data not found in local storage. Please try again later.");
+          }
       }
-
+      
       // Function to render profiles from CSV data
       function renderProfilesFromCSVData(rows) {
-        let locations = new Set();
-        let busData = [];
-        for (let i = 1; i < rows.length; i++) {
-          // Start from index 0 to include the first row
-          const profileData = rows[i];
-          const profileType = profileData[1]; // Assuming the profile type is in column B
-          if (profileType.trim() === catName.trim()) {
-            // Check if profile type is "Bus"
-            const profileName = profileData[2]; // Assuming the profile name is in column C
-            const time = profileData[3]; // Assuming the time is in column D
-            const roadMap = profileData[4]; // Assuming road map is in column E
-            const contact = profileData[6]; // Assuming contact is in column G
-            const imgSrc = profileData[5]; // Assuming image source URL is in column F
-            const locationsArray = roadMap.split(" > ");
-            locations = new Set([...locations, ...locationsArray]);
-            busData.push({
-              profileName,
-              time,
-              roadMap,
-              contact, // Adding contact information
-              imgSrc,
-            });
+          let locations = new Set();
+          let busData = [];
+          for (let i = 1; i < rows.length; i++) {
+              // Start from index 0 to include the first row
+              const profileData = rows[i];
+              const profileType = profileData[1]; // Assuming the profile type is in column B
+              if (profileType.trim() === catName.trim()) {
+                  // Check if profile type is "Bus"
+                  const profileName = profileData[2]; // Assuming the profile name is in column C
+                  const time = profileData[3]; // Assuming the time is in column D
+                  const roadMap = profileData[4]; // Assuming road map is in column E
+                  const contact = profileData[6]; // Assuming contact is in column G
+                  const imgSrc = profileData[5]; // Assuming image source URL is in column F
+                  const locationsArray = roadMap.split(" > ");
+                  locations = new Set([...locations, ...locationsArray]);
+                  busData.push({
+                      profileName,
+                      time,
+                      roadMap,
+                      contact, // Adding contact information
+                      imgSrc,
+                  });
+              }
           }
-        }
-        renderProfiles(busData, locations);
+          renderProfiles(busData, locations);
       }
-
+      
       // Function to render profiles
       function renderProfiles(busData, locations) {
-        const profileContainer = document.getElementById("profile-container");
-        profileContainer.innerHTML = "";
-        busData.forEach((profileData) => {
-          const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
-          const profileElement = document.createElement("div");
-          profileElement.innerHTML = `
-            <img src="${imgSrc}" alt="${profileName} Image">
-            <h2>${profileName}</h2>
-            <p>Time: ${time}</p>
-            <p>Roadmap: ${roadMap}</p>
-            <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
-        `;
-          profileContainer.appendChild(profileElement);
-        });
-
-        // Populate select dropdowns with unique locations
-        const fromSelect = document.getElementById("fromSelect");
-        const toSelect = document.getElementById("toSelect");
-        locations.forEach((location) => {
-          const option = document.createElement("option");
-          option.text = location;
-          fromSelect.add(option.cloneNode(true));
-          toSelect.add(option.cloneNode(true));
-        });
-        // Set the value of the 'From' select box to the first option of the 'To' select box
-        fromSelect.value = toSelect.options[0].value;
+          const profileContainer = document.getElementById("profile-container");
+          profileContainer.innerHTML = "";
+          busData.forEach((profileData) => {
+              const { profileName, time, roadMap, contact, imgSrc } = profileData; // Adding contact
+              const profileElement = document.createElement("div");
+              profileElement.innerHTML = `
+                  <img src="${imgSrc}" alt="${profileName} Image">
+                  <h2>${profileName}</h2>
+                  <p>Time: ${time}</p>
+                  <p>Roadmap: ${roadMap}</p>
+                  <p class="con">Contact: ${contact}</p> <!-- Adding contact -->
+              `;
+              profileContainer.appendChild(profileElement);
+          });
+      
+          // Populate select dropdowns with unique locations
+          const fromSelect = document.getElementById("fromSelect");
+          const toSelect = document.getElementById("toSelect");
+          locations.forEach((location) => {
+              const option = document.createElement("option");
+              option.text = location;
+              fromSelect.add(option.cloneNode(true));
+              toSelect.add(option.cloneNode(true));
+          });
+          // Set the value of the 'From' select box to the first option of the 'To' select box
+          fromSelect.value = toSelect.options[0].value;
       }
-
+      
       // Function to filter buses based on selected locations
       function filterBuses() {
-        const fromLocation = document.getElementById("fromSelect").value;
-        const toLocation = document.getElementById("toSelect").value;
-        const profiles = document.querySelectorAll("#profile-container div");
-        profiles.forEach((profile) => {
-          const roadmap = profile
-            .querySelector("p:nth-of-type(2)")
-            .textContent.split(": ")[1];
-          if (roadmap.includes(fromLocation) && roadmap.includes(toLocation)) {
-            profile.style.display = "grid";
-          } else {
-            profile.style.display = "none";
-          }
-        });
+          const fromLocation = document.getElementById("fromSelect").value;
+          const toLocation = document.getElementById("toSelect").value;
+          const profiles = document.querySelectorAll("#profile-container div");
+          profiles.forEach((profile) => {
+              const roadmap = profile
+                  .querySelector("p:nth-of-type(2)")
+                  .textContent.split(": ")[1];
+              if (roadmap.includes(fromLocation) && roadmap.includes(toLocation)) {
+                  profile.style.display = "grid";
+              } else {
+                  profile.style.display = "none";
+              }
+          });
       }
-
-      // Function to fetch CSV data if required
-      function fetchIfRequired() {
-        const lastFetchTime = localStorage.getItem("lastime2");
-        const fetchInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
-        if (!lastFetchTime || Date.now() - lastFetchTime > fetchInterval) {
-          csvToProfiles(
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMec3rLMJvXIWdyVxO_ZVzKaJTrxrxqp4Wk1G2jjzEbRAr2x0df81w-6C3UrYpgNgilUTmz_ct4seU/pub?output=csv&gid=497879876"
-          );
-        } else {
-          // Fetch from local storage and render profiles
-          const csvData = JSON.parse(localStorage.getItem("Transport"));
-          renderProfilesFromCSVData(csvData);
-        }
-      }
-
-      // Call fetchIfRequired() when the page loads
+      
+      // Call csvToProfiles() when the page loads
       window.onload = function () {
-        fetchIfRequired();
-        // Add event listener to the 'To' select element to filter buses when an option is selected
-        document
-          .getElementById("toSelect")
-          .addEventListener("change", filterBuses);
+          csvToProfiles();
+          // Add event listener to the 'To' select element to filter buses when an option is selected
+          document
+              .getElementById("toSelect")
+              .addEventListener("change", filterBuses);
       };
+      
     </script>
   </body>
 </html>
