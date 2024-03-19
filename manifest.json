@@ -21,7 +21,7 @@
   ],
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
-  "start_url": "/testoffline/",
+  "start_url": "/app/",
   "display": "standalone",
   "orientation": "portrait"
 }
