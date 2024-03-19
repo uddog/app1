@@ -116,6 +116,33 @@ function closeLogoutPopup() {
 }
 
 function logout() {
-  localStorage.clear();
-  location.reload();
+  localStorage.removeItem("userUsername");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userBName");
+  localStorage.removeItem("userFName");
+  localStorage.removeItem("userNumber");
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("userRole");
+  localStorage.removeItem("userBloodGroup");
+  localStorage.removeItem("userAddress");
+  localStorage.removeItem("userDonate");
+  localStorage.removeItem("userPoint");
+  localStorage.removeItem("userBirthDay");
+  localStorage.removeItem("userSchool");
+  localStorage.removeItem("userCollege");
+  localStorage.removeItem("userVarsity");
+  localStorage.removeItem("userGender");
+  localStorage.removeItem("userProfession");
+  localStorage.removeItem("userHobby");
+  localStorage.removeItem("userImg");
+  localStorage.removeItem("userJDate");
+  localStorage.removeItem("userReference");
+  localStorage.removeItem("userEvents");
+  localStorage.removeItem("userBDonate");
+  localStorage.removeItem("userMDate");
+  localStorage.removeItem("userBDate");
+  localStorage.removeItem("userPower");
+  localStorage.removeItem("rowIndex");
+
+    location.reload();
 }

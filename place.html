@@ -1,110 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSV Profile to HTML</title>
-  <link rel="stylesheet" href="universal.css">
-  <link rel="stylesheet" href="navbar.css">
-  <style>
-    #profiles {
-      margin-top: 10vh;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Place</title>
+    <link rel="stylesheet" href="universal.css" />
+    <link rel="stylesheet" href="navbar.css" />
+    <style>
+      body {
+        width: 100vw;
+        overflow-x: hidden;
+      }
+      #profiles {
+        margin-top: 10vh;
+      }
+      .profile {
+        font-family: "font1";
+      }
+      .sticky {
+        position: sticky;
+        top: 10vh;
+      }
+      .two {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.8rem;
+        border-radius: 10px;
+        margin: 10px 5px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
-    .profile {
-      font-family: "font1";
-    }
-    .sticky {
-      position: sticky;
-      top: 10vh;
-    }
-    .two {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      font-size: 0.8rem;
-      margin: 10px 5px;
-      padding: 20px;
-      box-shadow: rgba(0, 0, 0, 0.457) 0px 1px 4px;
-    }
-    .profile img {
-      height: 100px;
-      width: 100px;
-    }
-    .two:hover {
-      background-color: rgba(240, 248, 255, 0.313);
-    }
-    .two:hover img {
-      scale: 1.07;
-      transition: 0.8s;
-    }
-    .slide {
-      margin: 20px auto 0px auto;
-      width: 97vw;
-      display: flex;
-      overflow-y: scroll;
-      scroll-snap-type: x mandatory;
-    }
-    .slide img {
-      scroll-snap-align: start;
-      min-width: 97vw;
-      height: auto;
-    }
-    .pa {
-      font-size: 0.8rem;
-      margin-top: 3px;
-      text-align: center;
-      color: rgba(14, 14, 14, 0.938);
-    }
-    .deta {
-      padding: 20px 10px;
-      border-radius: 45px 45px 0px 0px;
-      text-align: justify;
-      position: sticky;
-      background-color: white;
-    }
-    .deta > p::first-letter {
-      font-size: 2rem;
-    }
-    .deta h2 {
-      text-align: center;
-    }
-    .deta > p {
-      margin-bottom: 10px;
-    }
-    .more {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 5px;
-    }
-    .more a {
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-      width: 30vw;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      padding: 8px;
-      margin: 4px;
-      text-decoration: none;
-      color: black;
-    }
-    .more a:hover {
-      background-color: rgb(239, 239, 239);
-      transition: 0.5s;
-    }
-    .more img {
-      object-fit: cover;
-      object-position: center;
-    }
-    .more p {
+      .profile img {
+        height: 90px;
+        width: 90px;
+      }
+      .two:hover {
+        background-color: rgba(240, 248, 255, 0.313);
+      }
+      .two:hover img {
+        scale: 1.07;
+        transition: 0.8s;
+      }
+      .slide {
+        margin: 20px auto 0px auto;
+        width: 97vw;
+        display: flex;
+        overflow-y: scroll;
+        scroll-snap-type: x mandatory;
+      }
+      .slide img {
+        scroll-snap-align: start;
+        min-width: 97vw;
+        height: auto;
+      }
+      .pa {
+        font-size: 0.8rem;
+        margin-top: 3px;
+        text-align: center;
+        color: rgba(14, 14, 14, 0.938);
+      }
+      .deta {
+        padding: 20px 10px;
+        border-radius: 20px 20px 0px 0px;
+        text-align: justify;
+        position: sticky;
+        background-color: white;
+      }
+      .deta > p::first-letter {
+        font-size: 2rem;
+      }
+      .deta h2 {
+        text-align: center;
+      }
+      .deta > p {
+        margin-bottom: 10px;
+      }
+      .more {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 5px;
+      }
+      .more a {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        width: 25vw;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: 4px;
+        text-decoration: none;
+        color: black;
+        border-radius: 5px;
+      }
+      .more a:hover {
+        background-color: #2ecc71; /* Cool green color */
+        transition: 0.5s;
+      }
+      
+      
+      .more img {
+        object-fit: cover;
+        object-position: center;
+      }
+      .more p {
         margin-top: 5px;
         font-size: 1.1rem;
-    }
-    
-  </style>
-</head>
-<body>
-  
+      }
+    </style>
+  </head>
+  <body>
     <!--NavBar Start-->
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
@@ -115,101 +121,104 @@
       <a href="profiles.html" id="profileBtn">Profile</a>
       <a href="settings.html">Settings</a>
       <a href="#" onclick="openLogoutPopup()" id="logoutBtn">Log Out</a>
-  </div>
-  <!-- Main content -->
-  <header>
+    </div>
+    <!-- Main content -->
+    <header>
       <div>
-          <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">&#9776;</div>
+        <div class="menu-icon" id="sidebarButton" onclick="toggleSidebar()">
+          &#9776;
+        </div>
       </div>
-      <nav id="navbar">
-      </nav>
-  </header>
+      <nav id="navbar"></nav>
+    </header>
 
-  <!-- Bio section -->
-  <div class="bio-section" id="bioSection" style="display: none;">
-  </div>
+    <!-- Bio section -->
+    <div class="bio-section" id="bioSection" style="display: none"></div>
 
-  <!-- Logout Popup -->
-  <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
-  <div class="popup" id="logoutPopup">
+    <!-- Logout Popup -->
+    <div class="overlay" id="overlay" onclick="closeLogoutPopup()"></div>
+    <div class="popup" id="logoutPopup">
       <p>Are you sure you want to logout?</p>
-      <a style="color: black;" href="index.html"><button onclick="logout()">Yes</button></a>  
+      <a style="color: black" href="index.html"
+        ><button onclick="logout()">Yes</button></a
+      >
       <button onclick="closeLogoutPopup()">No</button>
-  </div>    
-  <!--NavBar End-->
+    </div>
+    <!--NavBar End-->
 
+    <div id="profiles">
+      <!-- Profile content will be inserted here -->
+    </div>
 
-
-
-  <div id="profiles">
-    <!-- Profile content will be inserted here -->
-  </div>
-
-  <script src="navbar.js"></script>
-  <script src="universal.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-  <script>
-    $(document).ready(function () {
-        const placeName = localStorage.getItem('PlaceName');
-        const storedData = localStorage.getItem('PublicDataPlaces'); // Use the correct local storage key
+    <script src="navbar.js"></script>
+    <script src="universal.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const placeName = localStorage.getItem("PlaceName");
+        const storedData = localStorage.getItem("PublicDataPlaces");
     
         if (!storedData) {
-            console.error('No CSV data found in local storage.');
+            console.error("No CSV data found in local storage.");
             return;
         }
     
         Papa.parse(storedData, {
-          complete: function(results) {
-            const rows = results.data;
-            rows.shift(); // Skip first row
-            renderProfilesFromLocalStorage(rows, placeName);
-          },
-          header: false
+            complete: function (results) {
+                const rows = results.data;
+                rows.shift(); // Skip first row
+                renderProfilesFromLocalStorage(rows, placeName);
+            },
+            header: false,
         });
-  
+    
         function renderProfilesFromLocalStorage(data, placeName) {
             $("#profiles").empty(); // Clear existing content
             for (let j = 0; j < data.length; j++) {
                 const rowData = data[j];
     
                 if (rowData[1].trim() === placeName.trim()) {
-                    const profileDiv = `
-                        <div class="profile" data-one="${rowData[1]}" data-two="${rowData[2]}" data-three="${rowData[3]}" data-four="${rowData[18]}">
-                            <div class="sticky">
-                                <div class="two">
-                                    <img src="${rowData[7]}" alt="${rowData[1]}">
-                                    <div class="one">
-                                        <h2>${rowData[1]}</h2>
-                                        ${rowData[9] ? `<p>Owner : ${rowData[9]}</p>` : ""}
-                                        ${rowData[8] ? `<p>Type : ${rowData[8]}</p>` : ""}
-                                        ${rowData[4] ? `<p>Contact: ${rowData[4]}</p>` : ""}
-                                        ${rowData[5] ? `<p>Email: <a href="mailto:${rowData[5]}">${rowData[5]}</a></p>` : ""}
-                                        ${rowData[6] ? `<p>Address: ${rowData[6]}</p>` : ""}
-                                    </div>
-                                </div>
-                                <div class="slide">
-                                    ${rowData[13] ? `<img src="${rowData[13]}" alt="Image 1">` : ""}
-                                    ${rowData[14] ? `<img src="${rowData[14]}" alt="Image 2">` : ""}
-                                    ${rowData[15] ? `<img src="${rowData[15]}" alt="Image 3">` : ""}
-                                </div>
-                                <p class="pa">Change Image by Scroll Right<p>
-                            </div>
-                            <div class="deta">
-                                <h2>${rowData[1]}</h2>
-                                ${rowData[10] ? `<p>${rowData[10]}</p>` : ""}
-                                ${rowData[11] ? `<p>${rowData[11]}</p>` : ""}
-                                <h2>আরো জানুন</h2>
-                                <div class="more">
-                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                                    ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
-                                </div>
-                            </div>
-                        </div>`;
+                    const profileDiv = createProfileDiv(rowData);
                     $("#profiles").append(profileDiv);
                 }
             }
+        }
+    
+        function createProfileDiv(rowData) {
+            return `
+                <div class="profile" data-one="${rowData[1]}" data-two="${rowData[2]}" data-three="${rowData[3]}" data-four="${rowData[18]}">
+                    <div class="sticky">
+                        <div class="two">
+                            <img src="${rowData[7]}" alt="${rowData[1]}">
+                            <div class="one">
+                                <h2>${rowData[1]}</h2>
+                                ${rowData[9] ? `<p>প্রধান : ${rowData[9]}</p>` : ""}
+                                ${rowData[8] ? `<p>ধরন : ${rowData[8]}</p>` : ""}
+                                ${rowData[6] ? `<p>ঠিকানা : ${rowData[6]}</p>` : ""}
+                                ${rowData[4] ? `<p>Contact : ${rowData[4]}</p>` : ""}
+                                ${rowData[5] ? `<p>Email : ${rowData[5]}</p>` : ""}
+                            </div>
+                        </div>
+                        <div class="slide">
+                            ${rowData[13] ? `<img src="${rowData[13]}" alt="Image 1">` : ""}
+                            ${rowData[14] ? `<img src="${rowData[14]}" alt="Image 2">` : ""}
+                            ${rowData[15] ? `<img src="${rowData[15]}" alt="Image 3">` : ""}
+                        </div>
+                        <p class="pa">Change Image by Scroll Right<p>
+                    </div>
+                    <div class="deta">
+                        <h2>${rowData[1]}</h2>
+                        ${rowData[10] ? `<p>${rowData[10]}</p>` : ""}
+                        ${rowData[11] ? `<p>${rowData[11]}</p>` : ""}
+                        <h2>আরো জানুন</h2>
+                        <div class="more">
+                            ${rowData[17] ? `<a href="${rowData[19]}"><img src="${rowData[17]}"><br><p>${rowData[18]}</p></a>` : ""}
+                            ${rowData[20] ? `<a href="${rowData[22]}"><img src="${rowData[20]}"><br><p>${rowData[21]}</p></a>` : ""}
+                            ${rowData[23] ? `<a href="${rowData[25]}"><img src="${rowData[23]}"><br><p>${rowData[24]}</p></a>` : ""}
+                        </div>
+                    </div>
+                </div>`;
         }
     
         // Event listener for click on a tag
@@ -227,9 +236,7 @@
             localStorage.setItem("four", four);
         });
     });
-  </script>
-  
-  
-</body>
-
+    
+    </script>
+  </body>
 </html>
