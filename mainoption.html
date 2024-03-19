@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Profile</title>
+    <title>Options</title>
     <link rel="stylesheet" href="navbar.css" />
     <link rel="stylesheet" href="universal.css" />
     <style>
@@ -146,141 +146,115 @@
 
     <script src="universal.js"></script>
     <script src="navbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
     <script>
-      const csvLink =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5yPBQL7OkwisJJ6Dq4jpzATrchx3wbyxQQ09mH0BoPrTFr8FYnKxkT7xjvWB8P51Gled65w6S8VQH/pub?output=csv&gid=471126613";
-      const refreshInterval = 600000; // 10 minutes in milliseconds
+    // Function to show the loading spinner
+function showLoadingSpinner() {
+  document.getElementById("loadingSpinner").style.display = "block";
+}
 
-      // Function to show the loading spinner
-      function showLoadingSpinner() {
-        document.getElementById("loadingSpinner").style.display = "block";
-      }
+// Function to hide the loading spinner
+function hideLoadingSpinner() {
+  document.getElementById("loadingSpinner").style.display = "none";
+}
 
-      // Function to hide the loading spinner
-      function hideLoadingSpinner() {
-        document.getElementById("loadingSpinner").style.display = "none";
-      }
+function fetchAndProcessData() {
+  // Show loading spinner before fetching data
+  showLoadingSpinner();
 
-      function fetchAndProcessData() {
-        // Show loading spinner before fetching data
-        showLoadingSpinner();
+  // Fetch data from local storage
+  const csvData = localStorage.getItem("MoreOption");
 
-        fetchCSVData()
-          .then((csvData) => {
-            processData(csvData);
-            // Cache the fetched data
-            localStorage.setItem("cachedCSVData", csvData);
-            // Store the timestamp of the last update
-            localStorage.setItem("lastUpdateTimestamp", Date.now());
-          })
-          .catch((error) => {
-            console.error("Error fetching and processing CSV data:", error);
-          })
-          .finally(() => {
-            // Hide loading spinner after processing data or in case of error
-            hideLoadingSpinner();
-          });
-      }
+  if (csvData) {
+    processData(csvData);
+  } else {
+    console.error("CSV data not found in local storage.");
+    // Provide user feedback for errors
+    alert("CSV data not found in local storage. Please try again later.");
+  }
 
-      function fetchCSVData() {
-        return fetch(csvLink).then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.text();
-        });
-      }
+  // Hide loading spinner after processing data or in case of error
+  hideLoadingSpinner();
+}
 
-      function processData(csvData) {
-        // Process CSV data and update the UI
-        const profilesContainer = document.getElementById("profilesContainer");
-        // Clear previous data
-        profilesContainer.innerHTML = "";
-        const rows = csvData.split("\n");
-        let sections = {};
+function processData(csvData) {
+  // Process CSV data and update the UI
+  const profilesContainer = document.getElementById("profilesContainer");
+  // Clear previous data
+  profilesContainer.innerHTML = "";
+  const rows = csvData.split("\n");
+  let sections = {};
 
-        for (let i = 1; i < rows.length; i++) {
-          const profileData = rows[i].split(",");
+  for (let i = 1; i < rows.length; i++) {
+    const profileData = rows[i].split(",");
 
-          const sectionName = profileData[1];
-          const profileDiv = document.createElement("div");
-          profileDiv.classList.add("profile");
+    const sectionName = profileData[1];
+    const profileDiv = document.createElement("div");
+    profileDiv.classList.add("profile");
 
-          const imgElement = document.createElement("img");
-          imgElement.src = profileData[2]; // Assuming column B contains the image source
-          profileDiv.appendChild(imgElement);
+    const imgElement = document.createElement("img");
+    imgElement.src = profileData[2]; // Assuming column B contains the image source
+    profileDiv.appendChild(imgElement);
 
-          const columnCContent = document.createElement("div");
-          columnCContent.textContent = profileData[3]; // Assuming column C contains content
-          profileDiv.appendChild(columnCContent);
+    const columnCContent = document.createElement("div");
+    columnCContent.textContent = profileData[3]; // Assuming column C contains content
+    profileDiv.appendChild(columnCContent);
 
-          const anchorElement = document.createElement("a");
-          anchorElement.href = profileData[4]; // Assuming column D contains the link
-          anchorElement.appendChild(profileDiv);
+    const anchorElement = document.createElement("a");
+    anchorElement.href = profileData[4]; // Assuming column D contains the link
+    anchorElement.appendChild(profileDiv);
 
-          // Add anchor tag to the corresponding section
-          if (!sections[sectionName]) {
-            sections[sectionName] = {
-              sectionElement: document.createElement("div"),
-              hasMatchingProfile: false,
-            };
-            sections[sectionName].sectionElement.classList.add("section");
-            profilesContainer.appendChild(sections[sectionName].sectionElement);
+    // Add anchor tag to the corresponding section
+    if (!sections[sectionName]) {
+      sections[sectionName] = {
+        sectionElement: document.createElement("div"),
+        hasMatchingProfile: false,
+      };
+      sections[sectionName].sectionElement.classList.add("section");
+      profilesContainer.appendChild(sections[sectionName].sectionElement);
 
-            const sectionTitle = document.createElement("div");
-            sectionTitle.classList.add("section-title");
-            sectionTitle.textContent = sectionName;
-            sections[sectionName].sectionElement.appendChild(sectionTitle);
-          }
+      const sectionTitle = document.createElement("div");
+      sectionTitle.classList.add("section-title");
+      sectionTitle.textContent = sectionName;
+      sections[sectionName].sectionElement.appendChild(sectionTitle);
+    }
 
-          sections[sectionName].sectionElement.appendChild(anchorElement);
+    sections[sectionName].sectionElement.appendChild(anchorElement);
 
-          const storedOptionCategory = localStorage.getItem("optionCategory");
-          if (
-            sectionName.toLowerCase() === storedOptionCategory.toLowerCase()
-          ) {
-            sections[sectionName].hasMatchingProfile = true;
-          }
-        }
+    const storedOptionCategory = localStorage.getItem("optionCategory");
+    if (
+      sectionName.toLowerCase() === storedOptionCategory.toLowerCase()
+    ) {
+      sections[sectionName].hasMatchingProfile = true;
+    }
+  }
 
-        // Initially hide sections without matching profiles
-        Object.values(sections).forEach((section) => {
-          if (!section.hasMatchingProfile) {
-            section.sectionElement.style.display = "none";
-          }
-        });
-      }
+  // Initially hide sections without matching profiles
+  Object.values(sections).forEach((section) => {
+    if (!section.hasMatchingProfile) {
+      section.sectionElement.style.display = "none";
+    }
+  });
+}
 
-      // Check if data needs to be refreshed on page load
-      document.addEventListener("DOMContentLoaded", function () {
-        const lastUpdateTimestamp = localStorage.getItem("lastUpdateTimestamp");
-        if (
-          !lastUpdateTimestamp ||
-          Date.now() - lastUpdateTimestamp > refreshInterval
-        ) {
-          // Fetch data if it's not in local storage or if it's been more than 10 minutes since last update
-          fetchAndProcessData();
-        } else {
-          // Use cached data
-          const cachedData = localStorage.getItem("cachedCSVData");
-          if (cachedData) {
-            processData(cachedData);
-          }
-        }
-      });
+// Fetch data whenever the page is loaded or refreshed
+window.addEventListener("load", fetchAndProcessData);
 
-      // Add event listener for profiles click
-      document
-        .getElementById("profilesContainer")
-        .addEventListener("click", function (event) {
-          console.log("Clicked profile");
-          const clickedProfile = event.target.closest(".profile");
-          if (clickedProfile) {
-            const catName =
-              clickedProfile.querySelector("div:nth-child(2)").textContent; // Assuming column C contains the content
-            localStorage.setItem("CatName", catName);
-          }
-        });
+// Add event listener for profiles click
+document
+  .getElementById("profilesContainer")
+  .addEventListener("click", function (event) {
+    console.log("Clicked profile");
+    const clickedProfile = event.target.closest(".profile");
+    if (clickedProfile) {
+      const catName =
+        clickedProfile.querySelector("div:nth-child(2)").textContent; // Assuming column C contains the content
+      localStorage.setItem("CatName", catName);
+    }
+  });
+
+      
     </script>
   </body>
 </html>
